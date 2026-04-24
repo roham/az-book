@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Axiom Zen Operator's Manual — Vol. I & II</title>
+<style>
+@font-face{font-family:'Söhne';src:url('../../fonts/Söhne-Buch.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Söhne';src:url('../../fonts/Söhne-Fett.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Söhne Mono';src:url('../../fonts/SöhneMono-Buch.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Tiempos Headline';src:url('../../fonts/TiemposHeadline-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Tiempos Headline';src:url('../../fonts/TiemposHeadline-Bold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Tiempos Text';src:url('../../fonts/TiemposText-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Tiempos Text';src:url('../../fonts/TiemposText-RegularItalic.otf') format('opentype');font-weight:400;font-style:italic;font-display:swap}
+
+:root{
+  --paper:#F4F1EA;
+  --navy:#0B2A4A;
+  --red:#C8311B;
+  --ink:#1A1A1A;
+  --yellow:#D9A441;
+  --graphite:#8A8A88;
+  --hair:rgba(26,26,26,0.9);
+  --faint:rgba(26,26,26,0.14);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink)}
+body{
+  font-family:'Tiempos Text',Georgia,serif;
+  font-size:19px;
+  line-height:30px;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size:8px 8px;
+  background-position:0 0;
+}
+
+.page{max-width:1440px;margin:0 auto;padding:0 48px}
+
+/* ROW 1: MASTHEAD */
+.masthead{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--ink);
+  padding:0 48px;
+  max-width:1440px;
+  margin:0 auto;
+  font-family:'Söhne Mono',ui-monospace,monospace;
+  font-size:11px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.masthead .left{display:flex;align-items:center;gap:24px}
+.masthead .logo-mark{
+  width:18px;height:18px;border:1.25px solid var(--ink);border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;font-size:9px;
+}
+.masthead .right{display:flex;gap:28px;color:var(--graphite)}
+.masthead .right span{color:var(--ink)}
+
+/* ROW 2: TITLE BLOCK */
+.title-block{
+  display:grid;
+  grid-template-columns:repeat(12, 1fr);
+  gap:24px;
+  padding:56px 48px 40px;
+  max-width:1440px;margin:0 auto;
+  border-bottom:1px solid var(--ink);
+  position:relative;
+}
+.title-block::after{
+  content:'';position:absolute;left:48px;right:48px;bottom:-2px;
+  height:1px;background:var(--red);
+}
+.title-block .h1{
+  grid-column:1 / span 9;
+  font-family:'Tiempos Headline',Georgia,serif;
+  font-weight:400;
+  font-size:clamp(40px, 6vw, 84px);
+  line-height:1.04;
+  letter-spacing:-0.022em;
+  color:var(--ink);
+}
+.title-block .h1 em{font-style:italic;color:var(--navy)}
+.title-block .spec{
+  grid-column:10 / span 3;
+  font-family:'Söhne Mono',ui-monospace,monospace;
+  font-size:11px;
+  line-height:18px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink);
+  border-left:1px solid var(--ink);
+  padding:4px 0 4px 18px;
+  align-self:end;
+}
+.title-block .spec .row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed var(--faint)}
+.title-block .spec .row:last-child{border-bottom:none}
+.title-block .spec .row span:last-child{color:var(--red);font-weight:400}
+
+.subtitle-row{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:24px;
+  padding:28px 48px 48px;
+  max-width:1440px;margin:0 auto;
+  border-bottom:1px solid var(--ink);
+}
+.subtitle-row .sub{
+  grid-column:1 / span 7;
+  font-family:'Tiempos Text',Georgia,serif;
+  font-size:22px;
+  line-height:32px;
+  color:var(--ink);
+  font-style:italic;
+}
+.subtitle-row .machine-beat{
+  grid-column:9 / span 4;
+  font-family:'Söhne',system-ui,sans-serif;
+  font-weight:700;
+  font-size:13px;
+  line-height:19px;
+  letter-spacing:0.02em;
+  text-transform:uppercase;
+  color:var(--red);
+  align-self:end;
+  padding-left:18px;
+  border-left:2px solid var(--red);
+}
+
+/* ROW 3: HERO PLATE */
+.hero-plate{
+  max-width:1440px;margin:0 auto;padding:56px 48px 24px;
+  position:relative;
+}
+.hero-frame{
+  position:relative;
+  border:0.5px solid var(--ink);
+  background:var(--paper);
+  padding:36px 40px;
+}
+.hero-frame .dim-top,.hero-frame .dim-bottom,.hero-frame .dim-left,.hero-frame .dim-right{
+  position:absolute;font-family:'Söhne Mono',monospace;font-size:9px;
+  letter-spacing:0.1em;color:var(--ink);
+}
+.hero-frame .dim-top{top:-18px;left:50%;transform:translateX(-50%)}
+.hero-frame .dim-bottom{bottom:-18px;left:50%;transform:translateX(-50%)}
+.hero-frame .dim-left{left:-34px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:center}
+.hero-frame .dim-right{right:-34px;top:50%;transform:translateY(-50%) rotate(90deg);transform-origin:center}
+
+.hero-img-wrap{position:relative;width:100%;aspect-ratio:3/2}
+.hero-img-wrap img{width:100%;height:100%;object-fit:contain;display:block}
+
+/* SVG callout overlay */
+.callout-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.callout-circle{fill:var(--paper);stroke:var(--red);stroke-width:1.25}
+.callout-num{fill:var(--red);font-family:'Söhne Mono',monospace;font-size:11px;font-weight:400;text-anchor:middle;dominant-baseline:central;letter-spacing:0.05em}
+.callout-line{stroke:var(--red);stroke-width:0.75;fill:none}
+.callout-tick{stroke:var(--red);stroke-width:1.25;fill:none}
+
+.hero-cap{
+  margin-top:20px;
+  font-family:'Söhne Mono',monospace;font-size:11px;line-height:18px;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-top:0.5px solid var(--ink);padding-top:12px;
+}
+.hero-cap .cap-right{color:var(--graphite);text-align:right}
+
+/* TITLE BLOCK (drafting) */
+.draft-title-block{
+  position:absolute;right:48px;bottom:36px;
+  display:grid;grid-template-columns:auto auto;gap:0;
+  border:1px solid var(--ink);
+  font-family:'Söhne Mono',monospace;font-size:10px;line-height:14px;
+  letter-spacing:0.08em;text-transform:uppercase;
+  background:var(--paper);
+}
+.draft-title-block .cell{padding:7px 14px;border-bottom:0.5px solid var(--ink);border-right:0.5px solid var(--ink)}
+.draft-title-block .cell:nth-child(even){border-right:none}
+.draft-title-block .cell:nth-last-child(-n+2){border-bottom:none}
+.draft-title-block .cell .k{color:var(--graphite);display:block;margin-bottom:2px}
+.draft-title-block .cell .v{color:var(--ink)}
+
+/* ROW 4: EXECUTIVE SUMMARY */
+.exec-summary{
+  max-width:1440px;margin:0 auto;padding:96px 48px;
+  display:grid;grid-template-columns:repeat(12,1fr);gap:24px;
+  border-bottom:1px solid var(--ink);
+  position:relative;
+}
+.exec-summary::before{
+  content:'';position:absolute;left:48px;right:48px;top:-1px;
+  height:1px;background:var(--red);
+}
+.exec-summary .marg{
+  grid-column:1 / span 1;
+  font-family:'Söhne Mono',monospace;font-size:10px;line-height:16px;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--graphite);
+  padding-right:8px;
+}
+.exec-summary .marg .note{margin-bottom:28px;padding-top:4px;border-top:0.5px solid var(--faint)}
+.exec-summary .marg .note .n{color:var(--red);font-size:11px;display:block;margin-bottom:3px}
+.exec-summary .body{
+  grid-column:2 / span 10;
+  column-count:2;
+  column-gap:48px;
+  column-rule:0.5px solid var(--faint);
+  font-size:19px;
+  line-height:30px;
+  color:var(--ink);
+  text-align:justify;
+  hyphens:auto;
+}
+.exec-summary .body p{margin-bottom:16px;break-inside:avoid-column}
+.exec-summary .body p:first-child::first-letter{
+  font-family:'Tiempos Headline',Georgia,serif;
+  font-weight:400;
+  float:left;
+  font-size:112px;
+  line-height:0.82;
+  padding:12px 10px 0 0;
+  color:var(--navy);
+}
+.exec-summary .body em{font-style:italic}
+.exec-summary .body .emphasis{
+  font-family:'Söhne',system-ui,sans-serif;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--red);
+  display:block;
+  padding:6px 0;
+  border-top:1px solid var(--red);
+  border-bottom:1px solid var(--red);
+  margin:8px 0 14px;
+  text-align:left;
+}
+
+/* ROW 5: VOLUME CARDS */
+.volumes{
+  max-width:1440px;margin:0 auto;padding:72px 48px 48px;
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+}
+.vol-card{
+  border:1px solid var(--ink);
+  background:var(--paper);
+  padding:0;
+  display:flex;flex-direction:column;
+  position:relative;
+  text-decoration:none;color:var(--ink);
+  transition:transform 0.25s ease;
+}
+.vol-card:hover{transform:translateY(-2px)}
+.vol-card:hover .vol-cta{background:var(--ink);color:var(--paper)}
+.vol-card .vol-head{
+  border-bottom:0.5px solid var(--ink);
+  padding:14px 20px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'Söhne Mono',monospace;font-size:10px;letter-spacing:0.14em;
+  text-transform:uppercase;
+}
+.vol-card .vol-head .tag{color:var(--red)}
+.vol-card .vol-img{
+  aspect-ratio:4/3;background:var(--paper);
+  border-bottom:0.5px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.vol-card .vol-img img{width:100%;height:100%;object-fit:contain}
+.vol-card .vol-body{padding:28px 24px 20px;flex:1;display:flex;flex-direction:column}
+.vol-card h3{
+  font-family:'Tiempos Headline',Georgia,serif;
+  font-weight:400;
+  font-size:34px;
+  line-height:38px;
+  letter-spacing:-0.01em;
+  margin-bottom:14px;
+}
+.vol-card h3 em{font-style:italic;color:var(--navy)}
+.vol-card .syn{font-size:17px;line-height:27px;color:var(--ink);margin-bottom:22px;flex:1}
+.vol-card .vol-cta{
+  align-self:stretch;
+  text-align:left;
+  padding:14px 20px;
+  border-top:0.5px solid var(--ink);
+  font-family:'Söhne',system-ui,sans-serif;
+  font-weight:700;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;
+  display:flex;justify-content:space-between;align-items:center;
+}
+
+/* ROW 6: COLOPHON */
+.colophon{
+  max-width:1440px;margin:0 auto;padding:56px 48px 40px;
+  border-top:1px solid var(--ink);
+  font-family:'Söhne Mono',monospace;font-size:10px;line-height:18px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--graphite);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+}
+.colophon h4{color:var(--ink);font-weight:400;margin-bottom:8px}
+.colophon .row-full{grid-column:1 / -1;display:flex;justify-content:space-between;padding-top:24px;margin-top:12px;border-top:0.5px solid var(--faint)}
+.colophon .sheet{color:var(--red)}
+
+/* MOBILE */
+@media (max-width: 820px){
+  body{font-size:17px;line-height:27px}
+  .page, .masthead, .title-block, .subtitle-row, .hero-plate, .exec-summary, .volumes, .colophon{padding-left:20px;padding-right:20px}
+  .masthead{height:auto;padding-top:14px;padding-bottom:14px;flex-wrap:wrap;gap:8px;font-size:10px}
+  .masthead .right{gap:14px}
+  .title-block{padding:36px 20px 28px;grid-template-columns:1fr}
+  .title-block .h1{grid-column:1;font-size:40px;line-height:44px}
+  .title-block .spec{grid-column:1;border-left:none;border-top:1px solid var(--ink);padding:16px 0 0;margin-top:20px}
+  .subtitle-row{grid-template-columns:1fr;padding:20px 20px 28px}
+  .subtitle-row .sub{grid-column:1;font-size:19px;line-height:27px}
+  .subtitle-row .machine-beat{grid-column:1;margin-top:18px;padding-left:12px}
+  .hero-plate{padding:32px 20px 16px}
+  .hero-frame{padding:20px}
+  .hero-img-wrap{aspect-ratio:4/5}
+  .hero-img-wrap img{object-fit:cover;object-position:center}
+  .hero-cap{flex-direction:column;gap:6px;align-items:flex-start}
+  .hero-cap .cap-right{text-align:left}
+  .draft-title-block{position:static;margin-top:20px;font-size:9px;grid-template-columns:1fr 1fr}
+  .exec-summary{padding:56px 20px;grid-template-columns:1fr}
+  .exec-summary .marg{grid-column:1;display:flex;flex-wrap:wrap;gap:16px;padding:0 0 20px;border-bottom:0.5px solid var(--faint)}
+  .exec-summary .marg .note{flex:1 1 40%;margin-bottom:0;padding-top:4px}
+  .exec-summary .body{grid-column:1;column-count:1;font-size:17px;line-height:27px}
+  .exec-summary .body p:first-child::first-letter{font-size:72px}
+  .volumes{grid-template-columns:1fr;padding:40px 20px 20px;gap:24px}
+  .vol-card h3{font-size:28px;line-height:32px}
+  .colophon{grid-template-columns:1fr 1fr;padding:40px 20px 32px}
+  .colophon .row-full{flex-direction:column;gap:6px;font-size:9px}
+}
+@media (max-width: 420px){
+  .title-block .h1{font-size:34px;line-height:38px}
+  .exec-summary .body p:first-child::first-letter{font-size:60px}
+}
+</style>
+</head>
+<body>
+
+<!-- ROW 1: MASTHEAD -->
+<header class="masthead">
+  <div class="left">
+    <span class="logo-mark">AZ</span>
+    <span>The Axiom Zen Operator's Manual &mdash; Vol. I &amp; II</span>
+  </div>
+  <div class="right">
+    <span>REV. 02 / 2026</span>
+    <span>FIG. 01&nbsp;/&nbsp;12</span>
+    <span>SHEET 01 OF 01</span>
+  </div>
+</header>
+
+<!-- ROW 2: TITLE BLOCK -->
+<section class="title-block">
+  <h1 class="h1">How to Build a <em>Machine</em><br>That Farms Luck.</h1>
+  <div class="spec">
+    <div class="row"><span>Volumes</span><span>02</span></div>
+    <div class="row"><span>Steps</span><span>09</span></div>
+    <div class="row"><span>Frameworks</span><span>03</span></div>
+    <div class="row"><span>Drafted</span><span>2012&#8239;&ndash;&#8239;2026</span></div>
+    <div class="row"><span>Revision</span><span>A</span></div>
+  </div>
+</section>
+
+<section class="subtitle-row">
+  <p class="sub">Two volumes. Nine steps. One operating theory, disassembled into its working parts and laid out on the table.</p>
+  <p class="machine-beat">&mdash; Most books about innovation describe weather. This one describes a machine.</p>
+</section>
+
+<!-- ROW 3: HERO PLATE -->
+<section class="hero-plate">
+  <div class="hero-frame">
+    <span class="dim-top">&larr; &nbsp;&nbsp; 1 440 mm &nbsp;&nbsp; &rarr;</span>
+    <span class="dim-bottom">0 &mdash; 50 &mdash; 100 mm</span>
+    <span class="dim-left">960 mm</span>
+    <span class="dim-right">ASSEMBLY</span>
+    <div class="hero-img-wrap">
+      <img src="img/hero.png" alt="The Innovation Apparatus, Mk. II — exploded isometric schematic">
+    </div>
+  </div>
+  <div class="hero-cap">
+    <span>FIG. 01 &mdash; The Innovation Apparatus, Mk. II. Exploded View. Not to Scale.</span>
+    <span class="cap-right">PLATE 01 / SER &middot; BBP &middot; EBU / 09 STEPS</span>
+  </div>
+</section>
+
+<!-- ROW 4: EXECUTIVE SUMMARY -->
+<section class="exec-summary">
+  <aside class="marg" aria-label="Marginal notes">
+    <div class="note"><span class="n">01</span>Signal / Noise dial &mdash; Vol. I, Ch. 4</div>
+    <div class="note"><span class="n">03</span>SER / BBP / EBU lenses &mdash; Vol. I, Ch. 2</div>
+    <div class="note"><span class="n">08</span>Waitlist cartridge &mdash; Vol. II, Ch. 1</div>
+    <div class="note"><span class="n">09</span>Nine-step gear &mdash; Vol. I, Ch. 1</div>
+    <div class="note"><span class="n">12</span>Baseplate &mdash; Est. 2012</div>
+  </aside>
+  <div class="body">
+    <p>Most books about innovation describe weather. This one describes a machine.</p>
+    <p>For fourteen years, Axiom Zen has run the same experiment under different names &mdash; CryptoKitties, Dapper Labs, NBA Top Shot, NFL All Day, Flow. The hit rate is not an accident of timing or a function of the founder's taste. It is the output of a rig that was designed, tuned, and run to spec. The rig is what this book documents.</p>
+    <p>Volume I is the thesis. It lays out the nine steps of the Axiom Zen process, the three lenses every venture is measured against &mdash; <em>SER, BBP, EBU</em> &mdash; the archetype library the operator pulls from when assembling a team, and the Green Light Framework that decides when to advance and when to shelve. It is the physics of the apparatus, written down.</p>
+    <p>Volume II is the machine itself. The Alpha / Beta Phase-Gate Playbook is the working drawing &mdash; waitlist construction, Alpha closed-loop signal harvesting, Beta-gate criteria, the general-availability trigger, and the specific failure modes that have claimed the ventures that skipped a step. It is the schematic the operator keeps on the wall.</p>
+    <span class="emphasis">Innovation is not a weather system. It is a farm.</span>
+    <p>Together the volumes make one claim, plainly: luck compounds where the soil is prepared for it, where the instruments are calibrated for it, where the operator knows which signals to amplify and which to dampen. The scientific method, pointed at creative work, looks exactly like this.</p>
+    <p>Scroll to read the plates. Each component is labeled. Each labeled component corresponds to a chapter. Each chapter corresponds to a lever an operator can actually pull on a Tuesday morning.</p>
+    <p><em>The book is the diagram. The diagram is the bet.</em></p>
+  </div>
+</section>
+
+<!-- ROW 5: VOLUME CARDS -->
+<section class="volumes">
+  <a class="vol-card" href="../../volume-1.html">
+    <div class="vol-head">
+      <span>Vol. I &middot; The Thesis</span>
+      <span class="tag">FIG. 02</span>
+    </div>
+    <div class="vol-img"><img src="img/section-view.png" alt="Section view — Typical stratigraphy of a viable bet"></div>
+    <div class="vol-body">
+      <h3>The <em>Physics</em> of the Apparatus.</h3>
+      <p class="syn">Nine steps. Three lenses &mdash; SER, BBP, EBU. An archetype library. A Green Light Framework that decides when to advance and when to shelve. Written down, for the first time, as a machine specification.</p>
+    </div>
+    <div class="vol-cta"><span>Enter Vol. I</span><span>&rarr;</span></div>
+  </a>
+  <a class="vol-card" href="../../volume-2.html">
+    <div class="vol-head">
+      <span>Vol. II &middot; The Playbook</span>
+      <span class="tag">FIG. 03</span>
+    </div>
+    <div class="vol-img"><img src="img/plan-view.png" alt="Plan view — studio floor as strategic diagram"></div>
+    <div class="vol-body">
+      <h3>The <em>Working</em> Drawing.</h3>
+      <p class="syn">The Alpha / Beta Phase-Gate Playbook. Waitlist construction, closed-loop signal harvesting, Beta-gate criteria, GA triggers, and the failure modes that have claimed every venture that skipped a step.</p>
+    </div>
+    <div class="vol-cta"><span>Enter Vol. II</span><span>&rarr;</span></div>
+  </a>
+</section>
+
+<!-- ROW 6: COLOPHON -->
+<footer class="colophon">
+  <div>
+    <h4>Typography</h4>
+    Tiempos Headline &amp; Text / Klim<br>
+    Söhne &amp; Söhne Mono / Klim
+  </div>
+  <div>
+    <h4>Palette</h4>
+    F4F1EA cold paper<br>
+    0B2A4A blueprint navy<br>
+    C8311B signal red
+  </div>
+  <div>
+    <h4>References</h4>
+    USPTO 1900&ndash;1970<br>
+    Rams &mdash; Less and More<br>
+    Hofmann Swiss Technical
+  </div>
+  <div>
+    <h4>Drafted by</h4>
+    Axiom Zen Instruments<br>
+    Est. 2012 &middot; Vancouver<br>
+    Revision A &middot; 2026 Q2
+  </div>
+  <div class="row-full">
+    <span>&copy; 2026 Axiom Zen &middot; All Plates Reserved</span>
+    <span class="sheet">Sheet 01 of 01</span>
+    <span>DWG. NO. AZ-LANDING-MK-II</span>
+  </div>
+</footer>
+
+</body>
+</html>

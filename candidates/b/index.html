@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to farm lightning. — An Operator's Manual in Two Volumes</title>
+<style>
+  /* -------- Fonts (shared with /index.html, siblings, volumes) -------- */
+  @font-face { font-family:'Söhne'; src:url('../../fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne'; src:url('../../fonts/Söhne-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../../fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../../fonts/SöhneMono-Extraleicht.otf') format('opentype'); font-weight:200; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../../fonts/SöhneMono-ExtraleichtKursiv.otf') format('opentype'); font-weight:200; font-style:italic; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../../fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../../fonts/TiemposHeadline-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-BoldItalic.otf') format('opentype'); font-weight:700; font-style:italic; font-display:swap; }
+
+  /* -------- Tokens -------- */
+  :root {
+    --hull:        #0A0E14;
+    --midnight:    #141B24;
+    --cyan-shadow: #3A5168;
+    --amber:       #C58A3A;
+    --bone:        #E8DDC9;
+    --brass:       #8A6B3F;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background: var(--hull); color: var(--bone); }
+  body { font-family: 'Söhne', -apple-system, sans-serif; font-weight:400; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  a { color: inherit; text-decoration: none; }
+  img { display:block; max-width:100%; }
+
+  /* =========================================================
+     VIEWPORT 1 — HERO WITH LETTERBOX
+     ========================================================= */
+  .hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background: var(--hull);
+    overflow: hidden;
+  }
+  .hero__frame {
+    position: absolute;
+    top: 20vh;
+    bottom: 20vh;
+    left: 0; right: 0;
+    background-image: url('img/hero.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  /* Letterbox bars as real DOM elements so type lives inside them */
+  .bar {
+    position: absolute;
+    left: 0; right: 0;
+    height: 20vh;
+    background: var(--hull);
+    display: flex;
+    align-items: center;
+    padding: 0 5vw;
+    z-index: 2;
+  }
+  .bar--top    { top: 0; justify-content: space-between; }
+  .bar--bottom { bottom: 0; }
+
+  .eyebrow {
+    font-family: 'Söhne Mono', monospace;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    text-transform: uppercase;
+  }
+  .eyebrow__rule {
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--amber);
+    vertical-align: middle;
+    margin-right: 14px;
+    opacity: 0.8;
+  }
+
+  /* Bottom bar becomes a column to stack H1 / subtitle / timestamp */
+  .bar--bottom {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    padding: 0 5vw 2vh 5vw;
+  }
+  .hero__h1 {
+    font-family: 'Tiempos Headline', 'Times New Roman', serif;
+    font-weight: 400;
+    font-size: clamp(56px, 8.5vw, 108px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    color: var(--bone);
+    margin: 0;
+  }
+  .hero__h1 em {
+    font-family: 'Tiempos Headline', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .hero__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    margin-top: 14px;
+  }
+  .hero__subtitle {
+    font-family: 'Tiempos Text', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(15px, 1.4vw, 20px);
+    line-height: 1.45;
+    color: var(--bone);
+    opacity: 0.78;
+    max-width: 44ch;
+    margin: 0;
+  }
+  .hero__stamp {
+    font-family: 'Söhne Mono', monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* =========================================================
+     VIEWPORT 2 — EXECUTIVE SUMMARY
+     ========================================================= */
+  .summary {
+    background: var(--bone);
+    color: #1A1812;
+    padding: 96px 24px 120px;
+    position: relative;
+  }
+  .summary__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .chapter-mark {
+    font-family: 'Söhne Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--brass);
+    text-transform: uppercase;
+    display: block;
+  }
+  .chapter-mark--top    { margin-bottom: 56px; text-align: left; }
+  .chapter-mark--bottom { margin-top: 56px; text-align: right; }
+
+  .summary p {
+    font-family: 'Söhne', sans-serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 32px;
+    margin: 0 0 26px 0;
+    color: #1A1812;
+  }
+  .summary p:last-of-type { margin-bottom: 0; }
+
+  /* Drop cap on first paragraph */
+  .summary__lead::first-letter {
+    font-family: 'Tiempos Text', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 82px;
+    line-height: 0.82;
+    float: left;
+    padding: 8px 12px 0 0;
+    color: #1A1812;
+  }
+
+  /* Amber hairline between paragraph 3 and 4 */
+  .hairline {
+    border: 0;
+    border-top: 1px solid var(--amber);
+    width: 72px;
+    margin: 40px 0 40px 0;
+    opacity: 0.9;
+  }
+
+  /* Closing pull on the last line is visually handled by its own block */
+  .summary__close {
+    font-family: 'Tiempos Headline', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 30px;
+    line-height: 1.25;
+    margin-top: 40px !important;
+    color: #1A1812;
+    letter-spacing: -0.01em;
+  }
+
+  /* =========================================================
+     VIEWPORT 3 — DIPTYCH
+     ========================================================= */
+  .diptych {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--hull);
+    min-height: 100vh;
+  }
+  .panel {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    min-height: 70vh;
+  }
+  .panel__img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: filter 320ms ease, transform 400ms ease;
+    filter: brightness(0.92);
+  }
+  .panel:hover .panel__img { filter: brightness(0.97); }
+  .panel--left  .panel__img { background-image: url('img/apparatus.png'); }
+  .panel--right .panel__img { background-image: url('img/sieve.png'); }
+
+  /* Dim gradient at bottom for caption readability */
+  .panel__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10,14,20,0) 55%,
+      rgba(10,14,20,0.78) 100%
+    );
+    pointer-events: none;
+  }
+
+  .panel__caption {
+    position: absolute;
+    left: 32px;
+    bottom: 32px;
+    right: 32px;
+    color: var(--amber);
+    font-family: 'Söhne Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.55;
+    transition: transform 320ms ease;
+  }
+  .panel:hover .panel__caption { transform: translateY(-4px); }
+
+  .panel__caption strong {
+    display: block;
+    font-weight: 400;
+    color: var(--amber);
+    font-size: 13px;
+    margin-bottom: 6px;
+    letter-spacing: 0.14em;
+  }
+  .panel__caption span {
+    display: block;
+    color: var(--bone);
+    opacity: 0.92;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .panel__arrow {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    width: 18px;
+    height: 18px;
+    border-top: 1px solid var(--amber);
+    border-right: 1px solid var(--amber);
+    transform: rotate(45deg);
+    opacity: 0.75;
+    transition: opacity 240ms ease, transform 320ms ease;
+  }
+  .panel:hover .panel__arrow { opacity:1; transform: rotate(45deg) translate(2px,-2px); }
+
+  /* =========================================================
+     FOOTER MARK
+     ========================================================= */
+  .footmark {
+    background: var(--hull);
+    color: var(--brass);
+    font-family: 'Söhne Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 36px 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(197,138,58,0.22);
+  }
+  .footmark span { color: var(--amber); }
+
+  /* =========================================================
+     MOBILE — 375px narrative
+     ========================================================= */
+  @media (max-width: 720px) {
+    .hero { height: auto; min-height: 100vh; }
+    .hero__frame {
+      position: relative;
+      top: auto; bottom: auto;
+      aspect-ratio: 4/5;
+      width: 100%;
+    }
+    .bar { position: static; height: auto; padding: 18px 24px; }
+    .bar--top { padding-top: 24px; padding-bottom: 10px; }
+    .bar--bottom { padding-top: 20px; padding-bottom: 28px; }
+    .hero__h1 { font-size: 56px; }
+    .hero__row { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .hero__subtitle { font-size: 16px; max-width: 100%; }
+
+    .summary { padding: 64px 24px 80px; }
+    .summary__inner { max-width: 100%; }
+    .summary p { font-size: 17px; line-height: 28px; }
+    .summary__lead::first-letter { font-size: 68px; padding-right: 10px; }
+    .summary__close { font-size: 24px; }
+
+    .diptych { grid-template-columns: 1fr; }
+    .panel { min-height: 80vw; }
+    .panel__caption { left: 20px; right: 20px; bottom: 20px; }
+    .panel__arrow { right: 20px; top: 20px; }
+
+    .footmark { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+  }
+
+  @media (max-width: 420px) {
+    .hero__h1 { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =============================================================
+     1) HERO — 21:9 LETTERBOX
+============================================================= -->
+<section class="hero" aria-label="Title card">
+  <div class="hero__frame" role="img" aria-label="Empty corner office at 3:47 AM overlooking a downtown skyline, a single tungsten lamp on a walnut conference table."></div>
+
+  <div class="bar bar--top">
+    <div class="eyebrow"><span class="eyebrow__rule"></span>An Operator's Manual&nbsp;/&nbsp;In Two Volumes</div>
+    <div class="eyebrow" style="text-align:right;">Cold Open&nbsp;/&nbsp;Prelude</div>
+  </div>
+
+  <div class="bar bar--bottom">
+    <h1 class="hero__h1">How to farm <em>lightning.</em></h1>
+    <div class="hero__row">
+      <p class="hero__subtitle">Innovation isn't random. It's an apparatus — and someone has to stay up and build it.</p>
+      <div class="hero__stamp">03:47&nbsp;&nbsp;/&nbsp;&nbsp;Floor&nbsp;42&nbsp;&nbsp;/&nbsp;&nbsp;Vol.&nbsp;I–II</div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================
+     2) EXECUTIVE SUMMARY — PAPER
+============================================================= -->
+<section class="summary" aria-label="Executive summary">
+  <div class="summary__inner">
+    <span class="chapter-mark chapter-mark--top">§&nbsp;001&nbsp;&nbsp;/&nbsp;&nbsp;Prelude</span>
+
+    <p class="summary__lead">The myth is that great companies begin with a bolt from the sky. A founder in a shower. A napkin in a diner. A moment of grace that visits the deserving and skips the rest.</p>
+
+    <p>I have built companies for fifteen years and I have never seen it work that way. Not once.</p>
+
+    <p>What I have seen is this: a small number of operators who treat creativity the way a scientist treats a hypothesis, and a much larger number who treat it the way a gambler treats a hand. The first group compounds. The second group tells stories about the one time it almost worked. The difference is not taste. The difference is not intelligence. The difference is apparatus.</p>
+
+    <hr class="hairline" />
+
+    <p>An apparatus is the unglamorous machinery that sits between an idea and a product — the intake, the triage, the gates, the kill criteria, the small ruthless meetings at 11pm where a thing you loved last Tuesday gets retired on Thursday because the signal did not show up. It is the sieve. It is the nine steps. It is the waitlist that taught you the thing you could not have learned from a deck. It is the Alpha that was allowed to be ugly because ugliness was the point. It is the willingness to farm luck instead of pray for it.</p>
+
+    <p>This book — these two books — are what I wish someone had handed me in 2011. <strong style="font-weight:700;">Volume I</strong> is the thesis: nine steps, six archetypes, three portfolio tiers, one framework for saying yes and a harder one for saying no. <strong style="font-weight:700;">Volume II</strong> is the apparatus: the phase-gate playbook that turned the thesis into a machine — waitlist to Alpha to Beta to GA, the signals that matter, the ones that lie, and the specific discipline of hound-dog hunting in the dark.</p>
+
+    <p>If you stay, you will learn how to build the thing that catches the lightning.</p>
+
+    <p>You will not learn how to make it strike.</p>
+
+    <p class="summary__close">Nobody has ever learned that.</p>
+
+    <span class="chapter-mark chapter-mark--bottom">§&nbsp;001&nbsp;&nbsp;/&nbsp;&nbsp;End</span>
+  </div>
+</section>
+
+<!-- =============================================================
+     3) DIPTYCH — TWO VOLUMES, FULL-BLEED CLICK TARGETS
+============================================================= -->
+<section class="diptych" aria-label="The two volumes">
+  <a class="panel panel--left" href="../../volume-1.html" aria-label="Volume I — The Thesis">
+    <div class="panel__img"></div>
+    <div class="panel__scrim"></div>
+    <div class="panel__arrow" aria-hidden="true"></div>
+    <div class="panel__caption">
+      <strong>Volume I&nbsp;&nbsp;—&nbsp;&nbsp;The Thesis</strong>
+      <span>Nine Steps&nbsp;·&nbsp;Six Archetypes&nbsp;·&nbsp;Three Tiers</span>
+    </div>
+  </a>
+  <a class="panel panel--right" href="../../volume-2.html" aria-label="Volume II — The Apparatus">
+    <div class="panel__img"></div>
+    <div class="panel__scrim"></div>
+    <div class="panel__arrow" aria-hidden="true"></div>
+    <div class="panel__caption">
+      <strong>Volume II&nbsp;&nbsp;—&nbsp;&nbsp;The Apparatus</strong>
+      <span>Waitlist&nbsp;·&nbsp;Alpha&nbsp;·&nbsp;Beta&nbsp;·&nbsp;Gate</span>
+    </div>
+  </a>
+</section>
+
+<!-- =============================================================
+     FOOTMARK
+============================================================= -->
+<footer class="footmark">
+  <div>An Operator's Manual&nbsp;·&nbsp;In Two Volumes</div>
+  <div><span>End of Prelude</span>&nbsp;&nbsp;/&nbsp;&nbsp;Continue&nbsp;→&nbsp;Vol.&nbsp;I</div>
+</footer>
+
+</body>
+</html>
