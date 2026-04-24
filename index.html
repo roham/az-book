@@ -1,736 +1,498 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dead Reckoning &mdash; The Axiom Zen Atlas</title>
-<meta name="description" content="A two-volume operator's manual on how to farm the luck you cannot manufacture — the thesis of what to build, and the apparatus that builds it.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Innovation isn't random. It's farmable. — An operator's manual, in two volumes</title>
 <style>
-  /* ---- Söhne ---- */
-  @font-face{font-family:'Söhne';src:url('fonts/Söhne-Buch.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
-  @font-face{font-family:'Söhne';src:url('fonts/Söhne-Fett.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
-  @font-face{font-family:'Söhne Mono';src:url('fonts/SöhneMono-Buch.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
-  @font-face{font-family:'Tiempos Headline';src:url('fonts/TiemposHeadline-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
-  @font-face{font-family:'Tiempos Headline';src:url('fonts/TiemposHeadline-Bold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
-  @font-face{font-family:'Tiempos Text';src:url('fonts/TiemposText-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
-  @font-face{font-family:'Tiempos Text';src:url('fonts/TiemposText-RegularItalic.otf') format('opentype');font-weight:400;font-style:italic;font-display:swap}
+  /* -------- Fonts -------- */
+  @font-face { font-family:'Söhne'; src:url('fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne'; src:url('fonts/Söhne-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('fonts/SöhneMono-Extraleicht.otf') format('opentype'); font-weight:200; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('fonts/SöhneMono-ExtraleichtKursiv.otf') format('opentype'); font-weight:200; font-style:italic; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('fonts/TiemposHeadline-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('fonts/TiemposText-BoldItalic.otf') format('opentype'); font-weight:700; font-style:italic; font-display:swap; }
 
+  /* -------- Tokens (Bridge palette) -------- */
   :root{
-    --indigo:#1B2A44;
-    --red:#C8342B;
-    --vellum:#E8DCC4;
-    --sepia:#2F2A24;
-    --brass:#8A7A5B;
-    --parchment:#F4EFE4;
-    --parchment-dark:#EDE5D1;
+    --void:#05070C;
+    --graphite:#0E1420;
+    --deck:#1B2330;
+    --silver:#D9DCE1;
+    --ivory:#F3EFE6;
+    --amber:#E9A85C;
+    --cyan:#6FA8C7;
+    --hair:rgba(233,168,92,.32);
+    --hair-silver:rgba(217,220,225,.14);
   }
 
+  /* -------- Reset -------- */
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--parchment);
-    color:var(--sepia);
-    font-family:'Tiempos Text', Georgia, serif;
-    font-size:18px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
-  img{display:block;max-width:100%;height:auto}
-  a{color:var(--red);text-decoration:none}
+  html,body{background:var(--void);color:var(--ivory);font-family:'Tiempos Text',Georgia,serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
 
-  /* ============================================================
-     FOLD 1 — HERO (cartographer's desk, top-down, full-bleed)
-     ============================================================ */
+  .mono{font-family:'Söhne Mono','SF Mono',ui-monospace,monospace;font-weight:400}
+  .sohne{font-family:'Söhne','Inter',system-ui,sans-serif}
+  .tiempos{font-family:'Tiempos Text',Georgia,serif}
+  .headline{font-family:'Tiempos Headline','Tiempos Text',Georgia,serif}
+
+  /* -------- Hero -------- */
   .hero{
     position:relative;
     width:100%;
-    background:var(--indigo);
-  }
-  .hero-frame{
-    position:relative;
-    width:100%;
     height:100vh;
-    min-height:680px;
+    min-height:720px;
     overflow:hidden;
+    background:#000;
   }
-  /* FIX 1: photo + svg share an identically-sized stage so they crop in lockstep.
-     Both fill .hero-stage with cover/slice + center anchoring. The SVG viewBox
-     matches hero.png dimensions (1536x1024) so waypoints map directly onto the
-     chart regardless of viewport aspect. */
-  .hero-stage{
+  .hero__img{
+    position:absolute;inset:0;
+    background-image:url('img/hero.png');
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+  }
+  /* anamorphic flare feel behind H1 */
+  .hero__flare{
     position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-  }
-  .hero-photo{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center center;
-  }
-  .hero-svg{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-  }
-  /* Subtle warmth at edges so cream copy plate reads */
-  .hero-vignette{
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    background:
-      radial-gradient(ellipse at 25% 90%, rgba(27,42,68,.35) 0%, rgba(27,42,68,0) 55%),
-      linear-gradient(180deg, rgba(27,42,68,0) 55%, rgba(27,42,68,.28) 100%);
-  }
-  .hero-copy{
-    position:absolute;
-    left:5vw;
-    bottom:7vh;
-    max-width:min(540px, 44vw);
-    padding:26px 30px 28px 30px;
-    background:rgba(244,239,228,.94);
-    border-top:2px solid var(--indigo);
-    box-shadow:0 1px 0 rgba(27,42,68,.08);
-    backdrop-filter:blur(2px);
-    -webkit-backdrop-filter:blur(2px);
-  }
-  .hero-eyebrow{
-    font-family:'Söhne Mono', ui-monospace, monospace;
-    font-size:11px;
-    letter-spacing:.22em;
-    text-transform:uppercase;
-    color:var(--red);
-    margin-bottom:18px;
-    font-weight:400;
-  }
-  .hero-h1{
-    font-family:'Tiempos Headline', Georgia, serif;
-    font-weight:400;
-    color:var(--indigo);
-    font-size:clamp(34px, 5.6vw, 78px);
-    line-height:1.05;
-    letter-spacing:-.012em;
-    margin-bottom:18px;
-  }
-  .hero-h1 em{font-style:italic;color:var(--indigo)}
-  .hero-sub{
-    font-family:'Tiempos Text', Georgia, serif;
-    font-size:clamp(15px, 1.25vw, 18px);
-    line-height:1.5;
-    color:var(--sepia);
-    max-width:56ch;
-  }
-  .hero-coords{
-    position:absolute;
-    bottom:18px;
-    right:24px;
-    font-family:'Söhne Mono', ui-monospace, monospace;
-    font-size:11px;
-    letter-spacing:.18em;
-    color:var(--vellum);
-    opacity:.75;
-    text-transform:uppercase;
-  }
-  .scroll-chevron{
-    position:absolute;
-    bottom:24px;
-    left:50%;
-    transform:translateX(-50%);
-    width:32px;
-    height:32px;
-    color:var(--red);
-    animation:chev 2.4s ease-in-out infinite;
-  }
-  @keyframes chev{
-    0%,100%{transform:translate(-50%,0);opacity:.75}
-    50%{transform:translate(-50%,8px);opacity:1}
-  }
-
-  /* ============================================================
-     FOLD 2 — EXECUTIVE SUMMARY
-     ============================================================ */
-  .summary{
-    background:var(--parchment);
-    padding:12vh 6vw 14vh 6vw;
-    position:relative;
-  }
-  .summary-rule{
-    width:60px;
+    left:0;right:0;
+    bottom:18%;
     height:1px;
-    background:var(--indigo);
-    margin:0 auto 48px auto;
+    background:linear-gradient(90deg, transparent 0%, rgba(111,168,199,.0) 10%, rgba(111,168,199,.28) 32%, rgba(233,168,92,.42) 52%, rgba(233,168,92,.08) 78%, transparent 100%);
+    filter:blur(22px);
+    opacity:.9;
+    pointer-events:none;
   }
-  .summary-kicker{
-    font-family:'Söhne Mono', ui-monospace, monospace;
-    font-size:11px;
-    letter-spacing:.24em;
-    text-transform:uppercase;
-    color:var(--red);
-    text-align:center;
-    margin-bottom:36px;
+  .hero__flare::after{
+    content:'';
+    position:absolute;left:0;right:0;top:-1px;height:1px;
+    background:linear-gradient(90deg, transparent 0%, rgba(233,168,92,.15) 50%, transparent 100%);
+    filter:blur(1px);
   }
-  .summary-body{
-    max-width:680px;
-    margin:0 auto;
-    font-family:'Tiempos Text', Georgia, serif;
-    font-size:19px;
-    line-height:1.72;
-    color:var(--sepia);
-    position:relative;
-  }
-  .summary-body p{margin-bottom:1.25em}
-  .summary-body p.lede::first-letter{
-    font-family:'Tiempos Headline', Georgia, serif;
-    color:var(--indigo);
-    font-size:5em;
-    float:left;
-    line-height:.85;
-    padding:.1em .12em 0 0;
-    font-weight:400;
-  }
-  .summary-body em{font-style:italic}
-  .summary-body strong{
-    font-family:'Tiempos Headline', Georgia, serif;
-    font-weight:400;
-    color:var(--indigo);
-  }
-  /* Pull-quote: softer Tiempos Text italic beat between the three mono blocks */
-  .pull-quote{
-    max-width:620px;
-    margin:56px auto 0 auto;
-    padding:32px 0 0 0;
-    border-top:1px solid var(--brass);
-    font-family:'Tiempos Text', Georgia, serif;
-    font-style:italic;
-    font-size:22px;
-    line-height:1.5;
-    color:var(--indigo);
-    text-align:center;
-    letter-spacing:.002em;
+  .hero__vignette{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(120% 80% at 50% 35%, transparent 40%, rgba(5,7,12,.55) 100%),
+      linear-gradient(180deg, rgba(5,7,12,.45) 0%, rgba(5,7,12,0) 22%, rgba(5,7,12,0) 62%, rgba(5,7,12,.7) 100%);
+    pointer-events:none;
   }
 
-  /* ============================================================
-     FOLD 3 — THE TWO VOLUMES
-     ============================================================ */
-  .volumes{
-    background:var(--parchment-dark);
-    padding:14vh 0 14vh 0;
-    position:relative;
-  }
-  .volumes-header{
-    text-align:center;
-    margin-bottom:72px;
-    padding:0 6vw;
-  }
-  .volumes-kicker{
-    font-family:'Söhne Mono', ui-monospace, monospace;
-    font-size:11px;
-    letter-spacing:.24em;
-    text-transform:uppercase;
-    color:var(--red);
-    margin-bottom:20px;
-  }
-  .volumes-title{
-    font-family:'Tiempos Headline', Georgia, serif;
-    font-weight:400;
-    color:var(--indigo);
-    font-size:clamp(28px, 3.4vw, 44px);
-    line-height:1.1;
-    letter-spacing:-.008em;
-  }
-  .volumes-grid{
+  .hero__grid{
+    position:absolute;inset:0;
     display:grid;
-    grid-template-columns:1fr auto 1fr;
-    max-width:1280px;
-    margin:0 auto;
-    padding:0 6vw;
-    gap:0;
-    position:relative;
+    grid-template-columns:1fr;
+    grid-template-rows:auto 1fr auto;
+    padding:40px 56px 48px 56px;
   }
-  .volume{
-    padding:0 48px;
-  }
-  .volume-img{
-    width:100%;
-    aspect-ratio:1/1;
-    object-fit:cover;
-    margin-bottom:32px;
-    background:var(--indigo);
-  }
-  .volume-kicker{
-    font-family:'Söhne Mono', ui-monospace, monospace;
-    font-size:11px;
-    letter-spacing:.22em;
-    text-transform:uppercase;
-    color:var(--red);
-    margin-bottom:14px;
-  }
-  .volume-title{
-    font-family:'Tiempos Headline', Georgia, serif;
+
+  .eyebrow{
+    font-family:'Söhne Mono',monospace;
     font-weight:400;
-    color:var(--indigo);
-    font-size:clamp(26px, 2.6vw, 36px);
-    line-height:1.08;
-    margin-bottom:14px;
-    letter-spacing:-.01em;
-  }
-  .volume-desc{
-    font-family:'Tiempos Text', Georgia, serif;
-    font-style:italic;
-    color:var(--sepia);
-    font-size:16px;
-    line-height:1.55;
-    margin-bottom:24px;
-    max-width:34ch;
-  }
-  .volume-link{
-    font-family:'Söhne Mono', ui-monospace, monospace;
-    font-size:12px;
-    letter-spacing:.2em;
+    font-size:11px;
+    letter-spacing:.08em;
     text-transform:uppercase;
-    color:var(--red);
-    border-bottom:1px solid var(--brass);
-    padding-bottom:3px;
-    transition:border-color .2s;
+    color:var(--cyan);
+    grid-row:1;
+    align-self:start;
+    justify-self:start;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .eyebrow::before{
+    content:'';
+    display:inline-block;
+    width:28px;height:1px;
+    background:var(--cyan);
+    opacity:.6;
+  }
+
+  .hero__copy{
+    grid-row:3;
+    justify-self:start;
+    max-width:780px;
+    padding-bottom:8px;
+  }
+  .hero__h1{
+    font-family:'Tiempos Headline',serif;
+    font-weight:400;
+    font-style:italic;
+    font-size:clamp(48px,7.2vw,96px);
+    line-height:1.02;
+    letter-spacing:-0.012em;
+    color:var(--ivory);
+    max-width:14ch;
+    text-shadow:0 1px 40px rgba(5,7,12,.5);
+  }
+  .hero__sub{
+    margin-top:28px;
+    font-family:'Söhne',sans-serif;
+    font-weight:400;
+    font-size:clamp(16px,1.3vw,20px);
+    line-height:1.5;
+    color:var(--silver);
+    max-width:62ch;
+    opacity:.92;
+  }
+
+  .hero__ctas{
+    position:absolute;
+    right:56px;bottom:48px;
+    display:flex;
+    gap:14px;
+    align-items:flex-end;
+  }
+  .plate{
+    display:block;
+    padding:18px 22px 16px;
+    min-width:200px;
+    background:linear-gradient(180deg, rgba(27,35,48,.82) 0%, rgba(14,20,32,.9) 100%);
+    border:1px solid var(--hair-silver);
+    border-top-color:rgba(217,220,225,.22);
+    border-bottom-color:rgba(233,168,92,.22);
+    color:var(--ivory);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    position:relative;
+    transition:border-color .2s ease,transform .2s ease;
+  }
+  .plate:hover{ border-color:var(--amber); transform:translateY(-1px); }
+  .plate__coord{
+    font-family:'Söhne Mono',monospace;
+    font-size:10px;
+    letter-spacing:.06em;
+    color:var(--cyan);
+    opacity:.85;
+    display:block;
+    margin-bottom:6px;
+  }
+  .plate__label{
+    font-family:'Tiempos Headline',serif;
+    font-style:italic;
+    font-size:19px;
+    line-height:1.15;
+    color:var(--ivory);
+  }
+  .plate__arrow{
+    font-family:'Söhne Mono',monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--amber);
+    margin-top:10px;
+    display:block;
+  }
+
+  /* -------- Section shared -------- */
+  section{ padding:120px 40px; }
+  .wrap{ max-width:1200px; margin:0 auto; }
+  .rule{ height:1px;background:var(--hair);border:0;margin:0; }
+  .rule--silver{ height:1px;background:var(--hair-silver);border:0;margin:0; }
+
+  /* -------- Executive summary -------- */
+  .summary{
+    background:var(--void);
+    padding:140px 40px 160px;
+  }
+  .summary__col{
+    max-width:640px;
+    margin:0 auto;
+  }
+  .summary__kicker{
+    font-family:'Söhne Mono',monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin-bottom:36px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .summary__kicker::before{
+    content:'';display:inline-block;width:24px;height:1px;background:var(--amber);opacity:.7;
+  }
+  .summary p{
+    font-family:'Tiempos Text',serif;
+    font-size:19px;
+    line-height:30px;
+    color:var(--ivory);
+    margin-bottom:22px;
+  }
+  .summary p:last-child{ margin-bottom:0; }
+  .summary b{ font-weight:400; color:var(--ivory); font-style:normal; font-family:'Tiempos Text',serif; }
+  .summary strong{ font-family:'Söhne',sans-serif; font-weight:700; font-size:16.5px; letter-spacing:.01em; color:var(--ivory); text-transform:none; }
+
+  .pullquote{
+    margin:52px -20px;
+    padding:36px 20px;
+    border-top:1px solid var(--hair);
+    border-bottom:1px solid var(--hair);
+    font-family:'Tiempos Headline',serif;
+    font-style:italic;
+    font-size:clamp(24px,2.4vw,32px);
+    line-height:1.28;
+    color:var(--ivory);
+    text-align:left;
+  }
+  .pullquote::before{
+    content:'COHERENCE';
+    display:block;
+    font-family:'Söhne Mono',monospace;
+    font-style:normal;
+    font-size:10px;
+    letter-spacing:.14em;
+    color:var(--amber);
+    margin-bottom:14px;
+  }
+
+  /* -------- Diptych -------- */
+  .diptych{
+    background:var(--void);
+    padding:40px 40px 140px;
+  }
+  .diptych__grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    max-width:1440px;
+    margin:0 auto;
+  }
+  .panel{
+    position:relative;
+    padding:0;
+    background:linear-gradient(180deg, rgba(14,20,32,.4) 0%, rgba(5,7,12,.0) 100%);
+    border:1px solid var(--hair-silver);
+  }
+  .panel__img{
+    display:block;width:100%;
+    aspect-ratio: 16 / 10;
+    object-fit:cover;
+    background:#000;
+    border-bottom:1px solid var(--hair);
+  }
+  .panel__body{ padding:36px 36px 40px; }
+  .panel__coord{
+    font-family:'Söhne Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--cyan);
+    margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .panel__coord::before{ content:'';display:inline-block;width:18px;height:1px;background:var(--cyan);opacity:.7; }
+  .panel__title{
+    font-family:'Söhne',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin-bottom:18px;
+  }
+  .panel__h{
+    font-family:'Tiempos Headline',serif;
+    font-weight:400;
+    font-size:clamp(28px,2.6vw,36px);
+    line-height:1.1;
+    color:var(--ivory);
+    margin-bottom:22px;
+    max-width:18ch;
+  }
+  .panel__body p{
+    font-family:'Tiempos Text',serif;
+    font-size:17px;
+    line-height:1.6;
+    color:var(--silver);
+    margin-bottom:26px;
+    max-width:46ch;
+  }
+  .panel__link{
+    font-family:'Söhne Mono',monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--amber);
+    border-bottom:1px solid var(--amber);
+    padding-bottom:4px;
     display:inline-block;
   }
-  .volume-link:hover{border-color:var(--red)}
-  .volumes-divider{
-    width:1px;
-    background:var(--brass);
-    opacity:.55;
-    position:relative;
-  }
-  .volumes-divider svg{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    background:var(--parchment-dark);
-    padding:8px;
-  }
+  .panel__link:hover{ color:var(--ivory); border-bottom-color:var(--ivory); }
 
-  /* ============================================================
-     FOLD 4 — COLOPHON
-     ============================================================ */
+  /* -------- Colophon -------- */
   .colophon{
-    background:var(--indigo);
-    color:var(--vellum);
-    padding:10vh 6vw 10vh 6vw;
-    text-align:center;
-    font-family:'Söhne Mono', ui-monospace, monospace;
-    font-size:11px;
-    letter-spacing:.2em;
+    padding:56px 40px 72px;
+    border-top:1px solid rgba(217,220,225,.18);
+    background:var(--void);
+  }
+  .colophon__wrap{
+    max-width:1200px;margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:40px;
+    align-items:start;
+    font-family:'Söhne Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.08em;
     text-transform:uppercase;
-    line-height:1.9;
+    color:var(--silver);
+    opacity:.82;
   }
-  .colophon-rule{
-    width:40px;
-    height:1px;
-    background:var(--brass);
-    margin:28px auto;
+  .colophon__wrap > div{ line-height:1.9; }
+  .colophon__wrap strong{ color:var(--ivory); font-weight:400; }
+  .colophon__coord{
+    color:var(--cyan);
+    border-top:1px solid var(--hair-silver);
+    padding-top:14px;
+    margin-top:14px;
+    display:block;
+    letter-spacing:.12em;
   }
-  .colophon-ded{
-    margin-top:32px;
-    font-family:'Tiempos Text', Georgia, serif;
-    font-style:italic;
-    font-size:14px;
-    letter-spacing:.02em;
-    text-transform:none;
-    color:var(--vellum);
-    opacity:.75;
-  }
-  .colophon a{color:var(--red)}
 
-  /* ============================================================
-     RESPONSIVE
-     ============================================================ */
-  @media (max-width: 768px){
-    /* Mobile: hero-frame becomes a simple column — image block, then copy block.
-       Hero-stage wraps img + svg with a 9:16 aspect so both crop in lockstep.
-       Copy flows below in normal flow. */
-    .hero{background:var(--parchment)}
-    .hero-frame{
+  /* -------- Mobile 375 -------- */
+  @media (max-width: 720px){
+    .hero{ height:auto; min-height:0; }
+    .hero__img{
+      position:relative;
+      aspect-ratio: 4 / 5;
       height:auto;
-      min-height:0;
-      overflow:visible;
-      display:flex;
-      flex-direction:column;
+      background-position: 70% center;
     }
-    .hero-stage{
+    .hero__vignette{ inset:0; }
+    .hero__grid{
       position:relative;
+      padding:24px 22px 28px;
       inset:auto;
-      width:100%;
-      aspect-ratio:9/16;
-      max-height:80vh;
-      flex-shrink:0;
     }
-    /* FIX 5: mobile chart crop anchored upper-third so compass rose + apple stay visible */
-    .hero-photo{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center 35%;
-    }
-    .hero-vignette{
-      position:absolute;
-      inset:0;
-    }
-    .hero-svg{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-    }
-    .hero-copy{
+    .eyebrow{ font-size:10px; }
+    .hero__h1{ font-size:56px; line-height:.98; max-width:12ch; }
+    .hero__sub{ font-size:15px; margin-top:20px; }
+    .hero__ctas{
       position:relative;
-      left:auto;
-      bottom:auto;
-      right:auto;
-      max-width:none;
+      right:auto;bottom:auto;
+      margin-top:28px;
+      flex-direction:column;
+      gap:12px;
       width:100%;
-      margin:0;
-      padding:32px 22px 28px 22px;
-      border-top:1px solid var(--indigo);
-      background:var(--parchment);
-      box-shadow:none;
-      backdrop-filter:none;
-      order:2;
     }
-    .hero-h1{font-size:32px;line-height:1.08;margin-bottom:16px;letter-spacing:-.015em}
-    .hero-eyebrow{margin-bottom:14px;font-size:10px;letter-spacing:.2em}
-    .hero-sub{font-size:15px}
-    .hero-coords{
-      bottom:8px;
-      right:10px;
-      font-size:9px;
-      color:#F4EFE4;
-      text-shadow:0 0 8px rgba(27,42,68,.9);
-      letter-spacing:.14em;
-    }
-    .scroll-chevron{display:none}
-    .summary{padding:10vh 22px 10vh 22px}
-    .summary-body{
-      font-size:16px;
-      line-height:1.68;
-      max-width:100%;
-    }
-    .summary-body p.lede::first-letter{font-size:4em}
-    .pull-quote{
-      font-size:18px;
-      padding:24px 0 0 0;
-      max-width:100%;
-    }
-    .volumes{padding:10vh 0 10vh 0}
-    .volumes-header{margin-bottom:48px;padding:0 22px}
-    .volumes-grid{
-      grid-template-columns:1fr;
-      gap:48px;
-      padding:0 22px;
-      max-width:100%;
-    }
-    .volume{padding:0}
-    .volume-title{font-size:28px}
-    .volumes-divider{
-      width:100%;
-      height:1px;
-      margin:0;
-    }
-    .volumes-divider svg{
-      background:var(--parchment-dark);
-      padding:10px;
-    }
-    .colophon{padding:8vh 22px 8vh 22px;font-size:10px;letter-spacing:.16em}
+    .plate{ width:100%; min-width:0; }
+    section{ padding:72px 22px; }
+    .summary{ padding:80px 22px 80px; }
+    .summary p{ font-size:17px; line-height:28px; }
+    .pullquote{ font-size:22px; margin:40px -4px; padding:26px 4px; }
+    .diptych{ padding:12px 22px 80px; }
+    .diptych__grid{ grid-template-columns:1fr; gap:36px; }
+    .panel__body{ padding:26px 24px 30px; }
+    .panel__h{ font-size:26px; }
+    .panel__body p{ font-size:16px; }
+    .colophon{ padding:40px 22px 56px; }
+    .colophon__wrap{ grid-template-columns:1fr; gap:28px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     FOLD 1 — HERO
-     ============================================================ -->
-<section class="hero">
-  <div class="hero-frame">
-    <!-- FIX 1: shared stage — photo and SVG both live inside hero-stage with
-         identical sizing/cropping so the red route waypoints stay locked to
-         the chart underneath on any viewport (ultrawide, portrait, or phone). -->
-    <div class="hero-stage">
-      <img class="hero-photo" src="img/hero.png" alt="Cartographer's working desk with chart, sextant, dividers, logbook, compass rose paperweight, and a single green apple — top-down museum catalog photograph.">
-      <div class="hero-vignette"></div>
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero__img" role="img" aria-label="A lone operator on the observation deck of an interstellar vessel, a three-tiered holographic portfolio sphere floating at left, an instrument panel resolving noise into signal below."></div>
+  <div class="hero__vignette" aria-hidden="true"></div>
+  <div class="hero__flare" aria-hidden="true"></div>
 
-      <!-- SVG overlay: compass rose (upper-left), rhumb lines, red route WAITLIST → ALPHA → BETA → GA.
-           viewBox matches hero.png dimensions (1536x1024) so coordinates map directly onto photo.
-           preserveAspectRatio="xMidYMid slice" matches img's object-fit:cover + object-position:center. -->
-      <svg class="hero-svg" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <defs>
-          <pattern id="tickH" x="0" y="0" width="40" height="10" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="5" x2="4" y2="5" stroke="#1B2A44" stroke-width=".8" opacity=".45"/>
-          </pattern>
-          <pattern id="tickV" x="0" y="0" width="10" height="40" patternUnits="userSpaceOnUse">
-            <line x1="5" y1="0" x2="5" y2="4" stroke="#1B2A44" stroke-width=".8" opacity=".45"/>
-          </pattern>
-        </defs>
+  <div class="hero__grid">
+    <div class="eyebrow">AN OPERATOR'S MANUAL, IN TWO VOLUMES</div>
 
-        <!-- Faint tick-mark strips along chart margins (lat/lon registration) -->
-        <rect x="250" y="90"  width="1010" height="10" fill="url(#tickH)"/>
-        <rect x="250" y="740" width="1010" height="10" fill="url(#tickH)"/>
-        <rect x="250" y="90"  width="10" height="650" fill="url(#tickV)"/>
-        <rect x="1250" y="90" width="10" height="650" fill="url(#tickV)"/>
-
-        <!-- Upper-left small compass rose (photo already has brass compass paperweight upper-right) -->
-        <g transform="translate(140,200)">
-          <circle r="48" fill="#F4EFE4" opacity=".65"/>
-          <circle r="48" fill="none" stroke="#C8342B" stroke-width="1.2" opacity=".9"/>
-          <circle r="28" fill="none" stroke="#C8342B" stroke-width=".7" opacity=".55"/>
-          <circle r="3.5" fill="#C8342B"/>
-          <g stroke="#C8342B" stroke-width="1" opacity=".85">
-            <line x1="0" y1="-48" x2="0" y2="48"/>
-            <line x1="-48" y1="0" x2="48" y2="0"/>
-          </g>
-          <g stroke="#C8342B" stroke-width=".6" opacity=".55">
-            <line x1="-34" y1="-34" x2="34" y2="34"/>
-            <line x1="-34" y1="34" x2="34" y2="-34"/>
-          </g>
-          <polygon points="0,-56 -5,-40 0,-48 5,-40" fill="#C8342B"/>
-          <text x="0" y="-64" text-anchor="middle" font-family="'Söhne Mono',ui-monospace,monospace" font-size="10" font-weight="700" fill="#C8342B" letter-spacing="2">N</text>
-        </g>
-
-        <!-- Latitude marker strip (Söhne Mono) -->
-        <g font-family="'Söhne Mono',ui-monospace,monospace" font-size="10" fill="#1B2A44" opacity=".7" letter-spacing="1">
-          <text x="265" y="84">09°NW</text>
-          <text x="1050" y="84">17°NE</text>
-          <text x="265" y="765">02°SW</text>
-          <text x="1190" y="765">11°SE</text>
-        </g>
-
-        <!-- VOLUME I CARTOUCHE — mid-left plate anchoring the Thesis architecture,
-             counter-weighting the red WAITLIST→GA route on the right. Compact
-             legend style, flat (no rotation), sepia ink on faint vellum plate. -->
-        <g transform="translate(260, 345)">
-          <!-- Vellum plate with thin brass hairline border -->
-          <rect x="0" y="0" width="330" height="190" fill="#F4EFE4" opacity=".88" stroke="#8A7A5B" stroke-width=".9"/>
-          <!-- Inner hairline frame (cartographic register) -->
-          <rect x="8" y="8" width="314" height="174" fill="none" stroke="#2F2A24" stroke-width=".5" opacity=".45"/>
-
-          <!-- Title rule: heavy-thin-heavy -->
-          <line x1="22" y1="30" x2="308" y2="30" stroke="#2F2A24" stroke-width="1.4"/>
-          <line x1="22" y1="34" x2="308" y2="34" stroke="#2F2A24" stroke-width=".5"/>
-
-          <!-- VOLUME I title -->
-          <text x="165" y="55" text-anchor="middle"
-                font-family="'Söhne Mono',ui-monospace,monospace"
-                font-size="13" font-weight="700" fill="#2F2A24"
-                letter-spacing="4">VOLUME I</text>
-          <text x="165" y="70" text-anchor="middle"
-                font-family="'Söhne Mono',ui-monospace,monospace"
-                font-size="9" fill="#2F2A24" opacity=".75"
-                letter-spacing="2.5">THE THESIS</text>
-
-          <!-- Rule between title and content -->
-          <line x1="70" y1="82" x2="260" y2="82" stroke="#8A7A5B" stroke-width=".6"/>
-
-          <!-- Four architecture items, lozenge bullets -->
-          <g font-family="'Söhne Mono',ui-monospace,monospace" font-size="11" fill="#2F2A24" letter-spacing="1.6">
-            <text x="40" y="103">&#9830;  IX STEPS</text>
-            <text x="40" y="122">&#9830;  VI ARCHETYPES</text>
-            <text x="40" y="141">&#9830;  SER &middot; BBP &middot; EBU</text>
-            <text x="40" y="160">&#9830;  GREEN LIGHT</text>
-          </g>
-
-          <!-- Bottom title rule: heavy-thin-heavy -->
-          <line x1="22" y1="172" x2="308" y2="172" stroke="#2F2A24" stroke-width=".5"/>
-          <line x1="22" y1="176" x2="308" y2="176" stroke="#2F2A24" stroke-width="1.4"/>
-        </g>
-
-        <!-- THE RED ROUTE — WAITLIST → ALPHA → BETA → GA.
-             Route sweeps across the upper/mid chart, clear of the
-             bottom-left copy plate. All four waypoint labels sit to
-             the RIGHT of the plate (plate ends around x≈670 SVG). -->
-        <g>
-          <!-- Route path: three curved segments -->
-          <path d="M 720 530 Q 820 470 900 420"
-                fill="none" stroke="#C8342B" stroke-width="3.2"
-                stroke-dasharray="11 6" stroke-linecap="round"/>
-          <path d="M 900 420 Q 990 360 1040 320"
-                fill="none" stroke="#C8342B" stroke-width="3.2"
-                stroke-dasharray="11 6" stroke-linecap="round"/>
-          <path d="M 1040 320 Q 1130 260 1220 200"
-                fill="none" stroke="#C8342B" stroke-width="3.2"
-                stroke-dasharray="11 6" stroke-linecap="round"/>
-
-          <!-- Tiny archipelago islands along the route (stippled) -->
-          <g fill="#1B2A44" opacity=".55">
-            <circle cx="810" cy="490" r="3"/>
-            <circle cx="828" cy="498" r="1.8"/>
-            <circle cx="970" cy="390" r="2.5"/>
-            <circle cx="988" cy="384" r="1.6"/>
-            <circle cx="1140" cy="260" r="2.8"/>
-            <circle cx="1160" cy="254" r="1.6"/>
-          </g>
-
-          <!-- WAYPOINT 1: WAITLIST (just right of the copy plate, label below) -->
-          <circle cx="720" cy="530" r="11" fill="#F4EFE4" stroke="#C8342B" stroke-width="3.2"/>
-          <circle cx="720" cy="530" r="3.5" fill="#C8342B"/>
-          <line x1="720" y1="530" x2="720" y2="585" stroke="#C8342B" stroke-width="1.3"/>
-          <rect x="628" y="588" width="184" height="32" fill="#F4EFE4" stroke="#C8342B" stroke-width="1"/>
-          <text x="720" y="609" text-anchor="middle"
-                font-family="'Söhne Mono',ui-monospace,monospace"
-                font-size="16" font-weight="700" fill="#C8342B"
-                letter-spacing="3">WAITLIST</text>
-
-          <!-- WAYPOINT 2: ALPHA (label above, tucked between route segments) -->
-          <circle cx="900" cy="420" r="11" fill="#F4EFE4" stroke="#C8342B" stroke-width="3.2"/>
-          <circle cx="900" cy="420" r="3.5" fill="#C8342B"/>
-          <line x1="900" y1="420" x2="900" y2="372" stroke="#C8342B" stroke-width="1.3"/>
-          <rect x="826" y="330" width="148" height="42" fill="#F4EFE4" stroke="#C8342B" stroke-width="1"/>
-          <text x="900" y="352" text-anchor="middle"
-                font-family="'Söhne Mono',ui-monospace,monospace"
-                font-size="16" font-weight="700" fill="#C8342B"
-                letter-spacing="3">ALPHA</text>
-          <text x="900" y="365" text-anchor="middle"
-                font-family="'Söhne Mono',ui-monospace,monospace"
-                font-size="9" fill="#C8342B" opacity=".8"
-                letter-spacing="1.5">GATE I · 0.28</text>
-
-          <!-- WAYPOINT 3: BETA (label below) -->
-          <circle cx="1040" cy="320" r="11" fill="#F4EFE4" stroke="#C8342B" stroke-width="3.2"/>
-          <circle cx="1040" cy="320" r="3.5" fill="#C8342B"/>
-          <line x1="1040" y1="320" x2="1040" y2="375" stroke="#C8342B" stroke-width="1.3"/>
-          <rect x="966" y="378" width="148" height="42" fill="#F4EFE4" stroke="#C8342B" stroke-width="1"/>
-          <text x="1040" y="400" text-anchor="middle"
-                font-family="'Söhne Mono',ui-monospace,monospace"
-                font-size="16" font-weight="700" fill="#C8342B"
-                letter-spacing="3">BETA</text>
-          <text x="1040" y="413" text-anchor="middle"
-                font-family="'Söhne Mono',ui-monospace,monospace"
-                font-size="9" fill="#C8342B" opacity=".8"
-                letter-spacing="1.5">GATE II · 0.42</text>
-
-          <!-- WAYPOINT 4: GA (LANDFALL) — largest, solid red, label above -->
-          <circle cx="1220" cy="200" r="15" fill="#C8342B" stroke="#F4EFE4" stroke-width="3.2"/>
-          <circle cx="1220" cy="200" r="5.5" fill="#F4EFE4"/>
-          <line x1="1220" y1="200" x2="1220" y2="152" stroke="#C8342B" stroke-width="1.3"/>
-          <rect x="1144" y="110" width="152" height="42" fill="#F4EFE4" stroke="#C8342B" stroke-width="1"/>
-          <text x="1220" y="132" text-anchor="middle"
-                font-family="'Söhne Mono',ui-monospace,monospace"
-                font-size="16" font-weight="700" fill="#C8342B"
-                letter-spacing="3">GA</text>
-          <text x="1220" y="145" text-anchor="middle"
-                font-family="'Söhne Mono',ui-monospace,monospace"
-                font-size="9" fill="#C8342B" opacity=".8"
-                letter-spacing="1.5">LANDFALL</text>
-        </g>
-      </svg>
+    <div class="hero__copy">
+      <h1 class="hero__h1">Innovation isn't random. It's farmable.</h1>
+      <p class="hero__sub">Volume&nbsp;I is the architecture — what to build, with whom, funded how. Volume&nbsp;II is the instrument — how to run the experiment, read the result, know when to promote.</p>
     </div>
 
-    <div class="hero-copy">
-      <div class="hero-eyebrow">A Two-Volume Operator's Manual</div>
-      <!-- Thesis-level H1 — sits above both volumes, not inside either. -->
-      <h1 class="hero-h1"><em>Chance favors the prepared.<br>This is the preparation.</em></h1>
-      <p class="hero-sub">Two volumes on how to farm the luck you cannot manufacture &mdash; the thesis of what to build, and the apparatus that builds it.</p>
-    </div>
-
-    <div class="hero-coords">LAT 49&deg;N &middot; LON 123&deg;W &middot; AZ &middot; MMXXVI</div>
-
-    <svg class="scroll-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+    <nav class="hero__ctas" aria-label="Volumes">
+      <a class="plate" href="volume-1.html">
+        <span class="plate__coord">VOL·I · 09 STEPS · 06 ARCHETYPES · 03 TIERS</span>
+        <span class="plate__label">Vol&nbsp;I — The Thesis</span>
+        <span class="plate__arrow">ENTER ARCHITECTURE →</span>
+      </a>
+      <a class="plate" href="volume-2.html">
+        <span class="plate__coord">VOL·II · WAITLIST · ALPHA · BETA · GA</span>
+        <span class="plate__label">Vol&nbsp;II — The Apparatus</span>
+        <span class="plate__arrow">ENTER INSTRUMENT →</span>
+      </a>
+    </nav>
   </div>
-</section>
+</header>
 
-<!-- ============================================================
-     FOLD 2 — EXECUTIVE SUMMARY
-     ============================================================ -->
+<!-- ============ EXECUTIVE SUMMARY ============ -->
 <section class="summary">
-  <div class="summary-kicker">Executive Summary</div>
-  <div class="summary-rule"></div>
-  <div class="summary-body">
-    <!-- Tightened lede — keeps the weather-to-preparation pivot, hands off quickly to the two volumes. -->
-    <p class="lede">Most founders treat innovation as weather &mdash; something that happens to them. In twenty years of building at Axiom Zen and Dapper Labs, I have almost never seen it work that way. Innovation is not weather. It is an architecture you draw, and an instrument you run.</p>
+  <div class="summary__col">
+    <div class="summary__kicker">FIRST TRANSMISSION</div>
 
-    <p>The founders who succeed repeatedly &mdash; and it is always the same founders, which is the first clue that luck is not the variable people think it is &mdash; have quietly built themselves both halves. A thesis for what to build. An apparatus for how to run the experiment. They farm luck. They advance through gates rather than leap through doors.</p>
+    <p>Most founders treat innovation the way sailors once treated weather: a thing that arrives, or doesn't. You wait for lightning. You hope. You tell yourself the strike was skill.</p>
 
-    <p>This book is the atlas of that discipline, in two volumes.</p>
+    <p>This is an operator's manual that rejects that frame. It argues that lightning is not random, and that chance — reliably — favors the prepared. You cannot summon a hit, but you can build the apparatus that catches one when it strikes, and you can run that apparatus with enough discipline that strikes start to look like a rate.</p>
 
-    <!-- Volume I — expanded to match Volume II's texture. -->
-    <p><strong>Volume I &mdash; The Thesis</strong> is the architecture. The Nine Steps &mdash; from seeing a wave to pushing a button. The Six Archetypes the venture can be, each with its own shape and its own failure mode. Three portfolio tiers &mdash; Sandbox Experiments &amp; Research, Big Bet Projects, Established Business Units &mdash; that govern what kind of evidence a bet has to earn before it can move from one to the next. The Green Light Framework that decides when to invest, when to double, when to shelve. And the culture and financial discipline that hold any of this together when the month is hard. It is the answer to <em>what do I build, with whom, funded how, and why.</em></p>
+    <p><strong>Volume&nbsp;I is the architecture.</strong> It names what a company is actually made of when you stop looking at the org chart and start looking at the portfolio: Nine Steps that carry an idea from whisper to business; Six Archetypes of the people who carry them; three Tiers — Sandbox Experiments &amp; Research, Big Bet Projects, and Established Business Units — each with their own physics of risk, capital, and patience. It answers the four questions a founder actually has to answer before anything else matters: what do I build, with whom, funded how, and why. The Green Light Framework decides promotion between tiers. Culture and finance hold the whole structure up. Volume&nbsp;I is the map of the territory — the shape of the thing you are operating.</p>
 
-    <!-- Volume II — retained texture, tightened metaphor density. -->
-    <p><strong>Volume II &mdash; The Apparatus</strong> is the instrument. The phase-gate playbook &mdash; waitlist construction, closed Alpha, Private and Public Beta, the GA trigger &mdash; and the gate metrics that separate real signal from wishful noise. The retention cascade (D1 gates D7 gates D30), the smile curve that tells you a product has found its ritual, the activation point that only emerges when you look at the cohort that stayed. The hound-dog practice of reading what users <em>do</em> instead of what they say. And the specific failure modes that have claimed the ventures that skipped a step. It is the answer to <em>how do I run the experiment, read the result, and know when to promote.</em></p>
+    <blockquote class="pullquote">You cannot summon a hit, but you can build the apparatus that catches one.</blockquote>
 
-    <p>Read them in order, or keep them side by side. The thesis without the apparatus is philosophy. The apparatus without the thesis is a checklist. Together, they are the preparation.</p>
+    <p><strong>Volume&nbsp;II is the instrument.</strong> Once the architecture exists, the question becomes operational: how do you know a Sandbox Experiment is working? When does a Big Bet graduate? What does the signal look like before it is obvious, and how do you avoid killing it by mistake? Volume&nbsp;II answers with a phased apparatus — Waitlist, Alpha, Beta, GA — and the reading surfaces that sit underneath: retention cascades that show whether the product holds, activation discovery that finds the moment a user crosses over, hound-dog signal mining that separates the one real lead from ninety-nine noise events. Volume&nbsp;II is how you read the architecture while it runs. It is the difference between having a telescope and knowing how to point it.</p>
 
-    <p>Start with Volume I. The desk is set.</p>
-  </div>
-
-  <div class="pull-quote">
-    &ldquo;The thesis without the apparatus is philosophy.<br>The apparatus without the thesis is a checklist.&rdquo;
+    <p>Together, they are the bridge and the console. The ship and the way it sees.</p>
   </div>
 </section>
 
-<!-- ============================================================
-     FOLD 3 — THE TWO VOLUMES
-     ============================================================ -->
-<section class="volumes">
-  <div class="volumes-header">
-    <div class="volumes-kicker">The Atlas</div>
-    <h2 class="volumes-title">Two volumes.<br>One navigator's discipline.</h2>
-  </div>
+<!-- ============ DIPTYCH ============ -->
+<section class="diptych">
+  <div class="diptych__grid">
 
-  <div class="volumes-grid">
-    <!-- VOLUME I -->
-    <div class="volume">
-      <img class="volume-img" src="img/logbook.png" alt="Open leather-bound ship's logbook with sepia-ink entries and a hand-drawn nine-ring diagram threaded with a red dotted line.">
-      <div class="volume-kicker">Volume I &mdash; The Thesis</div>
-      <h3 class="volume-title">The Architecture</h3>
-      <p class="volume-desc">Nine Steps, Six Archetypes, three portfolio tiers &mdash; SER, BBP, EBU &mdash; and the Green Light Framework.</p>
-      <a class="volume-link" href="volume-1.html">Enter the Thesis &rarr;</a>
-    </div>
+    <article class="panel">
+      <img class="panel__img" src="img/sphere.png" alt="A three-tiered holographic sphere: dense bright core, middle ring of larger nodes, sparse outer shell of prominent nodes.">
+      <div class="panel__body">
+        <div class="panel__coord">CHART · I · THE ARCHITECTURE</div>
+        <div class="panel__title">Volume I — The Thesis</div>
+        <h2 class="panel__h">The shape of what you are actually operating.</h2>
+        <p>Nine Steps. Six Archetypes. Three Tiers — Sandbox Experiments &amp; Research, Big Bet Projects, Established Business Units. The Green Light Framework decides promotion. Culture and finance hold the structure up. Volume&nbsp;I is the map of the territory.</p>
+        <a class="panel__link" href="volume-1.html">Open Volume I →</a>
+      </div>
+    </article>
 
-    <!-- Divider with small red compass rose glyph -->
-    <div class="volumes-divider">
-      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-        <circle cx="14" cy="14" r="11" fill="none" stroke="#C8342B" stroke-width="1.2"/>
-        <circle cx="14" cy="14" r="6" fill="none" stroke="#C8342B" stroke-width=".7" opacity=".6"/>
-        <circle cx="14" cy="14" r="1.5" fill="#C8342B"/>
-        <line x1="14" y1="1" x2="14" y2="27" stroke="#C8342B" stroke-width=".9"/>
-        <line x1="1" y1="14" x2="27" y2="14" stroke="#C8342B" stroke-width=".9" opacity=".55"/>
-        <polygon points="14,0 12,6 14,4 16,6" fill="#C8342B"/>
-      </svg>
-    </div>
+    <article class="panel">
+      <img class="panel__img" src="img/instrument.png" alt="An instrument panel strip: interferometric waveform resolving from noise at left to clean concentric rings at right, a pulsing amber indicator at the signal end.">
+      <div class="panel__body">
+        <div class="panel__coord">CHART · II · THE INSTRUMENT</div>
+        <div class="panel__title">Volume II — The Apparatus</div>
+        <h2 class="panel__h">How you read the architecture while it runs.</h2>
+        <p>Waitlist, Alpha, Beta, GA — and the reading surfaces underneath: retention cascades, activation discovery, hound-dog signal mining. The difference between having a telescope and knowing how to point it. Volume&nbsp;II is the instrument.</p>
+        <a class="panel__link" href="volume-2.html">Open Volume II →</a>
+      </div>
+    </article>
 
-    <!-- VOLUME II -->
-    <div class="volume">
-      <img class="volume-img" src="img/sextant.png" alt="Polished brass sextant on dark indigo wool felt, raking light from the right, with a folded sea-chart corner and scattered brass chart-weights.">
-      <div class="volume-kicker">Volume II &mdash; The Apparatus</div>
-      <h3 class="volume-title">The Instrument</h3>
-      <p class="volume-desc">Waitlist to Alpha to Beta to GA &mdash; gate metrics, activation theory, signal mining.</p>
-      <a class="volume-link" href="volume-2.html">Open the Apparatus &rarr;</a>
-    </div>
   </div>
 </section>
 
-<!-- ============================================================
-     FOLD 4 — COLOPHON
-     ============================================================ -->
-<section class="colophon">
-  <div>Axiom Zen &middot; Vancouver &middot; MMXXVI</div>
-  <div>Roham Gharegozlou, author</div>
-  <div class="colophon-rule"></div>
-  <div>Tiempos Headline &middot; Tiempos Text &middot; S&ouml;hne &middot; S&ouml;hne Mono</div>
-  <div>Klim Type Foundry</div>
-  <div class="colophon-rule"></div>
-  <div class="colophon-ded">For everyone who has ever sailed out at four in the morning<br>to correct a heading no one else could see.</div>
-</section>
+<!-- ============ COLOPHON ============ -->
+<footer class="colophon">
+  <div class="colophon__wrap">
+    <div>
+      <strong>AUTHOR</strong><br>
+      Roham Gharegozlou<br>
+      First impression, April 2026
+    </div>
+    <div>
+      <strong>TYPE</strong><br>
+      Tiempos Headline · Tiempos Text<br>
+      Söhne · Söhne Mono<br>
+      Set on void black
+    </div>
+    <div>
+      <strong>STATION</strong><br>
+      The Bridge — R2.2 · candidate<br>
+      Two volumes, one apparatus<br>
+      <span class="colophon__coord">COORD 40°44′N 73°59′W · OBS DECK · T+00:00:00</span>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
