@@ -3,457 +3,696 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Axiom Zen Innovation Process &mdash; A Two-Volume Operator's Manual</title>
+<title>Dead Reckoning &mdash; The Axiom Zen Atlas</title>
+<meta name="description" content="A two-volume operator's manual for farming luck, reading signal, and navigating ventures from waitlist to landfall.">
 <style>
-  /* ---- Söhne (sans) ---- */
-  @font-face {
-    font-family: 'Söhne';
-    src: url('fonts/Söhne-Buch.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Söhne';
-    src: url('fonts/Söhne-Fett.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  /* ---- Söhne ---- */
+  @font-face{font-family:'Söhne';src:url('fonts/Söhne-Buch.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:'Söhne';src:url('fonts/Söhne-Fett.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
+  @font-face{font-family:'Söhne Mono';src:url('fonts/SöhneMono-Buch.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:'Tiempos Headline';src:url('fonts/TiemposHeadline-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:'Tiempos Headline';src:url('fonts/TiemposHeadline-Bold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
+  @font-face{font-family:'Tiempos Text';src:url('fonts/TiemposText-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:'Tiempos Text';src:url('fonts/TiemposText-RegularItalic.otf') format('opentype');font-weight:400;font-style:italic;font-display:swap}
+
+  :root{
+    --indigo:#1B2A44;
+    --red:#C8342B;
+    --vellum:#E8DCC4;
+    --sepia:#2F2A24;
+    --brass:#8A7A5B;
+    --parchment:#F4EFE4;
+    --parchment-dark:#EDE5D1;
   }
 
-  /* ---- Söhne Breit (wider display) ---- */
-  @font-face {
-    font-family: 'Söhne Breit';
-    src: url('fonts/SöhneBreit-Fett.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--parchment);
+    color:var(--sepia);
+    font-family:'Tiempos Text', Georgia, serif;
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+  img{display:block;max-width:100%;height:auto}
+  a{color:var(--red);text-decoration:none}
+
+  /* ============================================================
+     FOLD 1 — HERO (cartographer's desk, top-down, full-bleed)
+     ============================================================ */
+  .hero{
+    position:relative;
+    width:100%;
+    background:var(--indigo);
+  }
+  .hero-frame{
+    position:relative;
+    width:100%;
+    height:100vh;
+    min-height:680px;
+    overflow:hidden;
+  }
+  /* FIX 1: photo + svg share an identically-sized stage so they crop in lockstep.
+     Both fill .hero-stage with cover/slice + center anchoring. The SVG viewBox
+     matches hero.png dimensions (1536x1024) so waypoints map directly onto the
+     chart regardless of viewport aspect. */
+  .hero-stage{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+  }
+  .hero-photo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+  }
+  .hero-svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+  }
+  /* Subtle warmth at edges so cream copy plate reads */
+  .hero-vignette{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse at 25% 90%, rgba(27,42,68,.35) 0%, rgba(27,42,68,0) 55%),
+      linear-gradient(180deg, rgba(27,42,68,0) 55%, rgba(27,42,68,.28) 100%);
+  }
+  .hero-copy{
+    position:absolute;
+    left:5vw;
+    bottom:7vh;
+    max-width:min(540px, 44vw);
+    padding:26px 30px 28px 30px;
+    background:rgba(244,239,228,.94);
+    border-top:2px solid var(--indigo);
+    box-shadow:0 1px 0 rgba(27,42,68,.08);
+    backdrop-filter:blur(2px);
+    -webkit-backdrop-filter:blur(2px);
+  }
+  .hero-eyebrow{
+    font-family:'Söhne Mono', ui-monospace, monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--red);
+    margin-bottom:18px;
+    font-weight:400;
+  }
+  .hero-h1{
+    font-family:'Tiempos Headline', Georgia, serif;
+    font-weight:400;
+    color:var(--indigo);
+    font-size:clamp(34px, 5.6vw, 78px);
+    line-height:1.05;
+    letter-spacing:-.012em;
+    margin-bottom:18px;
+  }
+  .hero-h1 em{font-style:italic;color:var(--indigo)}
+  .hero-sub{
+    font-family:'Tiempos Text', Georgia, serif;
+    font-size:clamp(15px, 1.25vw, 18px);
+    line-height:1.5;
+    color:var(--sepia);
+    max-width:56ch;
+  }
+  .hero-coords{
+    position:absolute;
+    bottom:18px;
+    right:24px;
+    font-family:'Söhne Mono', ui-monospace, monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    color:var(--vellum);
+    opacity:.75;
+    text-transform:uppercase;
+  }
+  .scroll-chevron{
+    position:absolute;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%);
+    width:32px;
+    height:32px;
+    color:var(--red);
+    animation:chev 2.4s ease-in-out infinite;
+  }
+  @keyframes chev{
+    0%,100%{transform:translate(-50%,0);opacity:.75}
+    50%{transform:translate(-50%,8px);opacity:1}
   }
 
-  /* ---- Söhne Schmal (condensed — labels, kickers) ---- */
-  @font-face {
-    font-family: 'Söhne Schmal';
-    src: url('fonts/SöhneSchmal-Leicht.otf') format('opentype');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
+  /* ============================================================
+     FOLD 2 — EXECUTIVE SUMMARY
+     ============================================================ */
+  .summary{
+    background:var(--parchment);
+    padding:12vh 6vw 14vh 6vw;
+    position:relative;
   }
-  @font-face {
-    font-family: 'Söhne Schmal';
-    src: url('fonts/SöhneSchmal-Fett.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  .summary-rule{
+    width:60px;
+    height:1px;
+    background:var(--indigo);
+    margin:0 auto 48px auto;
   }
-
-  /* ---- Söhne Mono ---- */
-  @font-face {
-    font-family: 'Söhne Mono';
-    src: url('fonts/SöhneMono-Buch.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  .summary-kicker{
+    font-family:'Söhne Mono', ui-monospace, monospace;
+    font-size:11px;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color:var(--red);
+    text-align:center;
+    margin-bottom:36px;
   }
-  @font-face {
-    font-family: 'Söhne Mono';
-    src: url('fonts/SöhneMono-Extraleicht.otf') format('opentype');
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
+  .summary-body{
+    max-width:680px;
+    margin:0 auto;
+    font-family:'Tiempos Text', Georgia, serif;
+    font-size:19px;
+    line-height:1.72;
+    color:var(--sepia);
+    position:relative;
   }
-  @font-face {
-    font-family: 'Söhne Mono';
-    src: url('fonts/SöhneMono-ExtraleichtKursiv.otf') format('opentype');
-    font-weight: 200;
-    font-style: italic;
-    font-display: swap;
+  .summary-body p{margin-bottom:1.25em}
+  .summary-body p.lede::first-letter{
+    font-family:'Tiempos Headline', Georgia, serif;
+    color:var(--indigo);
+    font-size:5em;
+    float:left;
+    line-height:.85;
+    padding:.1em .12em 0 0;
+    font-weight:400;
   }
-
-  /* ---- Tiempos Headline (display serif) ---- */
-  @font-face {
-    font-family: 'Tiempos Headline';
-    src: url('fonts/TiemposHeadline-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  .summary-body em{font-style:italic}
+  .summary-body strong{
+    font-family:'Tiempos Headline', Georgia, serif;
+    font-weight:400;
+    color:var(--indigo);
   }
-  @font-face {
-    font-family: 'Tiempos Headline';
-    src: url('fonts/TiemposHeadline-Bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  /* ---- Tiempos Text (body serif for blockquotes / italic emphasis) ---- */
-  @font-face {
-    font-family: 'Tiempos Text';
-    src: url('fonts/TiemposText-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Tiempos Text';
-    src: url('fonts/TiemposText-RegularItalic.otf') format('opentype');
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Tiempos Text';
-    src: url('fonts/TiemposText-Bold.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Tiempos Text';
-    src: url('fonts/TiemposText-BoldItalic.otf') format('opentype');
-    font-weight: 700;
-    font-style: italic;
-    font-display: swap;
+  /* Pull-quote: softer Tiempos Text italic beat between the three mono blocks */
+  .pull-quote{
+    max-width:620px;
+    margin:56px auto 0 auto;
+    padding:32px 0 0 0;
+    border-top:1px solid var(--brass);
+    font-family:'Tiempos Text', Georgia, serif;
+    font-style:italic;
+    font-size:22px;
+    line-height:1.5;
+    color:var(--indigo);
+    text-align:center;
+    letter-spacing:.002em;
   }
 
-  :root {
-    --ink: #1a1a1a;
-    --ink-light: #3a3a3a;
-    --ink-muted: #6b6b6b;
-    --bg: #fefdfb;
-    --bg-warm: #f9f6f1;
-    --bg-aside: #f4f1eb;
-    --accent: #8b4513;
-    --accent-light: #a0522d;
-    --border: #d4c5b0;
-    --border-light: #e8ddd0;
-    --rule: #c4b5a0;
-    --serif: 'Tiempos Headline', 'Iowan Old Style', Georgia, serif;
-    --serif-text: 'Tiempos Text', 'Iowan Old Style', Georgia, serif;
-    --sans: 'Söhne', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --sans-condensed: 'Söhne Schmal', 'Söhne', sans-serif;
-    --mono: 'Söhne Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
-    --page-width: 820px;
-    --page-padding: 60px;
+  /* ============================================================
+     FOLD 3 — THE TWO VOLUMES
+     ============================================================ */
+  .volumes{
+    background:var(--parchment-dark);
+    padding:14vh 0 14vh 0;
+    position:relative;
+  }
+  .volumes-header{
+    text-align:center;
+    margin-bottom:72px;
+    padding:0 6vw;
+  }
+  .volumes-kicker{
+    font-family:'Söhne Mono', ui-monospace, monospace;
+    font-size:11px;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color:var(--red);
+    margin-bottom:20px;
+  }
+  .volumes-title{
+    font-family:'Tiempos Headline', Georgia, serif;
+    font-weight:400;
+    color:var(--indigo);
+    font-size:clamp(28px, 3.4vw, 44px);
+    line-height:1.1;
+    letter-spacing:-.008em;
+  }
+  .volumes-grid{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    max-width:1280px;
+    margin:0 auto;
+    padding:0 6vw;
+    gap:0;
+    position:relative;
+  }
+  .volume{
+    padding:0 48px;
+  }
+  .volume-img{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    margin-bottom:32px;
+    background:var(--indigo);
+  }
+  .volume-kicker{
+    font-family:'Söhne Mono', ui-monospace, monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--red);
+    margin-bottom:14px;
+  }
+  .volume-title{
+    font-family:'Tiempos Headline', Georgia, serif;
+    font-weight:400;
+    color:var(--indigo);
+    font-size:clamp(26px, 2.6vw, 36px);
+    line-height:1.08;
+    margin-bottom:14px;
+    letter-spacing:-.01em;
+  }
+  .volume-desc{
+    font-family:'Tiempos Text', Georgia, serif;
+    font-style:italic;
+    color:var(--sepia);
+    font-size:16px;
+    line-height:1.55;
+    margin-bottom:24px;
+    max-width:34ch;
+  }
+  .volume-link{
+    font-family:'Söhne Mono', ui-monospace, monospace;
+    font-size:12px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--red);
+    border-bottom:1px solid var(--brass);
+    padding-bottom:3px;
+    transition:border-color .2s;
+    display:inline-block;
+  }
+  .volume-link:hover{border-color:var(--red)}
+  .volumes-divider{
+    width:1px;
+    background:var(--brass);
+    opacity:.55;
+    position:relative;
+  }
+  .volumes-divider svg{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:var(--parchment-dark);
+    padding:8px;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ============================================================
+     FOLD 4 — COLOPHON
+     ============================================================ */
+  .colophon{
+    background:var(--indigo);
+    color:var(--vellum);
+    padding:10vh 6vw 10vh 6vw;
+    text-align:center;
+    font-family:'Söhne Mono', ui-monospace, monospace;
+    font-size:11px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    line-height:1.9;
+  }
+  .colophon-rule{
+    width:40px;
+    height:1px;
+    background:var(--brass);
+    margin:28px auto;
+  }
+  .colophon-ded{
+    margin-top:32px;
+    font-family:'Tiempos Text', Georgia, serif;
+    font-style:italic;
+    font-size:14px;
+    letter-spacing:.02em;
+    text-transform:none;
+    color:var(--vellum);
+    opacity:.75;
+  }
+  .colophon a{color:var(--red)}
 
-  @page { size: 7in 10in; margin: 1in 0.85in; }
-
-  @media print {
-    body { background: white; }
-    .page-container { box-shadow: none; border: none; margin: 0; padding: 0; max-width: none; }
-    .no-print { display: none; }
-  }
-
-  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
-  body {
-    background: #e8e0d5;
-    color: var(--ink);
-    line-height: 1.75;
-    font-family: var(--sans);
-    font-weight: 400;
-    font-size: 0.95rem;
-  }
-
-  .page-container {
-    max-width: calc(var(--page-width) + var(--page-padding) * 2);
-    margin: 40px auto;
-    background: var(--bg);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 10px 40px rgba(0,0,0,0.08);
-    border: 1px solid var(--border-light);
-    padding: var(--page-padding);
-    padding-top: 0;
-  }
-
-  /* ── TITLE BLOCK ── */
-  .title-page {
-    text-align: center;
-    padding: 100px 20px 70px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 50px;
-  }
-  .title-page .ornament {
-    font-size: 1.8rem;
-    color: var(--accent);
-    letter-spacing: 12px;
-    margin-bottom: 40px;
-  }
-  .title-page h1 {
-    font-family: var(--serif);
-    font-size: 3rem;
-    font-weight: 600;
-    line-height: 1.15;
-    color: var(--ink);
-    letter-spacing: -0.5px;
-    margin-bottom: 18px;
-  }
-  .title-page .subtitle {
-    font-family: var(--serif-text);
-    font-size: 1.3rem;
-    font-weight: 400;
-    font-style: italic;
-    color: var(--ink-muted);
-    line-height: 1.5;
-    max-width: 580px;
-    margin: 0 auto 40px;
-  }
-  .title-page .author-line {
-    font-family: var(--sans);
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    margin-bottom: 4px;
-  }
-  .title-page .author-title {
-    font-family: var(--sans);
-    font-size: 0.78rem;
-    color: var(--ink-muted);
-    font-style: italic;
-    letter-spacing: 0.5px;
-  }
-  .title-page .version-badge {
-    display: inline-block;
-    margin-top: 36px;
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 1px;
-    color: var(--ink-muted);
-    border: 1px solid var(--border);
-    padding: 4px 16px;
-    border-radius: 2px;
-  }
-
-  /* ── INTRO PROSE ── */
-  .intro {
-    max-width: 680px;
-    margin: 0 auto 50px;
-    font-family: var(--serif);
-    font-size: 1.15rem;
-    line-height: 1.7;
-    color: var(--ink-light);
-  }
-  .intro p { text-align: center; hyphens: none; -webkit-hyphens: none; margin-bottom: 14px; }
-  .intro p:last-child { margin-bottom: 0; }
-
-  /* ── VOLUME CARDS GRID ── */
-  .volumes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 28px;
-    margin: 50px 0;
-  }
-
-  .volume-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--bg-warm);
-    border: 1px solid var(--border-light);
-    border-left: 3px solid var(--accent);
-    padding: 32px 34px 30px;
-    border-radius: 3px;
-    transition: box-shadow 0.15s ease, transform 0.15s ease;
-  }
-  .volume-card:hover {
-    box-shadow: 0 6px 24px rgba(139, 69, 19, 0.10);
-    transform: translateY(-1px);
-  }
-  .volume-card .vol-label {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-  .volume-card h2 {
-    font-family: var(--serif);
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.15;
-    margin-bottom: 8px;
-    letter-spacing: -0.3px;
-  }
-  .volume-card .vol-sub {
-    font-family: var(--serif-text);
-    font-style: italic;
-    font-size: 1.02rem;
-    color: var(--ink-muted);
-    line-height: 1.45;
-    margin-bottom: 18px;
-  }
-  .volume-card .vol-blurb {
-    font-family: var(--sans);
-    font-size: 0.92rem;
-    line-height: 1.7;
-    color: var(--ink-light);
-    margin-bottom: 22px;
-    flex-grow: 1;
-  }
-  .volume-card .vol-meta {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    margin-bottom: 18px;
-    padding-top: 14px;
-    border-top: 1px solid var(--border-light);
-  }
-  .volume-card .vol-meta span + span::before {
-    content: " · ";
-    color: var(--border);
-    margin: 0 6px;
-  }
-  .volume-card .vol-cta {
-    display: inline-block;
-    font-family: var(--sans);
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: var(--accent);
-    text-decoration: none;
-    padding: 11px 22px;
-    border: 1.5px solid var(--accent);
-    border-radius: 3px;
-    align-self: flex-start;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-  .volume-card .vol-cta:hover {
-    background: var(--accent);
-    color: white;
-  }
-  .volume-card .vol-cta .arrow {
-    display: inline-block;
-    margin-left: 4px;
-    transition: transform 0.15s ease;
-  }
-  .volume-card .vol-cta:hover .arrow { transform: translateX(3px); }
-
-  /* ── HOW TO READ ── */
-  .how-to-read {
-    background: var(--bg-warm);
-    border: 1px solid var(--border-light);
-    border-left: 3px solid var(--accent);
-    padding: 28px 32px;
-    margin: 40px 0 30px;
-    font-size: 0.92rem;
-    line-height: 1.8;
-    color: var(--ink-light);
-  }
-  .how-to-read h3 {
-    font-family: var(--sans);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 14px;
-  }
-  .how-to-read p {
-    margin-bottom: 10px;
-    text-align: left;
-    hyphens: auto;
-  }
-  .how-to-read p:last-child { margin-bottom: 0; }
-
-  /* ── SECTION DIVIDER ── */
-  .section-divider {
-    text-align: center;
-    margin: 50px 0 40px;
-    color: var(--accent);
-    font-size: 1rem;
-    letter-spacing: 8px;
-  }
-
-  /* ── FOOTER ── */
-  .doc-footer {
-    margin-top: 40px;
-    padding-top: 30px;
-    border-top: 1px solid var(--border);
-    font-size: 0.78rem;
-    color: var(--ink-muted);
-    line-height: 1.7;
-    text-align: center;
-  }
-  .doc-footer a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }
-
-  @media (max-width: 640px) {
-    :root { --page-padding: 32px; }
-    .title-page { padding: 60px 10px 50px; }
-    .title-page h1 { font-size: 2.2rem; }
-    .title-page .subtitle { font-size: 1.1rem; }
-    .volume-card { padding: 26px 24px 24px; }
-    .volume-card h2 { font-size: 1.7rem; }
-    .intro { font-size: 1.05rem; }
-    .how-to-read { padding: 22px 24px; }
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 768px){
+    /* Mobile: hero-frame becomes a simple column — image block, then copy block.
+       Hero-stage wraps img + svg with a 9:16 aspect so both crop in lockstep.
+       Copy flows below in normal flow. */
+    .hero{background:var(--parchment)}
+    .hero-frame{
+      height:auto;
+      min-height:0;
+      overflow:visible;
+      display:flex;
+      flex-direction:column;
+    }
+    .hero-stage{
+      position:relative;
+      inset:auto;
+      width:100%;
+      aspect-ratio:9/16;
+      max-height:80vh;
+      flex-shrink:0;
+    }
+    /* FIX 5: mobile chart crop anchored upper-third so compass rose + apple stay visible */
+    .hero-photo{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center 35%;
+    }
+    .hero-vignette{
+      position:absolute;
+      inset:0;
+    }
+    .hero-svg{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+    }
+    .hero-copy{
+      position:relative;
+      left:auto;
+      bottom:auto;
+      right:auto;
+      max-width:none;
+      width:100%;
+      margin:0;
+      padding:32px 22px 28px 22px;
+      border-top:1px solid var(--indigo);
+      background:var(--parchment);
+      box-shadow:none;
+      backdrop-filter:none;
+      order:2;
+    }
+    .hero-h1{font-size:32px;line-height:1.08;margin-bottom:16px;letter-spacing:-.015em}
+    .hero-eyebrow{margin-bottom:14px;font-size:10px;letter-spacing:.2em}
+    .hero-sub{font-size:15px}
+    .hero-coords{
+      bottom:8px;
+      right:10px;
+      font-size:9px;
+      color:#F4EFE4;
+      text-shadow:0 0 8px rgba(27,42,68,.9);
+      letter-spacing:.14em;
+    }
+    .scroll-chevron{display:none}
+    .summary{padding:10vh 22px 10vh 22px}
+    .summary-body{
+      font-size:16px;
+      line-height:1.68;
+      max-width:100%;
+    }
+    .summary-body p.lede::first-letter{font-size:4em}
+    .pull-quote{
+      font-size:18px;
+      padding:24px 0 0 0;
+      max-width:100%;
+    }
+    .volumes{padding:10vh 0 10vh 0}
+    .volumes-header{margin-bottom:48px;padding:0 22px}
+    .volumes-grid{
+      grid-template-columns:1fr;
+      gap:48px;
+      padding:0 22px;
+      max-width:100%;
+    }
+    .volume{padding:0}
+    .volume-title{font-size:28px}
+    .volumes-divider{
+      width:100%;
+      height:1px;
+      margin:0;
+    }
+    .volumes-divider svg{
+      background:var(--parchment-dark);
+      padding:10px;
+    }
+    .colophon{padding:8vh 22px 8vh 22px;font-size:10px;letter-spacing:.16em}
   }
 </style>
 </head>
 <body>
-<div class="page-container">
 
-<!-- ═══════════════════ TITLE BLOCK ═══════════════════ -->
-<div class="title-page">
-  <div class="ornament">&#9670; &#9670; &#9670;</div>
-  <h1>The Axiom Zen<br>Innovation Process</h1>
-  <p class="subtitle">A two-volume operator's manual for farming serendipity.</p>
-  <p class="author-line">Roham Gharegozlou</p>
-  <p class="author-title">Founder, Axiom Zen &amp; Dapper Labs</p>
-  <div class="version-badge">EDITION 2026.04</div>
-</div>
+<!-- ============================================================
+     FOLD 1 — HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="hero-frame">
+    <!-- FIX 1: shared stage — photo and SVG both live inside hero-stage with
+         identical sizing/cropping so the red route waypoints stay locked to
+         the chart underneath on any viewport (ultrawide, portrait, or phone). -->
+    <div class="hero-stage">
+      <img class="hero-photo" src="img/hero.png" alt="Cartographer's working desk with chart, sextant, dividers, logbook, compass rose paperweight, and a single green apple — top-down museum catalog photograph.">
+      <div class="hero-vignette"></div>
 
-<!-- ═══════════════════ INTRO PROSE ═══════════════════ -->
-<div class="intro">
-  <p>The first volume lays out the thesis: how we choose the bet, staff it, fund it, and get it to the starting line.</p>
-  <p>The second is the apparatus: how we turn a lit bet into a living business by running it through the sieve of real users.</p>
-  <p>Read them in order.</p>
-</div>
+      <!-- SVG overlay: compass rose (upper-left), rhumb lines, red route WAITLIST → ALPHA → BETA → GA.
+           viewBox matches hero.png dimensions (1536x1024) so coordinates map directly onto photo.
+           preserveAspectRatio="xMidYMid slice" matches img's object-fit:cover + object-position:center. -->
+      <svg class="hero-svg" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <pattern id="tickH" x="0" y="0" width="40" height="10" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="5" x2="4" y2="5" stroke="#1B2A44" stroke-width=".8" opacity=".45"/>
+          </pattern>
+          <pattern id="tickV" x="0" y="0" width="10" height="40" patternUnits="userSpaceOnUse">
+            <line x1="5" y1="0" x2="5" y2="4" stroke="#1B2A44" stroke-width=".8" opacity=".45"/>
+          </pattern>
+        </defs>
 
-<!-- ═══════════════════ VOLUME CARDS ═══════════════════ -->
-<div class="volumes">
+        <!-- Faint tick-mark strips along chart margins (lat/lon registration) -->
+        <rect x="250" y="90"  width="1010" height="10" fill="url(#tickH)"/>
+        <rect x="250" y="740" width="1010" height="10" fill="url(#tickH)"/>
+        <rect x="250" y="90"  width="10" height="650" fill="url(#tickV)"/>
+        <rect x="1250" y="90" width="10" height="650" fill="url(#tickV)"/>
 
-  <article class="volume-card">
-    <div class="vol-label">Volume I</div>
-    <h2>The Thesis</h2>
-    <p class="vol-sub">Nine Steps, Portfolio Tiers, Archetypes, Green Light, Culture, Finance.</p>
-    <p class="vol-blurb">The architecture of the Axiom Zen innovation process: how to spot waves, choose bets, kill ideas efficiently, validate survivors through the Hook/Legs/Flywheel framework, ship at Clock Speed, and build durable competitive advantage. Pressure-tested across a decade of building CryptoKitties, NBA Top Shot, Flow, and Dapper Labs.</p>
-    <div class="vol-meta"><span>~2 hour read</span><span>Version 2.1</span></div>
-    <a href="volume-1.html" class="vol-cta">Read Volume I <span class="arrow">&rarr;</span></a>
-  </article>
+        <!-- Upper-left small compass rose (photo already has brass compass paperweight upper-right) -->
+        <g transform="translate(140,200)">
+          <circle r="48" fill="#F4EFE4" opacity=".65"/>
+          <circle r="48" fill="none" stroke="#C8342B" stroke-width="1.2" opacity=".9"/>
+          <circle r="28" fill="none" stroke="#C8342B" stroke-width=".7" opacity=".55"/>
+          <circle r="3.5" fill="#C8342B"/>
+          <g stroke="#C8342B" stroke-width="1" opacity=".85">
+            <line x1="0" y1="-48" x2="0" y2="48"/>
+            <line x1="-48" y1="0" x2="48" y2="0"/>
+          </g>
+          <g stroke="#C8342B" stroke-width=".6" opacity=".55">
+            <line x1="-34" y1="-34" x2="34" y2="34"/>
+            <line x1="-34" y1="34" x2="34" y2="-34"/>
+          </g>
+          <polygon points="0,-56 -5,-40 0,-48 5,-40" fill="#C8342B"/>
+          <text x="0" y="-64" text-anchor="middle" font-family="'Söhne Mono',ui-monospace,monospace" font-size="10" font-weight="700" fill="#C8342B" letter-spacing="2">N</text>
+        </g>
 
-  <article class="volume-card">
-    <div class="vol-label">Volume II</div>
-    <h2>The Apparatus</h2>
-    <p class="vol-sub">Waitlist, Alpha, Beta, Phase Gates &mdash; Farming Luck Operationalized.</p>
-    <p class="vol-blurb">The operational manual for the gap between Step 7 and Step 8: the phase-gate sequence from waitlist through Alpha and Beta to GA. Retention cascades, the doubling ladder, pre-committed kill criteria, the Hound Dog ritual, word-of-mouth engineering. The machinery that catches the lightning when it strikes.</p>
-    <div class="vol-meta"><span>~1.5 hour read</span><span>Version 1.0</span></div>
-    <a href="volume-2.html" class="vol-cta">Read Volume II <span class="arrow">&rarr;</span></a>
-  </article>
+        <!-- Latitude marker strip (Söhne Mono) -->
+        <g font-family="'Söhne Mono',ui-monospace,monospace" font-size="10" fill="#1B2A44" opacity=".7" letter-spacing="1">
+          <text x="265" y="84">09°NW</text>
+          <text x="1050" y="84">17°NE</text>
+          <text x="265" y="765">02°SW</text>
+          <text x="1190" y="765">11°SE</text>
+        </g>
 
-</div>
+        <!-- THE RED ROUTE — WAITLIST → ALPHA → BETA → GA.
+             Route sweeps across the upper/mid chart, clear of the
+             bottom-left copy plate. All four waypoint labels sit to
+             the RIGHT of the plate (plate ends around x≈670 SVG). -->
+        <g>
+          <!-- Route path: three curved segments -->
+          <path d="M 720 530 Q 820 470 900 420"
+                fill="none" stroke="#C8342B" stroke-width="3.2"
+                stroke-dasharray="11 6" stroke-linecap="round"/>
+          <path d="M 900 420 Q 990 360 1040 320"
+                fill="none" stroke="#C8342B" stroke-width="3.2"
+                stroke-dasharray="11 6" stroke-linecap="round"/>
+          <path d="M 1040 320 Q 1130 260 1220 200"
+                fill="none" stroke="#C8342B" stroke-width="3.2"
+                stroke-dasharray="11 6" stroke-linecap="round"/>
 
-<!-- ═══════════════════ HOW TO READ ═══════════════════ -->
-<div class="how-to-read">
-  <h3>How to Read</h3>
-  <p>Volume I first, then Volume II. The second volume assumes the vocabulary of the first &mdash; Hooks, Legs, Flywheel, SER/BBP/EBU, the Six Archetypes, Bold Beats, above water, programmatic enough &mdash; and sharpens the edge of each term at the exact moment a bet meets its first stranger.</p>
-  <p>Each volume is self-contained. Volume I is a complete framework for choosing and funding what to build. Volume II is a complete framework for learning what it becomes once users touch it. Together they are one manual for farming the kind of luck that compounds.</p>
-</div>
+          <!-- Tiny archipelago islands along the route (stippled) -->
+          <g fill="#1B2A44" opacity=".55">
+            <circle cx="810" cy="490" r="3"/>
+            <circle cx="828" cy="498" r="1.8"/>
+            <circle cx="970" cy="390" r="2.5"/>
+            <circle cx="988" cy="384" r="1.6"/>
+            <circle cx="1140" cy="260" r="2.8"/>
+            <circle cx="1160" cy="254" r="1.6"/>
+          </g>
 
-<div class="section-divider">&#9670; &#9670; &#9670;</div>
+          <!-- WAYPOINT 1: WAITLIST (just right of the copy plate, label below) -->
+          <circle cx="720" cy="530" r="11" fill="#F4EFE4" stroke="#C8342B" stroke-width="3.2"/>
+          <circle cx="720" cy="530" r="3.5" fill="#C8342B"/>
+          <line x1="720" y1="530" x2="720" y2="585" stroke="#C8342B" stroke-width="1.3"/>
+          <rect x="628" y="588" width="184" height="32" fill="#F4EFE4" stroke="#C8342B" stroke-width="1"/>
+          <text x="720" y="609" text-anchor="middle"
+                font-family="'Söhne Mono',ui-monospace,monospace"
+                font-size="16" font-weight="700" fill="#C8342B"
+                letter-spacing="3">WAITLIST</text>
 
-<!-- ═══════════════════ FOOTER ═══════════════════ -->
-<div class="doc-footer">
-  <p><strong>The Axiom Zen Innovation Process</strong> &middot; Edition 2026.04<br>
-  Roham Gharegozlou &middot; Founder, Axiom Zen &amp; Dapper Labs<br>
-  <a href="volume-1.html">Volume I &mdash; The Thesis</a> &middot; <a href="volume-2.html">Volume II &mdash; The Apparatus</a></p>
-</div>
+          <!-- WAYPOINT 2: ALPHA (label above, tucked between route segments) -->
+          <circle cx="900" cy="420" r="11" fill="#F4EFE4" stroke="#C8342B" stroke-width="3.2"/>
+          <circle cx="900" cy="420" r="3.5" fill="#C8342B"/>
+          <line x1="900" y1="420" x2="900" y2="372" stroke="#C8342B" stroke-width="1.3"/>
+          <rect x="826" y="330" width="148" height="42" fill="#F4EFE4" stroke="#C8342B" stroke-width="1"/>
+          <text x="900" y="352" text-anchor="middle"
+                font-family="'Söhne Mono',ui-monospace,monospace"
+                font-size="16" font-weight="700" fill="#C8342B"
+                letter-spacing="3">ALPHA</text>
+          <text x="900" y="365" text-anchor="middle"
+                font-family="'Söhne Mono',ui-monospace,monospace"
+                font-size="9" fill="#C8342B" opacity=".8"
+                letter-spacing="1.5">GATE I · 0.28</text>
 
-</div><!-- end page-container -->
+          <!-- WAYPOINT 3: BETA (label below) -->
+          <circle cx="1040" cy="320" r="11" fill="#F4EFE4" stroke="#C8342B" stroke-width="3.2"/>
+          <circle cx="1040" cy="320" r="3.5" fill="#C8342B"/>
+          <line x1="1040" y1="320" x2="1040" y2="375" stroke="#C8342B" stroke-width="1.3"/>
+          <rect x="966" y="378" width="148" height="42" fill="#F4EFE4" stroke="#C8342B" stroke-width="1"/>
+          <text x="1040" y="400" text-anchor="middle"
+                font-family="'Söhne Mono',ui-monospace,monospace"
+                font-size="16" font-weight="700" fill="#C8342B"
+                letter-spacing="3">BETA</text>
+          <text x="1040" y="413" text-anchor="middle"
+                font-family="'Söhne Mono',ui-monospace,monospace"
+                font-size="9" fill="#C8342B" opacity=".8"
+                letter-spacing="1.5">GATE II · 0.42</text>
+
+          <!-- WAYPOINT 4: GA (LANDFALL) — largest, solid red, label above -->
+          <circle cx="1220" cy="200" r="15" fill="#C8342B" stroke="#F4EFE4" stroke-width="3.2"/>
+          <circle cx="1220" cy="200" r="5.5" fill="#F4EFE4"/>
+          <line x1="1220" y1="200" x2="1220" y2="152" stroke="#C8342B" stroke-width="1.3"/>
+          <rect x="1144" y="110" width="152" height="42" fill="#F4EFE4" stroke="#C8342B" stroke-width="1"/>
+          <text x="1220" y="132" text-anchor="middle"
+                font-family="'Söhne Mono',ui-monospace,monospace"
+                font-size="16" font-weight="700" fill="#C8342B"
+                letter-spacing="3">GA</text>
+          <text x="1220" y="145" text-anchor="middle"
+                font-family="'Söhne Mono',ui-monospace,monospace"
+                font-size="9" fill="#C8342B" opacity=".8"
+                letter-spacing="1.5">LANDFALL</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hero-copy">
+      <div class="hero-eyebrow">A Two-Volume Operator's Manual</div>
+      <!-- FIX 2: 2-line lowercase NYT-register H1 -->
+      <h1 class="hero-h1"><em>You cannot command the wind.<br>You can plot the course.</em></h1>
+      <p class="hero-sub">The Axiom Zen atlas for farming luck, reading signal, and navigating ventures from waitlist to landfall.</p>
+    </div>
+
+    <div class="hero-coords">LAT 49&deg;N &middot; LON 123&deg;W &middot; AZ &middot; MMXXVI</div>
+
+    <svg class="scroll-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOLD 2 — EXECUTIVE SUMMARY
+     ============================================================ -->
+<section class="summary">
+  <div class="summary-kicker">Executive Summary</div>
+  <div class="summary-rule"></div>
+  <div class="summary-body">
+    <!-- FIX 3: tightened lede, ~50 words, keeps the weather-to-navigation pivot clean -->
+    <p class="lede">Most founders treat innovation as weather &mdash; something that happens to them. A storm of inspiration arrives, or it doesn't. The boat either finds the island, or it doesn't. In twenty years of building at Axiom Zen and Dapper Labs, I have almost never seen it work that way.</p>
+
+    <p>Innovation is not weather. It is navigation.</p>
+
+    <p>You cannot command the wind, but you can read it. You cannot choose the currents, but you can account for them. You cannot guarantee landfall, but you can plot a course, trim the sail, take a reading at noon, mark your position in the log, and correct your heading before the rocks find you instead of the harbor. The founders who succeed repeatedly &mdash; and it is always the same founders, which is the first clue that luck is not the variable people think it is &mdash; are the ones who have quietly built themselves a navigator's discipline. They farm luck. They mine signal from noise. They advance through gates rather than leap through doors.</p>
+
+    <p>This book is the atlas of that discipline, in two volumes.</p>
+
+    <!-- FIX 4: SER/BBP/EBU expanded on first use using canonical definitions from the Volume I glossary -->
+    <p><strong>Volume I &mdash; The Thesis</strong> is the theory of the sea: the Nine Steps, the Six Archetypes, the Portfolio Investment Framework &mdash; SER <em>(Sandbox Experiments &amp; Research)</em>, BBP <em>(Big Bet Projects)</em>, EBU <em>(Established Business Units)</em> &mdash; and the Green Light Framework. It is the answer to <em>why</em> the course bends where it bends. It is the chart-room, the library of winds and currents accumulated across thirty-plus ventures.</p>
+
+    <p><strong>Volume II &mdash; The Apparatus</strong> is the instrument: the Alpha/Beta Phase-Gate Playbook. Waitlist to Alpha to Beta to GA. Gate metrics that tell you whether the signal is real. Signal-mining routines for the days when the fog is thick. The sextant, the logbook, the dividers &mdash; the tools a navigator actually picks up at four in the morning when something has gone wrong.</p>
+
+    <p>Read them in order, or keep them side by side. The thesis without the apparatus is philosophy. The apparatus without the thesis is a checklist. Together, they are the way we have learned to sail.</p>
+
+    <p>Start with Volume I. The desk is set.</p>
+  </div>
+
+  <div class="pull-quote">
+    &ldquo;You cannot choose the currents,<br>but you can account for them.&rdquo;
+  </div>
+</section>
+
+<!-- ============================================================
+     FOLD 3 — THE TWO VOLUMES
+     ============================================================ -->
+<section class="volumes">
+  <div class="volumes-header">
+    <div class="volumes-kicker">The Atlas</div>
+    <h2 class="volumes-title">Two volumes.<br>One navigator's discipline.</h2>
+  </div>
+
+  <div class="volumes-grid">
+    <!-- VOLUME I -->
+    <div class="volume">
+      <img class="volume-img" src="img/logbook.png" alt="Open leather-bound ship's logbook with sepia-ink entries and a hand-drawn nine-ring diagram threaded with a red dotted line.">
+      <div class="volume-kicker">Volume I &mdash; The Thesis</div>
+      <h3 class="volume-title">The Theory<br>of the Sea</h3>
+      <p class="volume-desc">Nine Steps. Six Archetypes. SER, BBP, EBU, Green Light. The chart-room: winds and currents from thirty-plus ventures.</p>
+      <a class="volume-link" href="volume-1.html">Enter the Thesis &rarr;</a>
+    </div>
+
+    <!-- Divider with small red compass rose glyph -->
+    <div class="volumes-divider">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+        <circle cx="14" cy="14" r="11" fill="none" stroke="#C8342B" stroke-width="1.2"/>
+        <circle cx="14" cy="14" r="6" fill="none" stroke="#C8342B" stroke-width=".7" opacity=".6"/>
+        <circle cx="14" cy="14" r="1.5" fill="#C8342B"/>
+        <line x1="14" y1="1" x2="14" y2="27" stroke="#C8342B" stroke-width=".9"/>
+        <line x1="1" y1="14" x2="27" y2="14" stroke="#C8342B" stroke-width=".9" opacity=".55"/>
+        <polygon points="14,0 12,6 14,4 16,6" fill="#C8342B"/>
+      </svg>
+    </div>
+
+    <!-- VOLUME II -->
+    <div class="volume">
+      <img class="volume-img" src="img/sextant.png" alt="Polished brass sextant on dark indigo wool felt, raking light from the right, with a folded sea-chart corner and scattered brass chart-weights.">
+      <div class="volume-kicker">Volume II &mdash; The Apparatus</div>
+      <h3 class="volume-title">The Instrument</h3>
+      <p class="volume-desc">Waitlist to Alpha to Beta to GA. Gate metrics. Signal-mining routines. The sextant, the logbook, the dividers &mdash; tools for four in the morning.</p>
+      <a class="volume-link" href="volume-2.html">Open the Apparatus &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOLD 4 — COLOPHON
+     ============================================================ -->
+<section class="colophon">
+  <div>Axiom Zen &middot; Vancouver &middot; MMXXVI</div>
+  <div>Roham Gharegozlou, author</div>
+  <div class="colophon-rule"></div>
+  <div>Tiempos Headline &middot; Tiempos Text &middot; S&ouml;hne &middot; S&ouml;hne Mono</div>
+  <div>Klim Type Foundry</div>
+  <div class="colophon-rule"></div>
+  <div class="colophon-ded">For everyone who has ever sailed out at four in the morning<br>to correct a heading no one else could see.</div>
+</section>
+
 </body>
 </html>

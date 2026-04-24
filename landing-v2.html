@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Axiom Zen Innovation Process &mdash; A Two-Volume Operator's Manual</title>
+<style>
+  /* ---- Söhne (sans) ---- */
+  @font-face {
+    font-family: 'Söhne';
+    src: url('fonts/Söhne-Buch.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Söhne';
+    src: url('fonts/Söhne-Fett.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* ---- Söhne Breit (wider display) ---- */
+  @font-face {
+    font-family: 'Söhne Breit';
+    src: url('fonts/SöhneBreit-Fett.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* ---- Söhne Schmal (condensed — labels, kickers) ---- */
+  @font-face {
+    font-family: 'Söhne Schmal';
+    src: url('fonts/SöhneSchmal-Leicht.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Söhne Schmal';
+    src: url('fonts/SöhneSchmal-Fett.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* ---- Söhne Mono ---- */
+  @font-face {
+    font-family: 'Söhne Mono';
+    src: url('fonts/SöhneMono-Buch.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Söhne Mono';
+    src: url('fonts/SöhneMono-Extraleicht.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Söhne Mono';
+    src: url('fonts/SöhneMono-ExtraleichtKursiv.otf') format('opentype');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  /* ---- Tiempos Headline (display serif) ---- */
+  @font-face {
+    font-family: 'Tiempos Headline';
+    src: url('fonts/TiemposHeadline-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Tiempos Headline';
+    src: url('fonts/TiemposHeadline-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* ---- Tiempos Text (body serif for blockquotes / italic emphasis) ---- */
+  @font-face {
+    font-family: 'Tiempos Text';
+    src: url('fonts/TiemposText-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Tiempos Text';
+    src: url('fonts/TiemposText-RegularItalic.otf') format('opentype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Tiempos Text';
+    src: url('fonts/TiemposText-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Tiempos Text';
+    src: url('fonts/TiemposText-BoldItalic.otf') format('opentype');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  :root {
+    --ink: #1a1a1a;
+    --ink-light: #3a3a3a;
+    --ink-muted: #6b6b6b;
+    --bg: #fefdfb;
+    --bg-warm: #f9f6f1;
+    --bg-aside: #f4f1eb;
+    --accent: #8b4513;
+    --accent-light: #a0522d;
+    --border: #d4c5b0;
+    --border-light: #e8ddd0;
+    --rule: #c4b5a0;
+    --serif: 'Tiempos Headline', 'Iowan Old Style', Georgia, serif;
+    --serif-text: 'Tiempos Text', 'Iowan Old Style', Georgia, serif;
+    --sans: 'Söhne', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --sans-condensed: 'Söhne Schmal', 'Söhne', sans-serif;
+    --mono: 'Söhne Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+    --page-width: 820px;
+    --page-padding: 60px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @page { size: 7in 10in; margin: 1in 0.85in; }
+
+  @media print {
+    body { background: white; }
+    .page-container { box-shadow: none; border: none; margin: 0; padding: 0; max-width: none; }
+    .no-print { display: none; }
+  }
+
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  body {
+    background: #e8e0d5;
+    color: var(--ink);
+    line-height: 1.75;
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.95rem;
+  }
+
+  .page-container {
+    max-width: calc(var(--page-width) + var(--page-padding) * 2);
+    margin: 40px auto;
+    background: var(--bg);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 10px 40px rgba(0,0,0,0.08);
+    border: 1px solid var(--border-light);
+    padding: var(--page-padding);
+    padding-top: 0;
+  }
+
+  /* ── TITLE BLOCK ── */
+  .title-page {
+    text-align: center;
+    padding: 100px 20px 70px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 50px;
+  }
+  .title-page .ornament {
+    font-size: 1.8rem;
+    color: var(--accent);
+    letter-spacing: 12px;
+    margin-bottom: 40px;
+  }
+  .title-page h1 {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    margin-bottom: 18px;
+  }
+  .title-page .subtitle {
+    font-family: var(--serif-text);
+    font-size: 1.3rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.5;
+    max-width: 580px;
+    margin: 0 auto 40px;
+  }
+  .title-page .author-line {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 4px;
+  }
+  .title-page .author-title {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    letter-spacing: 0.5px;
+  }
+  .title-page .version-badge {
+    display: inline-block;
+    margin-top: 36px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    color: var(--ink-muted);
+    border: 1px solid var(--border);
+    padding: 4px 16px;
+    border-radius: 2px;
+  }
+
+  /* ── INTRO PROSE ── */
+  .intro {
+    max-width: 680px;
+    margin: 0 auto 50px;
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--ink-light);
+  }
+  .intro p { text-align: center; hyphens: none; -webkit-hyphens: none; margin-bottom: 14px; }
+  .intro p:last-child { margin-bottom: 0; }
+
+  /* ── VOLUME CARDS GRID ── */
+  .volumes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+    margin: 50px 0;
+  }
+
+  .volume-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-warm);
+    border: 1px solid var(--border-light);
+    border-left: 3px solid var(--accent);
+    padding: 32px 34px 30px;
+    border-radius: 3px;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .volume-card:hover {
+    box-shadow: 0 6px 24px rgba(139, 69, 19, 0.10);
+    transform: translateY(-1px);
+  }
+  .volume-card .vol-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .volume-card h2 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  .volume-card .vol-sub {
+    font-family: var(--serif-text);
+    font-style: italic;
+    font-size: 1.02rem;
+    color: var(--ink-muted);
+    line-height: 1.45;
+    margin-bottom: 18px;
+  }
+  .volume-card .vol-blurb {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--ink-light);
+    margin-bottom: 22px;
+    flex-grow: 1;
+  }
+  .volume-card .vol-meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-light);
+  }
+  .volume-card .vol-meta span + span::before {
+    content: " · ";
+    color: var(--border);
+    margin: 0 6px;
+  }
+  .volume-card .vol-cta {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 11px 22px;
+    border: 1.5px solid var(--accent);
+    border-radius: 3px;
+    align-self: flex-start;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .volume-card .vol-cta:hover {
+    background: var(--accent);
+    color: white;
+  }
+  .volume-card .vol-cta .arrow {
+    display: inline-block;
+    margin-left: 4px;
+    transition: transform 0.15s ease;
+  }
+  .volume-card .vol-cta:hover .arrow { transform: translateX(3px); }
+
+  /* ── HOW TO READ ── */
+  .how-to-read {
+    background: var(--bg-warm);
+    border: 1px solid var(--border-light);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    margin: 40px 0 30px;
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: var(--ink-light);
+  }
+  .how-to-read h3 {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .how-to-read p {
+    margin-bottom: 10px;
+    text-align: left;
+    hyphens: auto;
+  }
+  .how-to-read p:last-child { margin-bottom: 0; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    text-align: center;
+    margin: 50px 0 40px;
+    color: var(--accent);
+    font-size: 1rem;
+    letter-spacing: 8px;
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    line-height: 1.7;
+    text-align: center;
+  }
+  .doc-footer a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }
+
+  @media (max-width: 640px) {
+    :root { --page-padding: 32px; }
+    .title-page { padding: 60px 10px 50px; }
+    .title-page h1 { font-size: 2.2rem; }
+    .title-page .subtitle { font-size: 1.1rem; }
+    .volume-card { padding: 26px 24px 24px; }
+    .volume-card h2 { font-size: 1.7rem; }
+    .intro { font-size: 1.05rem; }
+    .how-to-read { padding: 22px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-container">
+
+<!-- ═══════════════════ TITLE BLOCK ═══════════════════ -->
+<div class="title-page">
+  <div class="ornament">&#9670; &#9670; &#9670;</div>
+  <h1>The Axiom Zen<br>Innovation Process</h1>
+  <p class="subtitle">A two-volume operator's manual for farming serendipity.</p>
+  <p class="author-line">Roham Gharegozlou</p>
+  <p class="author-title">Founder, Axiom Zen &amp; Dapper Labs</p>
+  <div class="version-badge">EDITION 2026.04</div>
+</div>
+
+<!-- ═══════════════════ INTRO PROSE ═══════════════════ -->
+<div class="intro">
+  <p>The first volume lays out the thesis: how we choose the bet, staff it, fund it, and get it to the starting line.</p>
+  <p>The second is the apparatus: how we turn a lit bet into a living business by running it through the sieve of real users.</p>
+  <p>Read them in order.</p>
+</div>
+
+<!-- ═══════════════════ VOLUME CARDS ═══════════════════ -->
+<div class="volumes">
+
+  <article class="volume-card">
+    <div class="vol-label">Volume I</div>
+    <h2>The Thesis</h2>
+    <p class="vol-sub">Nine Steps, Portfolio Tiers, Archetypes, Green Light, Culture, Finance.</p>
+    <p class="vol-blurb">The architecture of the Axiom Zen innovation process: how to spot waves, choose bets, kill ideas efficiently, validate survivors through the Hook/Legs/Flywheel framework, ship at Clock Speed, and build durable competitive advantage. Pressure-tested across a decade of building CryptoKitties, NBA Top Shot, Flow, and Dapper Labs.</p>
+    <div class="vol-meta"><span>~2 hour read</span><span>Version 2.1</span></div>
+    <a href="volume-1.html" class="vol-cta">Read Volume I <span class="arrow">&rarr;</span></a>
+  </article>
+
+  <article class="volume-card">
+    <div class="vol-label">Volume II</div>
+    <h2>The Apparatus</h2>
+    <p class="vol-sub">Waitlist, Alpha, Beta, Phase Gates &mdash; Farming Luck Operationalized.</p>
+    <p class="vol-blurb">The operational manual for the gap between Step 7 and Step 8: the phase-gate sequence from waitlist through Alpha and Beta to GA. Retention cascades, the doubling ladder, pre-committed kill criteria, the Hound Dog ritual, word-of-mouth engineering. The machinery that catches the lightning when it strikes.</p>
+    <div class="vol-meta"><span>~1.5 hour read</span><span>Version 1.0</span></div>
+    <a href="volume-2.html" class="vol-cta">Read Volume II <span class="arrow">&rarr;</span></a>
+  </article>
+
+</div>
+
+<!-- ═══════════════════ HOW TO READ ═══════════════════ -->
+<div class="how-to-read">
+  <h3>How to Read</h3>
+  <p>Volume I first, then Volume II. The second volume assumes the vocabulary of the first &mdash; Hooks, Legs, Flywheel, SER/BBP/EBU, the Six Archetypes, Bold Beats, above water, programmatic enough &mdash; and sharpens the edge of each term at the exact moment a bet meets its first stranger.</p>
+  <p>Each volume is self-contained. Volume I is a complete framework for choosing and funding what to build. Volume II is a complete framework for learning what it becomes once users touch it. Together they are one manual for farming the kind of luck that compounds.</p>
+</div>
+
+<div class="section-divider">&#9670; &#9670; &#9670;</div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<div class="doc-footer">
+  <p><strong>The Axiom Zen Innovation Process</strong> &middot; Edition 2026.04<br>
+  Roham Gharegozlou &middot; Founder, Axiom Zen &amp; Dapper Labs<br>
+  <a href="volume-1.html">Volume I &mdash; The Thesis</a> &middot; <a href="volume-2.html">Volume II &mdash; The Apparatus</a></p>
+</div>
+
+</div><!-- end page-container -->
+</body>
+</html>
