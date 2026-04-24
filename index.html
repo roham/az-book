@@ -321,6 +321,24 @@
       0 12px 30px rgba(14,47,61,.08);
     display:flex;
     flex-direction:column;
+    text-decoration:none;
+    color:inherit;
+    cursor:pointer;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    border-color:var(--tangerine);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95),
+      0 4px 0 rgba(232,138,60,.25),
+      0 18px 42px rgba(14,47,61,.14);
+  }
+  .card:hover .card-cta{ border-color:var(--tangerine) }
+  .card:hover .card-cta .arrow{ transform:translateX(4px) }
+  .card:focus-visible{
+    outline:3px solid var(--tangerine);
+    outline-offset:4px;
   }
   .card-img{
     width:100%;
@@ -508,27 +526,27 @@
 <section class="diptych-section" id="volumes">
   <div class="diptych">
 
-    <article class="card" id="vol1">
+    <a class="card" id="vol1" href="volume-1.html">
       <img class="card-img" src="img/vol1.svg" alt="Retro-future archetype wheel — six-slice chrome disc with tangerine pointer, set into an atomic-cream plotting table.">
       <div class="card-body">
         <div class="card-label">VOLUME I &nbsp;·&nbsp; THE THESIS</div>
         <p class="card-standfirst">Nine steps, six archetypes, three portfolio tiers. What to build, with whom, and funded how.</p>
-        <a class="card-cta" href="volume-1.html">
+        <span class="card-cta">
           Enter Volume I <span class="arrow">&rarr;</span>
-        </a>
+        </span>
       </div>
-    </article>
+    </a>
 
-    <article class="card" id="vol2">
+    <a class="card" id="vol2" href="volume-2.html">
       <img class="card-img" src="img/vol2.png" alt="Retro-future gauge stack — four analog dials labeled WAITLIST, ALPHA, BETA, GA with tangerine boomerang hands, on a deep-teal instrument panel.">
       <div class="card-body">
         <div class="card-label">VOLUME II &nbsp;·&nbsp; THE INSTRUMENT</div>
         <p class="card-standfirst">Waitlist, alpha, beta, GA. How to run the experiment, read the result, and promote on evidence.</p>
-        <a class="card-cta" href="volume-2.html">
+        <span class="card-cta">
           Enter Volume II <span class="arrow">&rarr;</span>
-        </a>
+        </span>
       </div>
-    </article>
+    </a>
 
   </div>
 </section>
@@ -549,7 +567,7 @@
     </svg>
   </div>
   <p class="colophon-text">
-    SET IN TIEMPOS &amp; SÖHNE <span>·</span> PLATES BY THE SHIP'S CHANDLER <span>·</span> STATION MMXXVI
+    SET IN TIEMPOS &amp; SÖHNE <span>·</span> PLATES BY HOUSE STUDIO <span>·</span> STATION MMXXVI
   </p>
 </footer>
 
