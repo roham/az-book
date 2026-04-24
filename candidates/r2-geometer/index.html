@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Draw the Circle. Catch the Lightning.</title>
+<meta name="description" content="A two-volume operator's manual on disciplined innovation. The thesis and the apparatus." />
+<style>
+  /* -------- Fonts -------- */
+  @font-face { font-family:'Söhne'; src:url('../../fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne'; src:url('../../fonts/Söhne-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../../fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../../fonts/SöhneMono-Extraleicht.otf') format('opentype'); font-weight:200; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../../fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../../fonts/TiemposHeadline-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+
+  /* -------- Tokens (Geometer palette) -------- */
+  :root{
+    --ink:#0B0A0F;            /* velvet ink */
+    --obsidian:#141320;        /* obsidian violet */
+    --gold:#E8B661;            /* ritual gold */
+    --copper:#B87333;          /* aged copper */
+    --parchment:#F5EFE2;       /* parchment */
+    --amethyst:#3A2E4A;        /* bruised amethyst */
+    --dust:#8A7A5C;            /* dust */
+    --hair-gold:rgba(232,182,97,.32);
+    --hair-gold-faint:rgba(232,182,97,.14);
+    --hair-copper:rgba(184,115,51,.22);
+  }
+
+  /* -------- Reset -------- */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--ink);color:var(--parchment);font-family:'Tiempos Text',Georgia,serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{overflow-x:hidden}
+  img{display:block;max-width:100%;height:auto}
+  a{color:inherit;text-decoration:none}
+
+  /* -------- Utilities -------- */
+  .mono{font-family:'Söhne Mono',ui-monospace,monospace;font-weight:400;letter-spacing:.12em;text-transform:uppercase}
+  .tight{letter-spacing:-.01em}
+  .coord{font-family:'Söhne Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;color:var(--gold);opacity:.6;text-transform:uppercase}
+  .hair{width:100%;height:1px;background:var(--hair-gold);border:0}
+
+  /* -------- Page shell -------- */
+  .shell{max-width:100%;margin:0 auto}
+
+  /* =============================================================
+     HERO — mobile first (375px base)
+     ============================================================= */
+  .hero{position:relative;width:100%;min-height:100vh;background:var(--ink);overflow:hidden}
+  .hero-img-wrap{position:relative;width:100%;aspect-ratio: 4 / 5;}
+  .hero-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center 60%;opacity:.95}
+  .hero-img-wrap::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(11,10,15,.55) 0%,rgba(11,10,15,0) 30%,rgba(11,10,15,0) 55%,rgba(11,10,15,.85) 100%);
+    pointer-events:none;
+  }
+
+  .eyebrow{
+    position:absolute;top:24px;left:24px;right:24px;
+    font-family:'Söhne Mono',ui-monospace,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);z-index:3;
+  }
+  .eyebrow::before{content:"◦  ";opacity:.7}
+
+  .manual-coord{
+    position:absolute;bottom:24px;right:24px;z-index:3;
+  }
+
+  .hero-type{
+    position:relative;
+    padding:28px 24px 96px;
+    background:var(--ink);
+  }
+  .hero-h1{
+    font-family:'Tiempos Headline',Georgia,serif;
+    font-weight:400;
+    font-size:clamp(34px,9vw,44px);
+    line-height:1.02;
+    letter-spacing:-.015em;
+    color:var(--parchment);
+  }
+  .hero-h1 em{
+    font-style:italic;
+    color:var(--gold);
+    font-weight:400;
+  }
+  .hero-sub{
+    margin-top:20px;
+    font-size:15px;line-height:1.55;
+    color:rgba(245,239,226,.78);
+    max-width:34em;
+  }
+
+  .hero-divider{
+    margin-top:32px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .hero-divider .line{flex:1;height:1px;background:var(--hair-gold)}
+  .hero-divider .dot{width:6px;height:6px;border:1px solid var(--gold);border-radius:50%;background:transparent}
+
+  /* Pull copy (desktop-only) */
+  .hero-pull{display:none}
+
+  /* =============================================================
+     VOLUME SECTIONS
+     ============================================================= */
+  .vol{padding:72px 24px;background:var(--ink);border-top:1px solid var(--hair-gold-faint)}
+  .vol-marker{
+    display:flex;align-items:baseline;gap:12px;
+    font-family:'Söhne Mono',ui-monospace,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:8px;
+  }
+  .vol-marker .num{color:var(--gold)}
+  .vol-marker .dash{color:var(--dust);opacity:.6}
+  .vol-title{
+    font-family:'Tiempos Headline',Georgia,serif;
+    font-weight:400;
+    font-size:28px;line-height:1.1;
+    color:var(--parchment);
+    margin-bottom:24px;
+    letter-spacing:-.01em;
+  }
+  .vol-img{
+    width:100%;aspect-ratio:1 / 1;
+    background:var(--ink);
+    margin-bottom:32px;
+    border:1px solid var(--hair-gold-faint);
+  }
+  .vol-img img{width:100%;height:100%;object-fit:contain;object-position:center}
+  .vol-body{
+    font-size:16px;line-height:1.65;
+    color:rgba(245,239,226,.82);
+  }
+  .vol-body p + p{margin-top:18px}
+  .vol-body strong{color:var(--parchment);font-weight:400;font-style:italic;font-family:'Tiempos Text',serif}
+
+  /* =============================================================
+     EXECUTIVE SUMMARY BODY
+     ============================================================= */
+  .exec{padding:72px 24px 96px;background:var(--ink);border-top:1px solid var(--hair-gold-faint)}
+  .exec-label{
+    font-family:'Söhne Mono',ui-monospace,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:16px;
+  }
+  .exec-lede{
+    font-family:'Tiempos Headline',Georgia,serif;
+    font-size:22px;line-height:1.3;
+    color:var(--parchment);
+    margin-bottom:24px;
+    font-style:italic;
+    letter-spacing:-.005em;
+  }
+  .exec-body{font-size:16px;line-height:1.7;color:rgba(245,239,226,.78)}
+  .exec-body p + p{margin-top:18px}
+  .exec-body strong{color:var(--parchment);font-weight:400;font-style:italic}
+
+  /* =============================================================
+     REFRAIN (final)
+     ============================================================= */
+  .refrain{
+    padding:200px 24px;
+    background:var(--ink);
+    text-align:center;
+    border-top:1px solid var(--hair-gold-faint);
+  }
+  .refrain-text{
+    font-family:'Tiempos Headline',Georgia,serif;
+    font-weight:400;
+    font-size:clamp(28px,7vw,44px);
+    line-height:1.1;
+    color:var(--parchment);
+    letter-spacing:-.01em;
+  }
+  .refrain-text em{color:var(--gold);font-style:italic}
+  .refrain-mark{
+    margin:56px auto 0;
+    width:40px;height:40px;
+    display:block;opacity:.85;
+  }
+  .colophon{
+    margin-top:40px;
+    font-family:'Söhne Mono',ui-monospace,monospace;
+    font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--dust);
+  }
+
+  /* =============================================================
+     DESKTOP (1024+)
+     ============================================================= */
+  @media (min-width:1024px){
+    .hero{min-height:100vh;display:grid;grid-template-columns:5fr 7fr;grid-template-rows:1fr;align-items:stretch}
+    .hero-img-wrap{aspect-ratio:auto;grid-column:2 / 3;grid-row:1 / 2;height:100%}
+    .hero-img-wrap img{object-position:center center}
+    .hero-img-wrap::after{
+      background:linear-gradient(90deg,var(--ink) 0%,rgba(11,10,15,.55) 20%,rgba(11,10,15,0) 50%);
+    }
+    .hero-type{
+      grid-column:1 / 2;grid-row:1 / 2;
+      display:flex;flex-direction:column;justify-content:center;
+      padding:72px 56px;
+      position:relative;z-index:2;
+    }
+    .eyebrow{position:static;margin-bottom:32px;color:var(--gold);font-size:12px}
+    .eyebrow::before{content:"◦  "}
+    .manual-coord{position:absolute;bottom:40px;left:56px;top:auto;right:auto}
+    .hero-h1{font-size:clamp(52px,5vw,76px);line-height:1.0}
+    .hero-sub{font-size:17px;max-width:32em;margin-top:28px}
+
+    .hero-pull{
+      display:block;
+      margin-top:40px;
+      padding-top:28px;
+      border-top:1px solid var(--hair-gold);
+      font-family:'Tiempos Text',serif;
+      font-style:italic;
+      font-size:15px;line-height:1.6;
+      color:rgba(245,239,226,.7);
+      max-width:34em;
+    }
+  }
+
+  @media (min-width:1280px){
+    .vols-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:56px;
+      max-width:1280px;margin:0 auto;padding:96px 56px;
+    }
+    .vols-grid .vol{padding:0;border:0}
+    .vol-img{aspect-ratio:1/1}
+    .vol-title{font-size:32px}
+
+    .exec{max-width:880px;margin:0 auto;padding:96px 56px 120px;border-top:1px solid var(--hair-gold-faint)}
+    .exec-lede{font-size:26px}
+    .refrain-text{font-size:64px}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ================================================================
+       HERO
+       ================================================================ -->
+  <section class="hero">
+    <div class="hero-img-wrap">
+      <img src="img/hero.png" alt="Two luminous geometric sigils suspended in velvet-ink air. A foreground gold mandala with nine concentric rings, six radial sectors, and three nested central circles — connected by a suspended dust-trail to a smaller copper instrument-glyph of four stages stacked vertically." />
+    </div>
+
+    <div class="hero-type">
+      <div class="eyebrow">A Two-Volume Operator's Manual</div>
+      <h1 class="hero-h1">Draw the Circle.<br/><em>Catch the Lightning.</em></h1>
+      <p class="hero-sub">Innovation is disciplined ritual — the thesis that governs what can be summoned, and the apparatus that catches it when it arrives.</p>
+
+      <div class="hero-divider">
+        <span class="line"></span>
+        <span class="dot"></span>
+        <span class="line"></span>
+      </div>
+
+      <p class="hero-pull">People think innovation is magic. I think innovation is ritual — which is the opposite. Magic suggests outcomes come from nowhere. Ritual insists outcomes come from geometry: the same gestures, performed with discipline, in the presence of forces you respect but do not pretend to fully control.</p>
+
+      <div class="manual-coord coord">IX &middot; VI &middot; III &nbsp;—&nbsp; Manual Coordinates</div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       VOLUMES — parity side-by-side on desktop
+       ================================================================ -->
+  <div class="vols-grid">
+
+    <section class="vol">
+      <div class="vol-marker"><span class="num">Volume I</span><span class="dash">—</span><span>The Thesis</span></div>
+      <h2 class="vol-title">The Sacred Geometry</h2>
+      <div class="vol-img"><img src="img/vol-i.png" alt="A single gold sigil on velvet-ink: nine concentric rings divided into six radial sectors, three nested circles at center, a horizontal measuring line across the middle rings." /></div>
+      <div class="vol-body">
+        <p>The laws that govern what can be summoned at all. <strong>Nine Steps</strong>, because ideas have structure. <strong>Six Archetypes</strong>, because the people who survive the work come in recognizable shapes. <strong>Three Portfolio Tiers</strong> — Sandbox Experiments &amp; Research, Big Bet Projects, Established Business Units — because capital at different temperatures does different things.</p>
+        <p>A <strong>Green Light Framework</strong> because the decision to commit is itself a geometry: specific lines, specific conditions, specific ceremonies.</p>
+        <p>Volume I answers <em>what do I build, with whom, funded how, why.</em> Skip it and you are gesturing at air.</p>
+      </div>
+    </section>
+
+    <section class="vol">
+      <div class="vol-marker"><span class="num">Volume II</span><span class="dash">—</span><span>The Apparatus</span></div>
+      <h2 class="vol-title">The Ritual Instrument</h2>
+      <div class="vol-img"><img src="img/vol-ii.png" alt="A single copper instrument-glyph: four horizontal tick-stages stacked vertically along a central spine, each with a gold aperture-marker reading. Dust rising from the lowest stage." /></div>
+      <div class="vol-body">
+        <p>The thing you actually hold and use. <strong>Waitlist, Alpha, Beta, GA</strong>, not as marketing stages but as diagnostic strips — each one reads a different frequency of the signal. A <strong>retention cascade</strong> because the only honest measure of whether lightning struck is whether it stayed.</p>
+        <p><strong>Activation discovery</strong> because the moment of conversion is the moment the circuit closes. <strong>Hound-dog signal mining</strong> because the instrument is deaf by default; you have to tune it, every time, on every product.</p>
+        <p>Volume II answers <em>how do I run the experiment, read the result, know when to promote.</em> Skip it and the geometry is decoration.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ================================================================
+       EXECUTIVE SUMMARY
+       ================================================================ -->
+  <section class="exec">
+    <div class="exec-label">Executive Summary &nbsp;/&nbsp; The Governing Law</div>
+    <p class="exec-lede">People think innovation is magic. I think innovation is ritual — which is the opposite.</p>
+    <div class="exec-body">
+      <p>Magic suggests outcomes come from nowhere. Ritual insists outcomes come from geometry: the same gestures, performed with discipline, in the presence of forces you respect but do not pretend to fully control. Lightning is real. You don't make lightning. You draw circles that make it legible, and you build instruments that catch it when it lands.</p>
+      <p>This manual is two volumes because the work has two irreducible parts.</p>
+      <p><strong>Volume I is the sacred geometry.</strong> It is the thesis — the laws that govern what can be summoned at all. Nine Steps, because ideas have structure. Six Archetypes, because the people who survive the work come in recognizable shapes. Three Portfolio Tiers — Sandbox Experiments &amp; Research, Big Bet Projects, Established Business Units — because capital at different temperatures does different things. A Green Light Framework because the decision to commit is itself a geometry: specific lines, specific conditions, specific ceremonies. Volume I answers <em>what do I build, with whom, funded how, why.</em> Skip it and you are gesturing at air.</p>
+      <p><strong>Volume II is the ritual instrument.</strong> It is the apparatus — the thing you actually hold and use. Waitlist, Alpha, Beta, GA, not as marketing stages but as diagnostic strips — each one reads a different frequency of the signal. A retention cascade because the only honest measure of whether lightning struck is whether it stayed. Activation discovery because the moment of conversion is the moment the circuit closes. Hound-dog signal mining because the instrument is deaf by default; you have to tune it, every time, on every product. Volume II answers <em>how do I run the experiment, read the result, know when to promote.</em> Skip it and the geometry is decoration.</p>
+      <p>Neither volume stands alone. The thesis without the apparatus is a philosophy paper. The apparatus without the thesis is a dashboard nobody trusts.</p>
+      <p>Together they are a practice: draw the circle, then hold the instrument, then wait — disciplined, prepared, unafraid of boredom — for the strike.</p>
+      <p>Chance favors the prepared. That is not a slogan. That is the governing law of this entire manual. Prepared means two things, at once, in proportion.</p>
+      <p><em>Draw the circle. Catch the lightning.</em></p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       REFRAIN + SIGNATURE
+       ================================================================ -->
+  <section class="refrain">
+    <p class="refrain-text"><em>Draw the circle. Catch the lightning.</em></p>
+    <svg class="refrain-mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="20" cy="20" r="19" fill="none" stroke="#E8B661" stroke-width="0.75" opacity="0.85"/>
+      <circle cx="20" cy="20" r="12" fill="none" stroke="#E8B661" stroke-width="0.5" opacity="0.5"/>
+      <circle cx="20" cy="20" r="5"  fill="none" stroke="#E8B661" stroke-width="0.5" opacity="0.75"/>
+      <line x1="1" y1="20" x2="39" y2="20" stroke="#E8B661" stroke-width="0.35" opacity="0.35"/>
+    </svg>
+    <div class="colophon">An Operator's Manual &middot; Vol I &amp; Vol II &middot; Geometer Edition</div>
+  </section>
+
+</div>
+</body>
+</html>
