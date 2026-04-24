@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Title variants — The Bridge landing</title>
+<style>
+  @font-face { font-family:'Söhne'; src:url('../fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+
+  :root{
+    --void:#05070C; --graphite:#0E1420; --deck:#1B2330;
+    --silver:#D9DCE1; --ivory:#F3EFE6; --amber:#E9A85C;
+    --cyan:#6FA8C7; --hair:rgba(233,168,92,.32); --hair-silver:rgba(217,220,225,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--void);color:var(--ivory);font-family:'Söhne',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  .page{max-width:1280px;margin:0 auto;padding:80px 40px 120px}
+  .page__intro{max-width:640px;margin-bottom:64px}
+  .eyebrow{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:24px}
+  .page__title{font-family:'Tiempos Headline',serif;font-size:44px;line-height:1.08;letter-spacing:-.01em;color:var(--ivory);margin-bottom:20px}
+  .page__body{font-family:'Tiempos Text',serif;font-size:18px;line-height:1.55;color:var(--silver)}
+  .page__body em{font-style:italic;color:var(--ivory)}
+  .page__body a{color:var(--amber);border-bottom:1px solid rgba(233,168,92,.45)}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+  .card{position:relative;border:1px solid var(--hair-silver);background:var(--graphite);overflow:hidden;transition:border-color .25s ease, transform .25s ease;text-decoration:none;color:inherit;display:block}
+  .card:hover{border-color:var(--hair);transform:translateY(-2px)}
+  .card__hero{position:relative;aspect-ratio:16/10;background:#000 url('../img/hero.png') center/cover no-repeat}
+  .card__hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(5,7,12,.15) 0%, rgba(5,7,12,.55) 60%, rgba(5,7,12,.85) 100%)}
+  .card__over{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 32px;z-index:2}
+  .card__h1{font-family:'Tiempos Headline',serif;font-style:italic;font-size:34px;line-height:1.1;letter-spacing:-.005em;color:var(--ivory);text-shadow:0 2px 16px rgba(0,0,0,.6)}
+  @media(max-width:600px){.card__h1{font-size:26px}}
+  .card__meta{padding:20px 32px 28px;display:flex;justify-content:space-between;gap:16px;align-items:baseline;border-top:1px solid var(--hair-silver)}
+  .card__slug{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+  .card__desc{font-family:'Söhne',sans-serif;font-size:13px;color:var(--silver);line-height:1.5}
+  .card__view{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);white-space:nowrap}
+
+  .footer{margin-top:80px;padding-top:32px;border-top:1px solid var(--hair-silver);font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--silver);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .footer a{color:var(--cyan)}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="page__intro">
+    <div class="eyebrow">TITLE VARIANTS · THE BRIDGE LANDING</div>
+    <h1 class="page__title">Pick a title.</h1>
+    <p class="page__body">Eight H1 candidates, each shipped as a full landing on the Bridge hero so you can see it in context. Typography, layout, imagery are identical — only the title and title tag differ. Click through to any variant, then tell me which to lock in. Once chosen, I'll remake <em>Volume I</em> and <em>Volume II</em> to match the Bridge's void-black editorial register.</p>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" href="generating-serendipity/">
+      <div class="card__hero"><div class="card__over"><div class="card__h1">Generating serendipity.</div></div></div>
+      <div class="card__meta">
+        <div>
+          <div class="card__slug">V1 · Generating Serendipity</div>
+          <div class="card__desc">Your suggestion · two words · thesis-level · active verb.</div>
+        </div>
+        <div class="card__view">View →</div>
+      </div>
+    </a>
+
+    <a class="card" href="science-of-innovation/">
+      <div class="card__hero"><div class="card__over"><div class="card__h1">The science of innovation.</div></div></div>
+      <div class="card__meta">
+        <div>
+          <div class="card__slug">V2 · Science of Innovation</div>
+          <div class="card__desc">Your suggestion · claim-forward · textbook-direct.</div>
+        </div>
+        <div class="card__view">View →</div>
+      </div>
+    </a>
+
+    <a class="card" href="science-of-serendipity/">
+      <div class="card__hero"><div class="card__over"><div class="card__h1">The science of generating serendipity.</div></div></div>
+      <div class="card__meta">
+        <div>
+          <div class="card__slug">V3 · Science of Serendipity</div>
+          <div class="card__desc">Synthesis · pairs claim with mystery · currently on root.</div>
+        </div>
+        <div class="card__view">View →</div>
+      </div>
+    </a>
+
+    <a class="card" href="chance-favors/">
+      <div class="card__hero"><div class="card__over"><div class="card__h1">Chance favors the prepared.</div></div></div>
+      <div class="card__meta">
+        <div>
+          <div class="card__slug">V4 · Chance Favors</div>
+          <div class="card__desc">Pasteur direct · quotation register · preparation as the thesis.</div>
+        </div>
+        <div class="card__view">View →</div>
+      </div>
+    </a>
+
+    <a class="card" href="farming-luck/">
+      <div class="card__hero"><div class="card__over"><div class="card__h1">Farming luck.</div></div></div>
+      <div class="card__meta">
+        <div>
+          <div class="card__slug">V5 · Farming Luck</div>
+          <div class="card__desc">Two-word thesis · farmable-innovation spine · agricultural metaphor.</div>
+        </div>
+        <div class="card__view">View →</div>
+      </div>
+    </a>
+
+    <a class="card" href="innovation-legible/">
+      <div class="card__hero"><div class="card__over"><div class="card__h1">Innovation, made legible.</div></div></div>
+      <div class="card__meta">
+        <div>
+          <div class="card__slug">V6 · Innovation Legible</div>
+          <div class="card__desc">Alternative framing · craft-oriented · innovation as readable.</div>
+        </div>
+        <div class="card__view">View →</div>
+      </div>
+    </a>
+
+    <a class="card" href="apparatus-of-luck/">
+      <div class="card__hero"><div class="card__over"><div class="card__h1">The apparatus of luck.</div></div></div>
+      <div class="card__meta">
+        <div>
+          <div class="card__slug">V7 · Apparatus of Luck</div>
+          <div class="card__desc">Thesis-metaphor · instrument framing · both volumes implied.</div>
+        </div>
+        <div class="card__view">View →</div>
+      </div>
+    </a>
+
+    <a class="card" href="prepared-apparatus/">
+      <div class="card__hero"><div class="card__over"><div class="card__h1">Prepared mind. Ready apparatus.</div></div></div>
+      <div class="card__meta">
+        <div>
+          <div class="card__slug">V8 · Prepared Apparatus</div>
+          <div class="card__desc">Two beats · Vol I (mind) + Vol II (apparatus) in the title itself.</div>
+        </div>
+        <div class="card__view">View →</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <span>AZ · Title Tournament · 2026</span>
+    <span><a href="../">← Current landing</a></span>
+  </div>
+</main>
+</body>
+</html>
