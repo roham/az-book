@@ -615,6 +615,59 @@
   }
 
   /* ════════════════════════════════════════════════
+     CHAPTER PLATE
+     ════════════════════════════════════════════════ */
+  .chapter-plate{
+    margin: 80px auto 60px;
+    max-width: 920px;
+    padding: 0 20px;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .chapter-plate img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 22px;
+    border: 1px solid var(--gold, #C8A961);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.7),
+      0 3px 0 rgba(200,169,97,.18),
+      0 18px 38px rgba(14,47,61,.12);
+    background: var(--cream, #F1E8D4);
+  }
+  .chapter-plate figcaption{
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-plate .plate-rule{
+    flex: 0 0 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold, #C8A961), transparent);
+  }
+  .chapter-plate .plate-caption{
+    font-family: 'Söhne Mono', 'SF Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--teal, #0E2F3D);
+    white-space: nowrap;
+  }
+  @media (max-width: 720px){
+    .chapter-plate{ margin: 60px auto 44px; padding: 0 16px; }
+    .chapter-plate .plate-rule{ flex: 0 0 32px; }
+    .chapter-plate .plate-caption{ font-size: 10px; letter-spacing: .18em; }
+  }
+  @media print{
+    .chapter-plate img{ break-inside: avoid; }
+    .chapter-plate{ break-before: page; }
+  }
+
+  /* ════════════════════════════════════════════════
      FOOTER
      ════════════════════════════════════════════════ */
   .doc-footer {
@@ -822,6 +875,7 @@
   <div class="toc-item"><a href="#s26">&sect;26. Escalation protocol</a></div>
   <div class="toc-item"><a href="#s27">&sect;27. The Vohra segmentation move</a></div>
   <div class="toc-item"><a href="#s28">&sect;28. Private Beta vs Public Beta</a></div>
+  <div class="toc-item"><a href="#s28a">&sect;28a. P0/P1: bugs and metric misses</a></div>
   <div class="toc-item"><a href="#s29">&sect;29. Activation point discovery</a></div>
   <div class="toc-part"><a href="#part-vi">Part VI &mdash; The Gate Metrics Table</a></div>
   <div class="toc-item"><a href="#s30">&sect;30. The canonical metrics table</a></div>
@@ -850,10 +904,19 @@
   <div class="toc-item"><a href="#s49">&sect;49. Pre-flight checklists</a></div>
   <div class="toc-item"><a href="#s50">&sect;50. Anti-pattern catalog</a></div>
   <div class="toc-item"><a href="#s51">&sect;51. Forthcoming companion docs</a></div>
+  <div class="toc-item"><a href="#s52">&sect;52. Addendum &mdash; Feature rollout on an existing product</a></div>
   <div class="toc-item"><a href="#coda">Coda</a></div>
 </div>
 
 <!-- ═══════════════════ PART I ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v2/part-i-frame.png" alt="Plate I — Farming Luck: cultivated rows under a probability sky, depicting Alpha and Beta as the deliberate practice of farming, not chasing, fortune." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE I &middot; FARMING LUCK</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break" id="part-i">
   <div class="part-label">Part I</div>
   <h2>The Frame</h2>
@@ -973,6 +1036,14 @@
 <p>If Programmatic Gating, Customer-Driven Shape, and Scientific Method are all operational, the Alpha/Beta pipeline will compound. If any one is missing, it will decay into theater, and the company will lose the luck it spent years farming.</p>
 
 <!-- ═══════════════════ PART II ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v2/part-ii-place.png" alt="Plate II — Place in the System: a mechanical schematic locating Alpha and Beta inside Steps 7 and 8 of the broader Axiom Zen nine-step apparatus." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE II &middot; PLACE IN THE SYSTEM</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break" id="part-ii">
   <div class="part-label">Part II</div>
   <h2>The Place in the AZ System</h2>
@@ -1024,6 +1095,14 @@
 <p>Never assume &ldquo;Alpha&rdquo; means one thing. Ask first: <em>which archetype are we in?</em> Then design the Alpha to that archetype's shape.</p>
 
 <!-- ═══════════════════ PART III ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v2/part-iii-waitlist.png" alt="Plate III — The Intake Valve: a queued reservoir feeding into a pressure valve, depicting the pre-Alpha waitlist as the calibrated intake of demand." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE III &middot; THE INTAKE VALVE</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break" id="part-iii">
   <div class="part-label">Part III</div>
   <h2>Pre-Alpha: The Waitlist</h2>
@@ -1141,6 +1220,14 @@
 <p>If three of four are green, open Alpha. If two or fewer, continue the waitlist and iterate the narrative.</p>
 
 <!-- ═══════════════════ PART IV ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v2/part-iv-alpha.png" alt="Plate IV — The Hand-Picked Cohort: a small, deliberately curated group of users illuminated against a darker field, representing the closed Alpha selection." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE IV &middot; THE HAND-PICKED COHORT</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break" id="part-iv">
   <div class="part-label">Part IV</div>
   <h2>Alpha (Closed)</h2>
@@ -1220,6 +1307,8 @@
 
 <p>If all three are green, and the Hook is validated, we proceed. If any is red, we freeze &mdash; and we do not unfreeze by wishing.</p>
 
+<p>P0 and P1 here are not only bugs. A funnel or engagement metric that comes in materially below its category benchmark is treated identically &mdash; same gate, same freeze, same weekly P1 cadence. See &sect;28a for the threshold logic and concrete examples.</p>
+
 <h2 id="s20">&sect;20. Alpha exit criteria</h2>
 
 <p>To exit Alpha and enter Private Beta, both must be true:</p>
@@ -1249,6 +1338,14 @@ If PMF is above 40% <em>but the curve is falling</em>, that is a mirage: early e
 <p>The kill decision is the hardest one in the playbook. It is also the most important. A company that cannot kill its own Alphas is a company that will eventually run out of money because it refuses to read its own sieve.</p>
 
 <!-- ═══════════════════ PART V ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v2/part-v-beta.png" alt="Plate V — The Doubling Ladder: a staircase whose rungs grow geometrically, depicting the Private-to-Public Beta scale-up from cohort to franchise." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE V &middot; THE DOUBLING LADDER</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break" id="part-v">
   <div class="part-label">Part V</div>
   <h2>Beta (Private &rarr; Public)</h2>
@@ -1347,8 +1444,8 @@ If PMF is above 40% <em>but the curve is falling</em>, that is a mirage: early e
 <p>Each time we consider the next rung of the ladder, these are the specific checks that instantiate the three gates above:</p>
 
 <ol>
-  <li><strong>P0 count = 0</strong> over the last 7 days.</li>
-  <li><strong>P1 triage on a weekly cadence</strong>, with actual ship velocity against the list.</li>
+  <li><strong>P0 count = 0</strong> over the last 7 days. (Bugs and metric misses both. A tracked metric &le; 50% of its category benchmark counts as a P0; see &sect;28a.)</li>
+  <li><strong>P1 triage on a weekly cadence</strong>, with actual ship velocity against the list. (Bugs and metric misses; a tracked metric in the 50&ndash;80% band of category benchmark is a P1.)</li>
   <li><strong>Support ticket rate per 1,000 users flat or falling.</strong> If it is rising in absolute tickets per user, the product is getting harder to use as we widen it &mdash; a signal that something non-obvious is breaking for the newer cohorts.</li>
   <li><strong>Hook still strong.</strong> Sean Ellis PMF not collapsing in the newer cohort. It will drift down a few points as we widen from early adopters into the mainstream. That is expected. Drift from 45% to 38% is within cohort-mix tolerance. Drift from 45% to 25% is collapse &mdash; a signal that we have outrun the hook.</li>
   <li><strong>Retention curve still flattening</strong> at the D7, D14, D30 horizons appropriate to the product cadence.</li>
@@ -1422,6 +1519,32 @@ Any one materially worse week-over-week &rarr; roll back a rung.</p>
   <li>A credible narrative for the Public Beta launch. (See &ldquo;new hotel, spa's not open yet,&rdquo; &sect;37.)</li>
 </ol>
 
+<h2 id="s28a">&sect;28a. P0/P1: bugs and the metrics that miss the mark</h2>
+
+<p>So far P0 and P1 have been used in the bug-severity sense &mdash; crashes, data loss, broken core flows. That is the right starting point, but it is not the full surface. <strong>A funnel or engagement metric that comes in materially below its category benchmark is also a P0 or a P1, and it freezes the ladder for the same reason a crash does:</strong> the rollout is leaking customers we will not get back.</p>
+
+<div class="north-star-box">
+  <p><strong>P0 (metric).</strong> Any tracked funnel, activation, retention, or engagement metric coming in at <strong>&le; 50% of category benchmark.</strong> If the industry standard for visitor-to-signup is 5% and we are at 2%, that is a P0. If category open rate is 25% and ours is 10%, P0. If AZ-tier OK on D1 retention is 50% and we are landing at 25%, P0. Below half of standard means we are not in the same product category as the comparator &mdash; we are losing more than half the customers we should be capturing.</p>
+  <p><strong>P1 (metric).</strong> Any tracked metric coming in between <strong>50% and 80% of category benchmark.</strong> Industry conversion 5%, ours 3&ndash;4% &rarr; P1. Open rate 15&ndash;20% against a 25% standard &rarr; P1. D1 retention 30&ndash;40% against a 50% target &rarr; P1. The product works enough that users do not bounce in panic, but enough silent attrition is happening that the cohort will not compound.</p>
+  <p><strong>P2 / P3.</strong> Above 80% of standard. Within tolerance. Monitor week-over-week, work the optimization backlog, do not freeze the ladder for it.</p>
+</div>
+
+<p><strong>The promotion gate logic is unchanged.</strong> Too many open P0s &mdash; bug or metric &mdash; freezes the rollout. P0s must close to zero before we double. P1s ride the same weekly cadence as P1 bugs: &ldquo;Week one, we fix this first P1; week two, we fix the second P1; week three, we fix all the P1s.&rdquo; If P0/P1 counts (combined across bugs and metric misses) overwhelm the team, the doctrine from &sect;25 still applies &mdash; pause the rollout, get above water, then continue.</p>
+
+<p>Concrete examples of metric-miss classification:</p>
+
+<ul>
+  <li><strong>Visitor &rarr; signup conversion.</strong> Category benchmark 5%. P0 below 2.5%. P1 between 2.5% and 4%. (Sources: industry SaaS funnel reports, &sect;48.)</li>
+  <li><strong>Email / push open rate.</strong> Category benchmark 25% (transactional and onboarding). P0 below 12.5%. P1 between 12.5% and 20%.</li>
+  <li><strong>D1 retention (consumer).</strong> AZ-tier OK is 50% (&sect;30). P0 below 25%. P1 between 25% and 40%.</li>
+  <li><strong>Activation rate.</strong> AZ-tier OK is 30%. P0 below 15%. P1 between 15% and 24%.</li>
+  <li><strong>Onboarding completion.</strong> AZ-tier OK is 50%. P0 below 25%. P1 between 25% and 40%.</li>
+</ul>
+
+<p>The rule that calibrates the rule: <strong>the benchmark is the category benchmark, not the team's hope.</strong> If we are picking the comparator, we pick the closest analog product (consumer-finance app vs consumer-finance app, B2B SaaS vs B2B SaaS), not whichever benchmark makes us look best. Set the comparator before the launch, write it down with the gate metrics (&sect;30), and do not move it after the data comes in. Moving the comparator is HiPPO override (&sect;50) in numerical disguise.</p>
+
+<p>The pre-flight checklists in &sect;49 implicitly include this rule already &mdash; every gate metric in the table comes with a benchmark column. The change is operational: <strong>the weekly review reads the metric column the way it reads the bug column.</strong> Anything red on the metric side is logged as a P0 or P1, assigned to an owner, and either resolved or it freezes the next doubling. Metric misses do not get a softer process than bugs. They get the same process.</p>
+
 <h2 id="s29">&sect;29. Activation point discovery (continued)</h2>
 
 <p>Section 22 established that the aha moment is discovered, not designed. This section is the operational checklist for that discovery, and the catalog of wrong activation points that look right.</p>
@@ -1448,6 +1571,14 @@ Any one materially worse week-over-week &rarr; roll back a rung.</p>
 <p>The lesson: <strong>folklore is not causation.</strong> Every activation point you import from another company must be re-tested against your own cohort, with coverage, lift, and a forced-onboarding A/B. Don't borrow someone else's magic number and brag about it. Find your own and prove it.</p>
 
 <!-- ═══════════════════ PART VI ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v2/part-vi-metrics.png" alt="Plate VI — The Dashboard: an instrument panel of gauges and gate thresholds, depicting the canonical metrics table that governs gate decisions." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE VI &middot; THE DASHBOARD</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break" id="part-vi">
   <div class="part-label">Part VI</div>
   <h2>The Gate Metrics Table</h2>
@@ -1530,6 +1661,14 @@ Any one materially worse week-over-week &rarr; roll back a rung.</p>
 </ul>
 
 <!-- ═══════════════════ PART VII ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v2/part-vii-houndog.png" alt="Plate VII — Reading the Scent: a tracking hound following a behavioral trail of telemetry, depicting the discipline of mining product behavior for signal." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE VII &middot; READING THE SCENT</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break" id="part-vii">
   <div class="part-label">Part VII</div>
   <h2>Behavioral Signal Mining (The Hound Dog)</h2>
@@ -1609,6 +1748,14 @@ Any one materially worse week-over-week &rarr; roll back a rung.</p>
 <p>Apply the same measurement convention (share of WAU, rolling 4-week) to any jerry-rig threshold elsewhere in the playbook. &ldquo;20%&rdquo; on its own is ambiguous &mdash; 20% of signups, of MAU, of a given session? &mdash; and ambiguity is how pivot decisions get made on shaky ground.</p>
 
 <!-- ═══════════════════ PART VIII ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v2/part-viii-wom.png" alt="Plate VIII — The Cascade: a branching diffusion network of users telling other users, depicting product-led growth and word-of-mouth as engineered cascades." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE VIII &middot; THE CASCADE</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break" id="part-viii">
   <div class="part-label">Part VIII</div>
   <h2>PLG and Word-of-Mouth Engineering</h2>
@@ -1705,6 +1852,14 @@ Any one materially worse week-over-week &rarr; roll back a rung.</p>
 <p>When selecting the Alpha cohort from the waitlist, prefer 500 users in one cluster to 5,000 distributed users. Always.</p>
 
 <!-- ═══════════════════ PART IX ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v2/part-ix-programmatic.png" alt="Plate IX — The Loop: a closed-circuit feedback loop with predict-ship-measure-decide nodes, depicting promotion as a deterministic operating loop." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE IX &middot; THE LOOP</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break" id="part-ix">
   <div class="part-label">Part IX</div>
   <h2>Programmatic Execution</h2>
@@ -1970,8 +2125,36 @@ else:
   <li><strong>Private Beta Retention Runbook.</strong> A standalone operational runbook for the weekly Private Beta cadence described in &sect;22 &mdash; templates for cohort plots, activation-candidate scoring sheets, forced-onboarding A/B designs, segment breakouts.</li>
 </ul>
 
+<h2 id="s52">&sect;52. Addendum &mdash; Feature rollout on an existing product</h2>
+
+<p>Everything in this book is written in the framing of launching a new product &mdash; waitlist, Closed Alpha, Private Beta, Public Beta, GA. <strong>The same apparatus runs equally well for a feature on an existing product.</strong> The mechanics do not change. The gate metrics, the three-gate check (&sect;19), the doubling ladder (&sect;23), the P0/P1 logic for bugs and metric misses (&sect;28a), the Hound Dog ritual (&sect;33), the kill criteria (&sect;44) &mdash; all of it applies identically. <strong>What changes is the cohort source.</strong> An existing product already has internal users, paid testers, an active community, VIPs, and a base who can be invited to a feature waitlist. Use them in order. The seven-rung feature-rollout ladder:</p>
+
+<ol>
+  <li><strong>Internal group.</strong> Employees and dogfood. Same rule as a new-product Closed Alpha: if the people who built it will not use it daily, the feature is not ready to leave the building. Catch the embarrassing failures here, where the cost is internal annoyance and not customer churn.</li>
+  <li><strong>Paid testers.</strong> A contracted external test community &mdash; UserTesting, a panel, a paid-for cohort the team owns. They are not your users, but they are real humans interacting with the feature for money. Useful for catching usability and instructions-readability failures the internal group is too close to the product to see. Cheap, fast, low-stakes.</li>
+  <li><strong>Community of frequent testers.</strong> Your active engaged user community &mdash; the Discord regulars, the beta-program signups, the people who already opt in to test new things and give feedback as a habit. They forgive rough edges and they tell you what they saw. This rung is where the feature first meets actual users of the product.</li>
+  <li><strong>VIPs.</strong> Your highest-value existing users. Whales, top accounts, identified evangelists. They get the feature with a personal note before the public knows it exists. Two purposes: (1) protect the relationship by not letting them learn about it from Twitter, (2) catch the failure modes that only emerge at the high end of the usage distribution.</li>
+  <li><strong>Public announcement and feature waitlist.</strong> Now broadcast. Blog post, in-product banner, email, social. Open a feature-specific waitlist for users who want it. The waitlist itself is the demand signal &mdash; size, velocity, and source mix tell you whether this feature is wanted by a slice or by the base.</li>
+  <li><strong>Off the waitlist by evangelism + feedback fit.</strong> First batch off the waitlist: prioritize the users who will <em>talk about it</em> and <em>give the most useful early feedback.</em> Identifiable by past behavior &mdash; people who have referred others, posted reviews, filed thoughtful bug reports, replied to founder emails. They generate the word-of-mouth wave and the qualitative loop simultaneously.</li>
+  <li><strong>Off the waitlist by activation/retention fit.</strong> Second batch: prioritize the users for whom the feature most likely produces the metric outcomes the team set as the success condition. The users who, if the feature works as theorized, will activate or retain at the highest rate. This rung produces the real evidence on whether to ramp to the rest of the base or freeze and rework.</li>
+</ol>
+
+<p><strong>Mapping to the new-product playbook.</strong> Rungs 1&ndash;3 are the equivalent of Closed Alpha &mdash; small, hand-picked, accessible, instrumented, validating that the feature does not blow up in friendly hands. Rung 4 is Late Alpha &mdash; the high-stakes cohort that is still inside the trusted circle. Rungs 5&ndash;6 are Private Beta &mdash; controlled access, marketing engaged, community absorbing the feature, evangelists carrying it to the next ring. Rung 7 is the transition to Public Beta &mdash; the metric proof point that licenses ramping to the full base.</p>
+
+<p>The gate metrics, the doubling logic, the freeze-on-P0 discipline, and the signal mining run identically across these rungs. P0 = 0 before promoting from rung to rung. P1s on weekly cadence (&sect;28a includes metric-miss P0s and P1s in this count). Three-gate check at each promotion. Pre-committed kill criteria (&sect;44) &mdash; if the feature does not lift the metric it was built to lift, decided in advance, then the feature gets cut or rebuilt rather than absorbed into the surface area as dead weight. Feature debt compounds the same way product debt does.</p>
+
+<p><strong>The most common cause of feature-blowups on otherwise-healthy products is skipping rungs 1&ndash;4.</strong> Team is confident, feature ships straight to the public announcement, P0 emerges in the first 48 hours of broad exposure, the apologies start, the metrics never recover because the first impression is set. The seven-rung ladder is not bureaucracy; it is the same sieve as the new-product apparatus, sized to a feature instead of a product. Run it on every non-trivial feature. Earned confidence beats assumed confidence every time the data comes in.</p>
+
 <hr>
 
+<figure class="chapter-plate">
+  <img src="img/v2/coda-bridge.png" alt="Plate X — The Bridge: a span connecting the we-made-this shore to the strangers-use-this shore, depicting the transition this volume is built to govern." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE X &middot; THE BRIDGE</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <h2 id="coda">Coda</h2>
 
 <p>The Axiom Zen book ends with the scientific method as the operating system of the whole company. This book is the operating system in action. Nothing here is inventing principles &mdash; it is applying them to the single hardest moment in any product's life, which is the transition from <em>we made this</em> to <em>strangers use this.</em></p>

@@ -1,0 +1,32 @@
+[18:59:05] START part-i-frame
+[18:59:05] START part-ii-place
+[18:59:05] START part-iii-waitlist
+[18:59:05] START part-iv-alpha
+[18:59:05] START part-v-beta
+[18:59:06] FAIL part-iv-alpha: {"message":"Rate limit reached for gpt-image-1 (for limit gpt-image) in organization org-2JUOlCLrgvvvNaiJUvbv4wTO on input-images per min: Limit 5, Used 5, Requested 1. Please try again in 12s. Visit https://platform.openai.com/account/rate-limits to learn more.","type":"input-images","param":null,"code":"rate_limit_exceeded"}
+[18:59:44] DONE  part-i-frame  2577078 bytes
+[18:59:44] DONE  part-ii-place  2279112 bytes
+[18:59:48] DONE  part-v-beta  2533741 bytes
+[18:59:49] DONE  part-iii-waitlist  2320319 bytes
+[18:59:49] WAVE 1 DONE — sleeping 70s to clear rate limit
+[19:00:59] START part-vii-houndog
+[19:00:59] START part-viii-wom
+[19:00:59] START coda-bridge
+[19:00:59] START part-ix-programmatic
+[19:01:36] DONE  part-ix-programmatic  2444472 bytes
+[19:01:45] DONE  coda-bridge  2792285 bytes
+[19:01:47] DONE  part-viii-wom  2307805 bytes
+[19:01:48] DONE  part-vii-houndog  2240980 bytes
+[19:01:48] ALL DONE
+total 43184
+drwxr-xr-x@ 11 ro  wheel      352 Apr 24 19:01 .
+drwxr-xr-x@  7 ro  wheel      224 Apr 24 18:54 ..
+-rw-r--r--@  1 ro  wheel  2792285 Apr 24 19:01 coda-bridge.png
+-rw-r--r--@  1 ro  wheel  2577078 Apr 24 18:59 part-i-frame.png
+-rw-r--r--@  1 ro  wheel  2279112 Apr 24 18:59 part-ii-place.png
+-rw-r--r--@  1 ro  wheel  2320319 Apr 24 18:59 part-iii-waitlist.png
+-rw-r--r--@  1 ro  wheel  2444472 Apr 24 19:01 part-ix-programmatic.png
+-rw-r--r--@  1 ro  wheel  2533741 Apr 24 18:59 part-v-beta.png
+-rw-r--r--@  1 ro  wheel  2593754 Apr 24 18:57 part-vi-metrics.png
+-rw-r--r--@  1 ro  wheel  2240980 Apr 24 19:01 part-vii-houndog.png
+-rw-r--r--@  1 ro  wheel  2307805 Apr 24 19:01 part-viii-wom.png

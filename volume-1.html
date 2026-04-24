@@ -566,6 +566,57 @@
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
 
+  /* ── CHAPTER PLATE ── */
+  .chapter-plate{
+    margin: 80px auto 60px;
+    max-width: 920px;
+    padding: 0 20px;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .chapter-plate img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 22px;
+    border: 1px solid var(--gold, #C8A961);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.7),
+      0 3px 0 rgba(200,169,97,.18),
+      0 18px 38px rgba(14,47,61,.12);
+    background: var(--cream, #F1E8D4);
+  }
+  .chapter-plate figcaption{
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-plate .plate-rule{
+    flex: 0 0 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold, #C8A961), transparent);
+  }
+  .chapter-plate .plate-caption{
+    font-family: 'Söhne Mono', 'SF Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--teal, #0E2F3D);
+    white-space: nowrap;
+  }
+  @media (max-width: 720px){
+    .chapter-plate{ margin: 60px auto 44px; padding: 0 16px; }
+    .chapter-plate .plate-rule{ flex: 0 0 32px; }
+    .chapter-plate .plate-caption{ font-size: 10px; letter-spacing: .18em; }
+  }
+  @media print{
+    .chapter-plate img{ break-inside: avoid; }
+    .chapter-plate{ break-before: page; }
+  }
+
   /* ── FOOTER ── */
   .doc-footer {
     margin-top: 70px;
@@ -762,6 +813,14 @@
 </div>
 
 <!-- ═══════════════════ PROLOGUE ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v1/prologue.png" alt="Plate I — The Field at Morning: a quiet, dawn-lit landscape evoking the start of the journey, where the innovation process begins." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE I &middot; THE FIELD AT MORNING</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <h2 id="prologue">Prologue: Where This Process Comes From</h2>
 
 <p>Before this document tells you how to build, it owes you an answer to a simpler question: <em>why should you trust it?</em></p>
@@ -825,6 +884,14 @@
 <p><strong>A note on completeness:</strong> This document is a snapshot, not scripture. The process must survive contact with new markets, new technologies, and new evidence. When it doesn't, it must evolve. This version prioritizes fidelity over brevity. A separate, forward-looking operational playbook will be distilled later. This version captures everything the process has been up to now, including the parts that are still evolving.</p>
 
 <!-- ═══════════════════ PART I ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v1/part-i-thesis.png" alt="Plate II — Nine Steps, In Order: a diagrammatic ladder rendering of the nine-step innovation process from constraints through strategy." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE II &middot; NINE STEPS, IN ORDER</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break">
   <div class="part-label">Part I</div>
   <h2 id="part-i">The Thesis</h2>
@@ -883,6 +950,14 @@
 <p>The mechanism for moving between tiers is the <strong>Green Light Framework</strong> — a series of validation milestones that unlock investment in tranches. We'll cover it in detail in Part V.</p>
 
 <!-- ═══════════════════ PART II ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v1/part-ii-wave.png" alt="Plate III — Wave-Spotting: cresting wave with horizon markers, depicting the discipline of identifying the macro waves a product can ride." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE III &middot; WAVE-SPOTTING</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break">
   <div class="part-label">Part II</div>
   <h2 id="part-ii">Finding the Wave</h2>
@@ -995,6 +1070,14 @@
 <p>Each of these waves is mapped to existing and future products. CryptoKitties and Miquela explored the Gen AI wave. CryptoKitties and Top Shot rode the Asia wave. Fungible coins represent a future opportunity for Top Shot and beyond. Stablecoins and RWAs point toward Dapper's personal finance ambitions.</p>
 
 <!-- ═══════════════════ PART III ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v1/part-iii-archetypes.png" alt="Plate IV — The Shape of the Bet: six archetype silhouettes from Petri Dish to Killer App, mapping the different shapes a product investment can take." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE IV &middot; THE SHAPE OF THE BET</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break">
   <div class="part-label">Part III</div>
   <h2 id="part-iii">Getting in the Water</h2>
@@ -1138,6 +1221,14 @@
 <p>The sequence is not always linear. CryptoKitties started as something between a Petri Dish and a Probe, became a Lighthouse, and pointed the way toward the Killer App (Top Shot). The archetypes describe the <em>objective</em> of what you're building, not a permanent classification.</p>
 
 <!-- ═══════════════════ PART IV ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v1/part-iv-funnel.png" alt="Plate V — The Sieve: a funnel diagram showing many ideas entering, kill filters narrowing the flow, and survivors falling through to validation." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE V &middot; THE SIEVE</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break">
   <div class="part-label">Part IV</div>
   <h2 id="part-iv">Generating and Killing Ideas</h2>
@@ -1259,6 +1350,14 @@
 <p>The output of the Culling is not just a go/no-go. It is a clear articulation of the most significant assumptions that need validation — the inputs to the next step.</p>
 
 <!-- ═══════════════════ PART V ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v1/part-v-greenlight.png" alt="Plate VI — Green Light: stage-gated signal lamps marking Hook, Legs, and Flywheel validation milestones unlocking investment in tranches." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE VI &middot; GREEN LIGHT</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break">
   <div class="part-label">Part V</div>
   <h2 id="part-v">De-Risking and Validation</h2>
@@ -1410,6 +1509,14 @@
 <p><em>These benchmarks are based on industry best practices and should be calibrated to the specific product category. Roham should set the canonical thresholds for each Dapper product line.</em></p>
 
 <!-- ═══════════════════ PART VI ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v1/part-vi-clockspeed.png" alt="Plate VII — Clock Speed: a precision chronograph and learning loop motif, illustrating speed of iteration as competitive advantage." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE VII &middot; CLOCK SPEED</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break">
   <div class="part-label">Part VI</div>
   <h2 id="part-vi">Shipping and Learning</h2>
@@ -1515,6 +1622,14 @@
 <p>This doesn't scale forever. As products mature and move from SER to BBP to EBU, you need specialization. But the founder mindset must persist even as roles differentiate — the <em>orientation</em> toward learning, speed, and ownership doesn't go away. It just gets channeled into more structured forms.</p>
 
 <!-- ═══════════════════ PART VII ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v1/part-vii-moat.png" alt="Plate VIII — Seven Powers: a seven-pointed bastion diagram visualizing Hamilton Helmer's seven sources of durable competitive advantage." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE VIII &middot; SEVEN POWERS</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break">
   <div class="part-label">Part VII</div>
   <h2 id="part-vii">Building the Moat</h2>
@@ -1599,6 +1714,14 @@
 </div>
 
 <!-- ═══════════════════ PART IX ═══════════════════ -->
+<figure class="chapter-plate">
+  <img src="img/v1/part-ix-culture.png" alt="Plate IX — Founders, Not Functions: a portrait of operators wearing every hat, depicting the founder-mindset culture that animates the framework." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE IX &middot; FOUNDERS, NOT FUNCTIONS</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break">
   <div class="part-label">Part IX</div>
   <h2 id="part-ix">The Culture That Makes It Work</h2>
@@ -1648,6 +1771,14 @@
 <!-- ═══════════════════ PART X ═══════════════════ -->
 <!-- Finance and the Innovation Process — converted for az-book insertion -->
 
+<figure class="chapter-plate">
+  <img src="img/v1/part-x-finance.png" alt="Plate X — The Circuit-Breaker Ledger: an accounting ledger crossed with a circuit-breaker schematic, depicting milestone-gated investment as financing events." loading="lazy">
+  <figcaption>
+    <span class="plate-rule"></span>
+    <span class="plate-caption">PLATE X &middot; THE CIRCUIT-BREAKER LEDGER</span>
+    <span class="plate-rule"></span>
+  </figcaption>
+</figure>
 <div class="part-break">
   <div class="part-label">Part X</div>
   <h2 id="part-x">Finance and the Innovation Process</h2>
