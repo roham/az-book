@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Axiom Zen Innovation Process &mdash; Volume II: The Apparatus</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #1a1a1a;
+    --ink-light: #3a3a3a;
+    --ink-muted: #6b6b6b;
+    --bg: #fefdfb;
+    --bg-warm: #f9f6f1;
+    --bg-aside: #f4f1eb;
+    --accent: #8b4513;
+    --accent-light: #a0522d;
+    --border: #d4c5b0;
+    --border-light: #e8ddd0;
+    --rule: #c4b5a0;
+    --serif: 'Cormorant Garamond', 'Georgia', serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', 'Consolas', monospace;
+    --page-width: 720px;
+    --page-padding: 60px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @page { size: 7in 10in; margin: 1in 0.85in; }
+
+  @media print {
+    body { background: white; }
+    .page-container { box-shadow: none; border: none; margin: 0; padding: 0; max-width: none; }
+    .title-page, .part-break { page-break-before: always; }
+    h2 { page-break-before: always; }
+    h3, h4 { page-break-after: avoid; }
+    blockquote, table, pre, .case-study { page-break-inside: avoid; }
+    .no-print { display: none; }
+  }
+
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  body {
+    background: #e8e0d5;
+    color: var(--ink);
+    line-height: 1.75;
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.95rem;
+  }
+
+  .page-container {
+    max-width: calc(var(--page-width) + var(--page-padding) * 2);
+    margin: 40px auto;
+    background: var(--bg);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 10px 40px rgba(0,0,0,0.08);
+    border: 1px solid var(--border-light);
+    padding: var(--page-padding);
+    padding-top: 0;
+  }
+
+  /* ── TITLE PAGE ── */
+  .title-page {
+    text-align: center;
+    padding: 100px 20px 80px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 50px;
+  }
+  .title-page .ornament {
+    font-size: 1.8rem;
+    color: var(--accent);
+    letter-spacing: 12px;
+    margin-bottom: 40px;
+  }
+  .title-page h1 {
+    font-family: var(--serif);
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .title-page .volume-label {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 12px 0 14px;
+  }
+  .title-page .subtitle {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.5;
+    max-width: 520px;
+    margin: 0 auto 50px;
+  }
+  .title-page .author-line {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 4px;
+  }
+  .title-page .author-title {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    letter-spacing: 0.5px;
+  }
+  .title-page .version-badge {
+    display: inline-block;
+    margin-top: 40px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    color: var(--ink-muted);
+    border: 1px solid var(--border);
+    padding: 4px 16px;
+    border-radius: 2px;
+  }
+
+  /* ── ABSTRACT ── */
+  .abstract {
+    background: var(--bg-warm);
+    border: 1px solid var(--border-light);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    margin: 0 0 50px 0;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--ink-light);
+  }
+  .abstract strong { color: var(--ink); font-weight: 600; }
+
+  /* ── EPIGRAPH ── */
+  .epigraph {
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ink-muted);
+    padding: 30px 40px;
+    margin: 0 0 50px 0;
+  }
+  .epigraph .attrib {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 12px;
+  }
+
+  /* ── PART BREAKS ── */
+  .part-break {
+    text-align: center;
+    padding: 60px 20px;
+    margin: 60px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-warm);
+  }
+  .part-break .part-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .part-break h2 {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  /* ── HEADINGS ── */
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.65rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 55px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 40px 0 12px;
+    line-height: 1.35;
+  }
+  h4 {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink-light);
+    margin: 30px 0 8px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── BODY TEXT ── */
+  p {
+    margin-bottom: 16px;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+  strong { font-weight: 600; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* ── BLOCKQUOTES ── */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 24px 0;
+    padding: 14px 24px;
+    background: var(--bg-warm);
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    font-style: italic;
+    color: var(--ink-light);
+    line-height: 1.7;
+  }
+  blockquote strong { font-style: normal; }
+  blockquote em { font-style: italic; }
+  blockquote p { text-align: left; margin-bottom: 8px; }
+  blockquote .attrib {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 10px;
+  }
+
+  /* ── LISTS ── */
+  ul, ol { margin: 14px 0 18px 24px; }
+  li { margin-bottom: 8px; line-height: 1.65; }
+  li strong { color: var(--ink); }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.82rem;
+  }
+  thead th {
+    background: var(--bg-warm);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.75rem;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  tr:last-child td { border-bottom: 1px solid var(--border); }
+
+  .metrics-table { font-size: 0.78rem; }
+  .metrics-table td, .metrics-table th { padding: 8px 10px; }
+  .metrics-table td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+
+  /* ── CODE / PRE ── */
+  code {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    background: var(--bg-aside);
+    padding: 2px 5px;
+    border-radius: 2px;
+    color: var(--ink-light);
+  }
+  pre {
+    background: #2b2b2b;
+    color: #d4d4d4;
+    padding: 22px 26px;
+    border-radius: 3px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.65;
+    margin: 24px 0;
+    border: 1px solid #444;
+  }
+  pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+
+  /* ── HORIZONTAL RULES ── */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 50px auto;
+    width: 60%;
+  }
+
+  /* ── CASE STUDY ── */
+  .case-study {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 24px 28px;
+    margin: 28px 0;
+    background: var(--bg);
+  }
+  .case-study h3, .case-study h4 {
+    margin-top: 0;
+    color: var(--accent);
+  }
+  .case-study p { text-align: left; }
+
+  /* ── ARCHETYPE / CALLOUT BOX ── */
+  .archetype-box {
+    background: var(--bg-warm);
+    border: 1px solid var(--border-light);
+    border-radius: 3px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .archetype-box p { margin-bottom: 8px; text-align: left; }
+  .archetype-box strong { color: var(--accent); }
+
+  /* ── NORTH STAR BOX ── */
+  .north-star-box {
+    border-left: 3px solid var(--accent);
+    background: var(--bg-warm);
+    padding: 18px 24px;
+    margin: 22px 0;
+  }
+  .north-star-box strong { color: var(--accent); }
+  .north-star-box p { text-align: left; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    text-align: center;
+    margin: 50px 0;
+    color: var(--accent);
+    font-size: 1rem;
+    letter-spacing: 8px;
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    line-height: 1.7;
+  }
+  .doc-footer a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }
+
+  /* ── TOC ── */
+  .toc {
+    padding: 30px 0;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc h2 {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    border: none;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 0;
+  }
+  .toc-part {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 18px 0 6px;
+  }
+  .toc-item {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--ink-light);
+    padding: 3px 0 3px 16px;
+    line-height: 1.5;
+  }
+  .toc-part a, .toc-item a { color: inherit; text-decoration: none; }
+  .toc-part a:hover, .toc-item a:hover { text-decoration: underline; }
+
+  /* ── APPENDIX HEADING ── */
+  .appendix-header {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist { counter-reset: check; list-style: none; margin-left: 0; padding-left: 0; }
+  .checklist li { counter-increment: check; padding-left: 36px; position: relative; margin-bottom: 10px; text-align: left; }
+  .checklist li::before {
+    content: counter(check);
+    position: absolute;
+    left: 0; top: 1px;
+    width: 24px; height: 24px;
+    background: var(--accent);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+  }
+</style>
+</head>
+<body>
+<div class="page-container">
+
+<!-- ═══════════════════ TITLE PAGE ═══════════════════ -->
+<div class="title-page">
+  <div class="ornament">&#9670; &#9670; &#9670;</div>
+  <h1>The Axiom Zen<br>Innovation Process</h1>
+  <p class="volume-label">Volume II &middot; The Apparatus</p>
+  <p class="subtitle">Farming Luck: An Operator's Playbook for Waitlist, Alpha, and Beta</p>
+  <p class="author-line">Roham Gharegozlou</p>
+  <p class="author-title">Founder, Axiom Zen &amp; Dapper Labs</p>
+  <div class="version-badge">VERSION 1.0 &mdash; 2026.04</div>
+  <p style="margin-top: 28px; font-family: var(--serif); font-style: italic; font-size: 0.95rem; color: var(--ink-muted);">Companion to <a href="volume-1.html" style="color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent);">Volume I &mdash; The Thesis</a></p>
+</div>
+
+<!-- ═══════════════════ ABSTRACT ═══════════════════ -->
+<div class="abstract">
+  <strong>Abstract.</strong> This is the operational manual for the gap between Step 7 and Step 8 of the Axiom Zen Innovation Process &mdash; the moment a Green Lit bet becomes real code in front of a stranger, and the long arc from there to escape velocity. It codifies the phase-gate sequence <strong>waitlist &rarr; Alpha (closed) &rarr; Private Beta &rarr; Public Beta &rarr; GA</strong> as a sieve, not a schedule: each stage a finer screen, each promotion a programmatic function of metrics, each gate pre-committed before the cohort opens. The central doctrine is <strong>farming luck</strong>: innovation is not random, but it is luck-dependent, and luck is farmable by building machinery that increases both the rate at which breakthroughs can happen and the acuity with which the organization hears them when they do. The book covers waitlist doctrine and the case library (Superhuman, Robinhood, Dropbox, Clubhouse cautionary); Alpha as Hook validation with founder-led user interviews and Sean Ellis 40%; Private Beta as Legs validation through the retention cascade, smile curve, and discovered aha moment; Public Beta as Flywheel validation via Bass-diffusion word-of-mouth and product-led growth. Gate metrics are tabulated, kill criteria pre-committed, fallbacks taxonomized. The book assumes Volume I.
+</div>
+
+<!-- ═══════════════════ EPIGRAPH ═══════════════════ -->
+<div class="epigraph">
+  &ldquo;In the fields of observation, chance favors only the prepared mind.&rdquo;
+  <span class="attrib">Louis Pasteur, Lille, 7 December 1854</span>
+</div>
+
+<!-- ═══════════════════ TOC ═══════════════════ -->
+<div class="toc">
+  <h2>Contents</h2>
+  <div class="toc-part"><a href="#part-i">Part I &mdash; The Frame</a></div>
+  <div class="toc-item"><a href="#s1">&sect;1. Why this document exists</a></div>
+  <div class="toc-item"><a href="#s2">&sect;2. Farming luck</a></div>
+  <div class="toc-item"><a href="#s3">&sect;3. The Startup Sluice</a></div>
+  <div class="toc-item"><a href="#s4">&sect;4. The three commitments</a></div>
+  <div class="toc-part"><a href="#part-ii">Part II &mdash; The Place in the AZ System</a></div>
+  <div class="toc-item"><a href="#s5">&sect;5. Inside Steps 7 and 8</a></div>
+  <div class="toc-item"><a href="#s6">&sect;6. Mapping to the Green Light Framework</a></div>
+  <div class="toc-item"><a href="#s7">&sect;7. Tier implications</a></div>
+  <div class="toc-item"><a href="#s8">&sect;8. Archetype dependency</a></div>
+  <div class="toc-part"><a href="#part-iii">Part III &mdash; Pre-Alpha: The Waitlist</a></div>
+  <div class="toc-item"><a href="#s9">&sect;9. The waitlist is not a launch tactic</a></div>
+  <div class="toc-item"><a href="#s10">&sect;10. Waitlist case library</a></div>
+  <div class="toc-item"><a href="#s11">&sect;11. Viral math &mdash; the cycle-time lever</a></div>
+  <div class="toc-item"><a href="#s12">&sect;12. The waitlist decay curve</a></div>
+  <div class="toc-item"><a href="#s12a">&sect;12a. Public vs private waitlist</a></div>
+  <div class="toc-item"><a href="#s13">&sect;13. Waitlist gates to enter Alpha</a></div>
+  <div class="toc-part"><a href="#part-iv">Part IV &mdash; Alpha (Closed)</a></div>
+  <div class="toc-item"><a href="#s14">&sect;14. The purpose of Alpha</a></div>
+  <div class="toc-item"><a href="#s15">&sect;15. Cohort size and ladder</a></div>
+  <div class="toc-item"><a href="#s16">&sect;16. What we actually do in Alpha</a></div>
+  <div class="toc-item"><a href="#s17">&sect;17. Alpha-specific instrumentation</a></div>
+  <div class="toc-item"><a href="#s18">&sect;18. Alpha entry criteria</a></div>
+  <div class="toc-item"><a href="#s19">&sect;19. The three-gate check</a></div>
+  <div class="toc-item"><a href="#s20">&sect;20. Alpha exit criteria</a></div>
+  <div class="toc-item"><a href="#s21">&sect;21. Kill, pivot, or polish</a></div>
+  <div class="toc-part"><a href="#part-v">Part V &mdash; Beta (Private &rarr; Public)</a></div>
+  <div class="toc-item"><a href="#s22">&sect;22. The purpose of Beta &mdash; retention, habit, aha</a></div>
+  <div class="toc-item"><a href="#s23">&sect;23. The doubling ladder</a></div>
+  <div class="toc-item"><a href="#s24">&sect;24. The gate check at every doubling</a></div>
+  <div class="toc-item"><a href="#s25">&sect;25. Fallback taxonomy</a></div>
+  <div class="toc-item"><a href="#s26">&sect;26. Escalation protocol</a></div>
+  <div class="toc-item"><a href="#s27">&sect;27. The Vohra segmentation move</a></div>
+  <div class="toc-item"><a href="#s28">&sect;28. Private Beta vs Public Beta</a></div>
+  <div class="toc-item"><a href="#s29">&sect;29. Activation point discovery</a></div>
+  <div class="toc-part"><a href="#part-vi">Part VI &mdash; The Gate Metrics Table</a></div>
+  <div class="toc-item"><a href="#s30">&sect;30. The canonical metrics table</a></div>
+  <div class="toc-part"><a href="#part-vii">Part VII &mdash; Behavioral Signal Mining (The Hound Dog)</a></div>
+  <div class="toc-item"><a href="#s31">&sect;31. Product is behavior, not PRD</a></div>
+  <div class="toc-item"><a href="#s32">&sect;32. Signal taxonomy</a></div>
+  <div class="toc-item"><a href="#s33">&sect;33. The Hound Dog ritual</a></div>
+  <div class="toc-item"><a href="#s34">&sect;34. The silent supermajority</a></div>
+  <div class="toc-item"><a href="#s35">&sect;35. Pivot vs polish decision rule</a></div>
+  <div class="toc-part"><a href="#part-viii">Part VIII &mdash; PLG and Word-of-Mouth Engineering</a></div>
+  <div class="toc-item"><a href="#s36">&sect;36. The math of WOM is not opinion</a></div>
+  <div class="toc-item"><a href="#s37">&sect;37. PLG works &mdash; with boundary conditions</a></div>
+  <div class="toc-item"><a href="#s38">&sect;38. Loops, ranked by viability</a></div>
+  <div class="toc-item"><a href="#s39">&sect;39. Rogers' five attributes as WOM scorecard</a></div>
+  <div class="toc-item"><a href="#s40">&sect;40. STEPPS &mdash; the feature-sharing checklist</a></div>
+  <div class="toc-item"><a href="#s41">&sect;41. NPS is a thermometer, not a gate</a></div>
+  <div class="toc-item"><a href="#s42">&sect;42. Atomic network seeding</a></div>
+  <div class="toc-part"><a href="#part-ix">Part IX &mdash; Programmatic Execution</a></div>
+  <div class="toc-item"><a href="#s43">&sect;43. Promotion as a deterministic function</a></div>
+  <div class="toc-item"><a href="#s44">&sect;44. Pre-committed kill criteria</a></div>
+  <div class="toc-item"><a href="#s45">&sect;45. Programmatic enough &mdash; automate what should be</a></div>
+  <div class="toc-item"><a href="#s46">&sect;46. The agent layer</a></div>
+  <div class="toc-part"><a href="#part-x">Part X &mdash; Appendix</a></div>
+  <div class="toc-item"><a href="#s47">&sect;47. Quote library</a></div>
+  <div class="toc-item"><a href="#s48">&sect;48. Benchmark sources</a></div>
+  <div class="toc-item"><a href="#s49">&sect;49. Pre-flight checklists</a></div>
+  <div class="toc-item"><a href="#s50">&sect;50. Anti-pattern catalog</a></div>
+  <div class="toc-item"><a href="#s51">&sect;51. Forthcoming companion docs</a></div>
+  <div class="toc-item"><a href="#coda">Coda</a></div>
+</div>
+
+<!-- ═══════════════════ PART I ═══════════════════ -->
+<div class="part-break" id="part-i">
+  <div class="part-label">Part I</div>
+  <h2>The Frame</h2>
+</div>
+
+<h2 id="s1">&sect;1. Why this document exists</h2>
+
+<p>The Axiom Zen Innovation Book lays out how we choose what to build, how we fund it, and how we staff it &mdash; the Nine Steps, the Green Light Framework, the Six Archetypes, the portfolio tiers (SER/BBP/EBU), the Clock Speed, the Bold Beats, the Scientific Method as an operating system. That book is the architecture of how we pick bets and fund them without flinching.</p>
+
+<p>It stops, deliberately, at the moment the bet becomes real code in front of a stranger. Step 7 says: <em>ship it</em>. Step 8 says: <em>scale what works</em>. Between those two words sits almost every company we have ever killed and almost every one we have ever kept.</p>
+
+<p>This is the operational manual for that gap.</p>
+
+<p>Wherever the AZ book uses a term &mdash; Hooks, Legs, Flywheel, Petri Dish, Killer App, Bold Beat, above water, programmatic enough &mdash; this book uses the same term and sharpens its edge. If you have not read the AZ book, read it first. This one assumes it.</p>
+
+<p>What you hold is the companion. The second book. The part that turns a Green Lit bet into an actual business by running it through a sequence of ever-sharpening sieves, watching what users <em>do</em> with it, and either doubling the invite list or pulling the plug. No politics. No theater. No self-deception.</p>
+
+<p>If the AZ book is <em>how we get to the starting line</em>, this book is <em>how we get to escape velocity</em>.</p>
+
+<h2 id="s2">&sect;2. Farming luck</h2>
+
+<p>Innovation is not random. It requires luck. But luck is farmable.</p>
+
+<p>This is the central doctrine and it sits behind every decision downstream. Every page of this playbook &mdash; every gate, every metric, every cohort ladder &mdash; exists to increase the number of shots we take and to sharpen the instrument we use to hear when one lands. We are not praying for lightning. We are building rods, placing them in fields during storm season, and watching the sky.</p>
+
+<p>The frame has been given to us by people smarter than we are:</p>
+
+<blockquote>
+  <p><em>&ldquo;Dans les champs de l'observation, le hasard ne favorise que les esprits pr&eacute;par&eacute;s.&rdquo;</em><br>
+  (&ldquo;In the fields of observation, chance favors only the prepared mind.&rdquo;)</p>
+  <span class="attrib">Louis Pasteur, Lille inaugural lecture, 7 December 1854</span>
+</blockquote>
+
+<p>Pasteur was not talking about fortune cookies. He meant that chance events happen constantly, and the person who happens to be <em>equipped</em> to notice one and act on it gets credit for a breakthrough. Everyone else gets nothing. The preparation is the whole thing.</p>
+
+<blockquote>
+  <p><em>&ldquo;I used the same technique which I had found successful when working with the lysozyme&hellip;&rdquo;</em></p>
+  <span class="attrib">Alexander Fleming, Nobel Lecture, 1945</span>
+</blockquote>
+
+<p>Fleming did not stumble onto penicillin because he was lucky. He stumbled onto penicillin because he had already spent years developing the technique to <em>recognize</em> what he saw in the contaminated petri dish. Other microbiologists had seen moldy plates and thrown them out. Fleming had built the apparatus to ask the right question of a contaminated sample. The mold was luck. The preparation was not.</p>
+
+<blockquote>
+  <p><em>&ldquo;Chance favors the connected mind.&rdquo;</em></p>
+  <span class="attrib">Steven Johnson, <em>Where Good Ideas Come From</em> (2010)</span>
+</blockquote>
+
+<blockquote>
+  <p><em>&ldquo;Adjacent possible.&rdquo;</em> Stuart Kauffman, on how the next viable move depends on the current boundary of what exists. You cannot leap to the distant possibility. You can only step into what is one step away from the current edge.</p>
+</blockquote>
+
+<blockquote>
+  <p><em>&ldquo;Bush [early, protected] vs Franchise [mature, optimized].&rdquo;</em> Safi Bahcall, <em>Loonshots</em> (2019). Different phases demand different environments. Do not run a bush project on franchise metrics.</p>
+</blockquote>
+
+<blockquote>
+  <p><em>&ldquo;Equal-odds rule.&rdquo;</em> Dean Keith Simonton. Within a given creator, the hit-rate is roughly constant. What varies is volume. Geniuses are not more likely per attempt. They just take more attempts.</p>
+</blockquote>
+
+<blockquote>
+  <p><em>&ldquo;Convexity. Optionality. Barbell.&rdquo;</em> Nassim Taleb. Bets whose downside is bounded and whose upside is open-ended are the only bets worth taking in uncertain systems. Beta is how we enforce that asymmetry at the product level.</p>
+</blockquote>
+
+<blockquote>
+  <p><em>&ldquo;Luck surface area = Doing &times; Telling.&rdquo;</em> Jason Roberts. The more things you do, and the more you let the world know about them, the larger the surface area that luck can strike. Waitlists are luck surface area. Alphas are luck surface area. Every user conversation is luck surface area.</p>
+</blockquote>
+
+<blockquote>
+  <p><em>&ldquo;Maximize opportunities. Listen to intuition. Expect good fortune. Turn bad luck to good.&rdquo;</em> Richard Wiseman, <em>The Luck Factor</em> (2003). Empirical work on &ldquo;lucky&rdquo; versus &ldquo;unlucky&rdquo; people. The lucky ones did not roll better dice. They showed up more, paid closer attention, and re-framed setbacks faster.</p>
+</blockquote>
+
+<p>Put together, these thinkers tell us something that should be uncontroversial and that most companies nevertheless ignore: <strong>you do not sit and wait for the breakthrough. You build machinery that increases the rate at which breakthroughs can happen, and the acuity with which you hear them when they do.</strong></p>
+
+<p>The Alpha/Beta process is that machinery. That is the whole book in one sentence.</p>
+
+<p>The frame itself is empirical. We refined it by observing which luck-farming practices compounded across our own bets and we will adjust when the data contradicts it. This book is the current best draft of the apparatus, not the final one.</p>
+
+<h2 id="s3">&sect;3. The Startup Sluice</h2>
+
+<p>Picture a mining sluice. At the top, you pour in a slurry of ore &mdash; ideas, PRDs, pitches, hunches, half-baked prototypes. The slurry moves through a series of progressively finer screens. Most of what you poured in washes out. What survives the first screen is smaller, denser, more promising. What survives the second screen is smaller still. At the bottom of the apparatus, if the mine is real, there is gold.</p>
+
+<p>The Alpha/Beta pipeline is our sluice. Each stage is a finer sieve. Ideas enter wide. Survivors exit narrow and sharp. The sieves are:</p>
+
+<ol>
+  <li><strong>Green Lit concept</strong> (from the AZ Nine Steps)</li>
+  <li><strong>Pre-Alpha / Waitlist</strong> &mdash; demand exists in strangers' minds</li>
+  <li><strong>Alpha (closed)</strong> &mdash; strangers actually use it, the hook lands</li>
+  <li><strong>Private Beta</strong> &mdash; it has legs: retention holds, the habit forms, evangelists surface</li>
+  <li><strong>Public Beta</strong> &mdash; it scales through word-of-mouth without collapsing</li>
+  <li><strong>GA</strong> &mdash; it operates as a franchise, not a bush</li>
+</ol>
+
+<p>At each step, we lose ideas. This is not failure. This is the step working. A pipeline that never kills anything is a pipeline without screens.</p>
+
+<p>The point of this book is to describe what each screen is made of, what passes through it, and how we decide &mdash; honestly, programmatically, without ego &mdash; whether to keep going.</p>
+
+<p>What survives all the way down is shaped, at every stage, not by our opinions but by the behavior of strangers. This is the crucial inversion. When a product emerges from the sluice, it is not the product we started with. It is the product that <em>customers carved out of what we started with</em> by choosing, with their actions, which parts to use and which parts to ignore. The team's job is to notice, quickly.</p>
+
+<p>Lightning in a bottle is not metaphor. It is the empirical claim that rare outsized outcomes emerge from a specific combination &mdash; the right team, the right moment, the right wave, the right scientific apparatus to capture the signal when it hits. You cannot generate the lightning. You can only be ready to catch it. The farming-luck process, the sieve, and the scientific method are the three legs of that readiness. Miss any leg and the lightning strikes and dissipates before you can bottle it.</p>
+
+<h2 id="s4">&sect;4. The three commitments</h2>
+
+<p>This pipeline only works if three commitments are real. Drop any one of them and you are running theater.</p>
+
+<div class="archetype-box">
+  <p><strong>Commitment 1: Programmatic gating.</strong> Promotion from one stage to the next is a function of metrics, not meetings. Before we open a cohort, we write down the numbers that will permit its doubling, the numbers that will force its freeze, and the numbers that will trigger a rollback. Then, week over week, the numbers decide. Our job is to set direction and then <em>refuse</em> to override the gate. If this sounds harsh, remember: the alternative is an organization that promotes products for political reasons, and every person in the room already knows which ones.</p>
+</div>
+
+<div class="archetype-box">
+  <p><strong>Commitment 2: Customer-driven shape.</strong> What users <em>do</em> with the product overrides what we <em>thought we were building</em>. If the waitlist shape suggests a different market, we adjust. If the Alpha session replays show people using the third-most-important feature as if it were the first, we adjust. If the Beta cohort is retaining because of a surprise use case, we double down on the surprise. As founders we chose the direction. From the moment a stranger touches the product, the customer is a co-pilot. This is not abdication. This is the only way to avoid building a beautiful thing no one wants.</p>
+</div>
+
+<div class="archetype-box">
+  <p><strong>Commitment 3: Scientific method.</strong> Each cohort launch is a hypothesis, not a vanity milestone. Before we ship: <em>we predict the number</em>. After we ship: <em>we compare the number to the prediction</em>. We write down, before the experiment, what result will cause us to kill the product. Then, if we see that result, we kill it. Ries calls this the pivot-or-persevere meeting, scheduled in advance, where the numbers are presented and the decision is made with the evidence already collected. We run ours the same way.</p>
+</div>
+
+<p>If Programmatic Gating, Customer-Driven Shape, and Scientific Method are all operational, the Alpha/Beta pipeline will compound. If any one is missing, it will decay into theater, and the company will lose the luck it spent years farming.</p>
+
+<!-- ═══════════════════ PART II ═══════════════════ -->
+<div class="part-break" id="part-ii">
+  <div class="part-label">Part II</div>
+  <h2>The Place in the AZ System</h2>
+</div>
+
+<h2 id="s5">&sect;5. Inside Steps 7 and 8</h2>
+
+<p>In the Nine Steps, Alpha and Beta live inside Step 7 (build the minimum lovable thing) and extend into Step 8 (scale what works). They are not new steps. They are the rigor inside those two.</p>
+
+<p>What makes Step 7 real is the Alpha. What makes Step 8 real is the Beta doubling ladder. Without this machinery, Step 7 becomes &ldquo;we shipped something&rdquo; and Step 8 becomes &ldquo;we spent a lot on marketing.&rdquo; Both of those outcomes kill companies.</p>
+
+<h2 id="s6">&sect;6. Mapping to the Green Light Framework</h2>
+
+<p>The AZ book's Green Light Framework defines three stages of a bet's life: <strong>Hook</strong>, <strong>Legs</strong>, <strong>Flywheel</strong>.</p>
+
+<ul>
+  <li><strong>Alpha = Hook validation.</strong> Does it grab? Does a stranger who touches the product get it, use it, come back the next day?</li>
+  <li><strong>Private Beta = Legs validation.</strong> Does it hold? Do weekly cohorts retain through D7, D14, D30 &mdash; and does the curve start to smile as the habit forms?</li>
+  <li><strong>Public Beta = Flywheel validation.</strong> Does it pull the next user in by itself? Is word-of-mouth carrying new users into the product faster than we push them in? Does the K-factor cross the threshold where external push becomes optional?</li>
+</ul>
+
+<p>Preserve the vocabulary. Alpha is Hooks. Private Beta is Legs. Public Beta is Flywheel. GA is the franchise.</p>
+
+<h2 id="s7">&sect;7. Tier implications &mdash; do not open Alpha without tier alignment</h2>
+
+<p>The AZ book divides the portfolio into SER (Search), BBP (Big Bold Play), and EBU (Existing Business Unit). Each tier has different risk tolerance, different investment size, different time horizon.</p>
+
+<ul>
+  <li><strong>Alpha sits in late-SER / early-BBP.</strong> It is the moment a search candidate either becomes a real bet or returns to the idea pool. The capital commitment steps up: you are no longer merely exploring, you are reserving a slot in the portfolio for this thing to prove itself.</li>
+  <li><strong>Private Beta is a BBP phase.</strong> The bet is now real. The company is betting time, headcount, roadmap position, and opportunity cost on this specific hypothesis.</li>
+  <li><strong>Public Beta transitions BBP &rarr; EBU candidacy.</strong> If it graduates, it becomes a franchise. If not, it becomes a shut-down decision.</li>
+</ul>
+
+<p>The implication: <strong>do not open an Alpha without first confirming the tier the bet is in.</strong> Running an Alpha on a product whose portfolio slot is not committed is how teams burn months discovering they were never authorized to scale even if it worked. The AZ book's resourcing doctrine &mdash; <em>every resource request is a financing event</em> &mdash; applies here. Alpha is a financing event, even if no new capital flows. The organization is committing scarce founder and engineering attention. Treat it that way.</p>
+
+<h2 id="s8">&sect;8. Archetype dependency</h2>
+
+<p>The AZ book's Six Archetypes shape every build. An Alpha for a Petri Dish &mdash; early, exploratory, learning-first &mdash; is not the same as an Alpha for a Killer App &mdash; large-market, consumer-scale, growth-first. They have different cohort sizes, different gate metrics, different kill criteria.</p>
+
+<p>Examples of the archetype-dependent shift:</p>
+
+<div class="archetype-box">
+  <p><strong>Petri Dish Alpha:</strong> cohort 5&ndash;20; success = qualitative novelty signal; exit = a sharper hypothesis, not a metric. The Alpha may run for months.</p>
+  <p><strong>Killer App Alpha:</strong> cohort 50&ndash;200; success = a quantitative hook (Sean Ellis 40% or cohort-flattening D7); exit = a green gate metric. The Alpha often runs 4&ndash;8 weeks.</p>
+  <p><strong>Platform Alpha:</strong> the user is another builder. Cohort = design partners. Success = they build something on the platform you did not prompt.</p>
+  <p><strong>Scale-Play Alpha:</strong> already assumes distribution. Alpha is checking fit against a known channel.</p>
+</div>
+
+<p>Never assume &ldquo;Alpha&rdquo; means one thing. Ask first: <em>which archetype are we in?</em> Then design the Alpha to that archetype's shape.</p>
+
+<!-- ═══════════════════ PART III ═══════════════════ -->
+<div class="part-break" id="part-iii">
+  <div class="part-label">Part III</div>
+  <h2>Pre-Alpha: The Waitlist</h2>
+</div>
+
+<h2 id="s9">&sect;9. The waitlist is not a launch tactic</h2>
+
+<p>The waitlist is the top of the sieve. Teams that treat it as a marketing trick lose its real value. Its real purposes, in order of importance:</p>
+
+<ol>
+  <li><strong>Filter for real demand.</strong> A person who gives you an email and signs up for a thing that does not exist yet is worth more, as a signal, than a hundred passive impressions. The waitlist is the first honest measurement the world gives you.</li>
+  <li><strong>Pressure-test the pitch.</strong> The conversion rate from landing-page visitor to waitlist signup is a live measurement of whether the positioning lands. If it does not, you do not have a product problem yet &mdash; you have a narrative problem.</li>
+  <li><strong>Seed atomic networks.</strong> The first 100, 500, 2,000 users must be picked, not drawn from the aggregate. Andrew Chen's doctrine is correct: the first network must be geographically or socially bounded. A globally distributed waitlist is an anti-pattern. Cluster the first cohorts.</li>
+  <li><strong>Create the narrative of scarcity.</strong> Scarcity, honestly deployed, is a WOM amplifier. Dishonestly deployed, it is a Clubhouse. Read the case studies below and know which is which.</li>
+</ol>
+
+<h2 id="s10">&sect;10. Waitlist case library</h2>
+
+<p>Use this as calibration. The numbers are reported; attributions are the originators.</p>
+
+<div class="case-study">
+  <h4>Superhuman</h4>
+  <p>Peak waitlist ~450,000. Onboarding rate-limited to ~100 users/week with a mandatory 30-minute white-glove call. ~65% of admitted signups transitioned to paid. Product-market fit lifted from 22% &ldquo;very disappointed&rdquo; to 58% over three quarters of segment-driven iteration. [Rahul Vohra; First Round Review; Superhuman blog.]</p>
+</div>
+
+<div class="case-study">
+  <h4>Robinhood</h4>
+  <p>~1,000,000 pre-launch waitlist. 10K on day one, 50K in week one. &gt;50% of signups from referral. Mechanic: position-in-line visible; referral moves you up. Cost per signup: near zero. [Founders at Work; contemporaneous press.]</p>
+</div>
+
+<div class="case-study">
+  <h4>Dropbox</h4>
+  <p>100K &rarr; 4M in 15 months (~3,900% growth). Referral bounty: 500MB free storage per successful invite (two-sided). Permanent +60% lift on baseline signup rate. Demo video with deliberate niche in-jokes to seed technical WOM. [Drew Houston; Sean Ellis &ldquo;Growth Hacking&rdquo; lecture.]</p>
+</div>
+
+<div class="case-study">
+  <h4>Mailbox</h4>
+  <p>1.3M waitlist in 6 weeks. Public queue with a live progress bar showing &ldquo;you are #382,104 in line; 4,000 in front of you today.&rdquo; Visible draining is the engagement mechanic. [Mailbox launch communications.]</p>
+</div>
+
+<div class="case-study">
+  <h4>Clubhouse (cautionary)</h4>
+  <p>Invite-gated scarcity with no retention substrate. 10M MAU peak &rarr; ~3.5M in six months (-65% downloads). Scarcity without sticky use-case = cliff. [Sensor Tower; App Annie.]</p>
+</div>
+
+<div class="case-study">
+  <h4>Hey</h4>
+  <p>50K waitlist in month one. ~75% of admitted users converted to paid. Paid from day one &mdash; no free tier theater. [Basecamp communications; DHH talks.]</p>
+</div>
+
+<div class="case-study">
+  <h4>Monzo</h4>
+  <p>&ldquo;Golden Ticket&rdquo; &mdash; each user received one invite token after two weeks of active use. Drove ~40% of 2017 signups at effectively zero CAC. Waitlist grew 70K &rarr; 600K over the campaign. [Monzo investor updates.]</p>
+</div>
+
+<div class="case-study">
+  <h4>Linear</h4>
+  <p>10K waitlist. Private beta ran ~12 months. Admissions via direct invite + Slack community participation. Highly curated; retention defined the cadence of opening. [Linear blog; Karri Saarinen interviews.]</p>
+</div>
+
+<div class="case-study">
+  <h4>Figma</h4>
+  <p>~10-month private preview before public beta. Design partners were major studios. The long incubation was the unlock &mdash; by the time public launched, the network effect inside teams was already real. [Dylan Field interviews.]</p>
+</div>
+
+<div class="case-study">
+  <h4>Arc Browser (cautionary)</h4>
+  <p>~500K Windows waitlist stretched &gt;9 months. Public sentiment shifted from &ldquo;dying for it&rdquo; to &ldquo;did they give up on Windows.&rdquo; Decay risk is real; silence kills the asset.</p>
+</div>
+
+<div class="case-study">
+  <h4>Notion</h4>
+  <p>No conventional waitlist. Ambassador program. ~95% organic growth. Proof that &ldquo;waitlist&rdquo; is one implementation of a broader principle, not the principle itself. [Notion public communications.]</p>
+</div>
+
+<h2 id="s11">&sect;11. Viral math &mdash; the cycle-time lever</h2>
+
+<p>David Skok's formulation: <strong>K = i &times; c &times; (1 / cycle_time)</strong>, where <em>i</em> is invites per user, <em>c</em> is conversion rate per invite, and <em>cycle_time</em> is how long the loop takes to complete. Most teams obsess over raising <em>K</em> and ignore <em>cycle_time</em>. Halving cycle_time doubles the effective compounding rate. This is why products that reduce friction on the <em>invite step itself</em> (one-tap share, deep-linked auto-fill) outperform products that merely increase reward.</p>
+
+<p>For waitlist design, cycle-time is: sign up &rarr; get referral link &rarr; share &rarr; friend clicks &rarr; friend signs up. If any step takes days, the loop dies. If the full loop fits inside a single session on one phone, the loop compounds.</p>
+
+<h2 id="s12">&sect;12. The waitlist decay curve</h2>
+
+<p>The hardest-earned data point from our own work and the case library:</p>
+
+<ul>
+  <li>If a waitlisted user is invited within 30 days of signup, ~50% activate.</li>
+  <li>If invited at 30&ndash;90 days, activation drops to ~30%.</li>
+  <li>If invited after 90 days, activation falls below 20% in most consumer cases.</li>
+</ul>
+
+<p><strong>Implication: scarcity governs, but silence kills.</strong> A waitlist that grows without communication degrades weekly. Arc's stretched Windows launch is the canonical cautionary case. The remedy is not to open the gate &mdash; the remedy is to <em>talk</em>. Progress updates, team behind the curtain, honest delays, milestones. The waitlist is a relationship, not a queue.</p>
+
+<h2 id="s12a">&sect;12a. Public vs private waitlist &mdash; choose by archetype</h2>
+
+<p>Public waitlist = viral surface, position-in-line visible, referral bounty, narrative-forward. Works for Killer App and Lighthouse archetypes where the story is ready for strangers to inspect.</p>
+
+<p>Private waitlist = curated, hand-invited, community-gated, design-partner-shaped. Works for Petri Dish, Probe, and Frame archetypes where the product is too rough for strangers and the signal density of early users matters more than volume.</p>
+
+<p>Beachhead archetype splits the difference: public waitlist bounded by geography or vertical.</p>
+
+<p>The wrong choice burns real demand. A Petri Dish product with a public waitlist signals false confidence and generates expectation the product cannot meet. A Killer App with a private waitlist leaves organic virality on the table and invites a Clubhouse-shaped cliff.</p>
+
+<h2 id="s13">&sect;13. Waitlist gates to enter Alpha</h2>
+
+<p>Before we open the Alpha cohort, the waitlist must itself clear the following:</p>
+
+<ul>
+  <li><strong>Depth of demand signal.</strong> Is the signup coming from organic search, social, or paid? Organic share &gt; 50% = strong demand. &lt; 20% = the market is being manufactured by us, which means Alpha will reveal it.</li>
+  <li><strong>Clustering.</strong> Can we identify a geographic, vertical, or social cluster of at least 500 accounts? If not, Alpha will be a distributed experiment without a network effect.</li>
+  <li><strong>Referral rate.</strong> If any referral mechanism is present, the per-user invite count above 1.0 is a green light. Below 0.3 is a warning.</li>
+  <li><strong>Sentiment.</strong> Replies to waitlist communications, tone of subreddit/Discord chatter, &ldquo;when will this ship&rdquo; density in inbound channels.</li>
+</ul>
+
+<p>If three of four are green, open Alpha. If two or fewer, continue the waitlist and iterate the narrative.</p>
+
+<!-- ═══════════════════ PART IV ═══════════════════ -->
+<div class="part-break" id="part-iv">
+  <div class="part-label">Part IV</div>
+  <h2>Alpha (Closed)</h2>
+</div>
+
+<h2 id="s14">&sect;14. The purpose of Alpha</h2>
+
+<p>Alpha's job is one thing: <strong>validate the Hook.</strong> The binary question is whether strangers outside the team &mdash; not friends, not investors, not employees &mdash; <em>get it</em> within a single session without hand-holding. If they do, you have a Hook. If they don't, no amount of Legs or Flywheel work will save the product.</p>
+
+<p>The Hook is the thirty-second reaction. Do they lean in, or do they avoid eye contact? Do their eyes light up, or do their eyebrows scrunch?</p>
+
+<h2 id="s15">&sect;15. Cohort size and ladder</h2>
+
+<p>Two phases inside Alpha, run sequentially:</p>
+
+<ul>
+  <li><strong>Dogfood Alpha: 5&ndash;20 users.</strong> Hand-picked. Internal employees + immediate network. Purpose: find the embarrassing bugs before strangers see them. Run: 1&ndash;2 weeks.</li>
+  <li><strong>Closed Alpha: 50&ndash;200 users.</strong> Strangers from the waitlist, selected to match the archetype's target cluster. Purpose: validate the Hook with people who do not owe you politeness. Run: 4&ndash;8 weeks.</li>
+</ul>
+
+<p>Smaller than 50 and you cannot distinguish signal from friendship. Larger than 200 and you lose the ability to talk to every user.</p>
+
+<p>Constraints breed greatness. The cohort cap is not a limitation &mdash; it is the constraint that forces the team to treat every user like a co-founder.</p>
+
+<h2 id="s16">&sect;16. What we actually do in Alpha</h2>
+
+<p>This is where founders earn our keep.</p>
+
+<ul>
+  <li><strong>Founder-interview every user.</strong> Every one. Target: 30 minutes, video, recorded, indexed. For a 100-person Alpha, that is 50 hours of a leader's calendar. It is worth it because there's no other way to build a human connection.</li>
+  <li><strong>Ritualize the debrief.</strong> Twice weekly, 45 minutes, team + product + design + engineering. Rotate who summarizes the interviews. Surface the contradictions. Kill features no one used. Add nothing without evidence.</li>
+  <li><strong>Read every session replay.</strong> Or at minimum, sample ten a day at random. The gap between what users <em>say</em> in the interview and what the replay <em>shows</em> is where the truth lives.</li>
+  <li><strong>Do things that don't scale.</strong> Paul Graham's line is load-bearing here. Onboard users personally. Hand-write the welcome email. Fix their broken account on a Sunday. The early users have to feel owned, because they are the atomic network. [Paul Graham, &ldquo;Do Things That Don't Scale,&rdquo; 2013.]</li>
+</ul>
+
+<p>This is the Customer Development move (Steve Blank). It is also Scientific Method (predict &rarr; observe &rarr; update). It is not delegable.</p>
+
+<p>My threshold on conviction-building is roughly 100 users interviewed personally. Below that, my instinct is under-calibrated to the population. Above that, my instinct is a working instrument. This is the empirical floor.</p>
+
+<h2 id="s17">&sect;17. Alpha-specific instrumentation</h2>
+
+<p>What to build into the product before Alpha opens:</p>
+
+<ul>
+  <li><strong>Hook rate</strong> &mdash; percentage of invited users who install and complete a first meaningful action within 24 hours.</li>
+  <li><strong>First-session completion</strong> &mdash; percentage who finish the onboarding to &ldquo;aha.&rdquo;</li>
+  <li><strong>Setup &rarr; aha conversion</strong> &mdash; from account creation to the moment the product delivers its core value.</li>
+  <li><strong>Verbatim capture</strong> &mdash; session recording + transcription of user voice calls where possible.</li>
+  <li><strong>Event funnel</strong> &mdash; instrumented from signup through every major action. If you cannot draw the funnel from production data, you cannot run Alpha.</li>
+</ul>
+
+<p>Instrumentation is not a later stage. If the event pipeline is not in place when Alpha opens, you are running Alpha blind and wasting the cohort. This is non-negotiable.</p>
+
+<h2 id="s18">&sect;18. Alpha entry criteria</h2>
+
+<p>Before Alpha opens:</p>
+
+<ol>
+  <li>Dogfood has run for &ge;1 week with no P0 in the final 72 hours.</li>
+  <li>Instrumentation is live and queryable.</li>
+  <li>Session recording is deployed and consented.</li>
+  <li>The welcome-and-onboarding flow is ready for a stranger (not an employee).</li>
+  <li>A target cluster of invitees has been identified from the waitlist.</li>
+  <li>Pre-committed kill criteria are written down. (See &sect;45.)</li>
+  <li>The team has cleared 50 hours over the next 8 weeks for user interviews.</li>
+</ol>
+
+<h2 id="s19">&sect;19. The three-gate check</h2>
+
+<p>Every week of Alpha, every Beta doubling, the same three gates:</p>
+
+<div class="north-star-box">
+  <p><strong>Gate 1 &mdash; Quality.</strong> P0 count = 0 in the most recent 7 days.</p>
+  <p><strong>Gate 2 &mdash; Velocity.</strong> P1s resolved on a weekly cadence. &ldquo;Week one, we fix this first P1; week two, we fix the second P1; week three, we fix all the P1s.&rdquo; &mdash; the discipline is the cadence.</p>
+  <p><strong>Gate 3 &mdash; Team.</strong> Team is above water. The engineers are not drowning; support is not in triage panic; ops has headroom. If the team is underwater, even green metrics are a lie, because the product is being propped up by heroism that will not scale.</p>
+</div>
+
+<p>If all three are green, and the Hook is validated, we proceed. If any is red, we freeze &mdash; and we do not unfreeze by wishing.</p>
+
+<h2 id="s20">&sect;20. Alpha exit criteria</h2>
+
+<p>To exit Alpha and enter Private Beta, both must be true:</p>
+
+<ol>
+  <li><strong>Sean Ellis PMF</strong> &mdash; &ge;40% of active users answer &ldquo;very disappointed&rdquo; to &ldquo;How would you feel if you could no longer use this product?&rdquo; (Sean Ellis' threshold, calibrated across 100+ early-stage startups. <em>pmfsurvey.com</em>.)</li>
+  <li><strong>Cohort retention curve flattening</strong> &mdash; weekly cohort retention curves stop falling. Andrew Chen's &ldquo;the flattening of the retention curve is the magic number&rdquo; doctrine holds. Absolute level matters less than the second derivative.</li>
+</ol>
+
+<p><strong>And</strong> the three-gate check is green.</p>
+
+<p>If PMF is below 40% <em>but the curve is flattening</em>, that is a signal to keep iterating &mdash; usually via Vohra segmentation (&sect;27) &mdash; not to promote.<br>
+If PMF is above 40% <em>but the curve is falling</em>, that is a mirage: early enthusiasts love it, late enthusiasts churn. Do not promote.</p>
+
+<p>Both must hold.</p>
+
+<h2 id="s21">&sect;21. Kill, pivot, or polish</h2>
+
+<p>The decision tree at the end of Alpha:</p>
+
+<ul>
+  <li><strong>Polish</strong> &mdash; Hook validated, curve flattening, two or three friction points identified. Fix them, widen the cohort, move to Private Beta. This is the common case for a well-chosen bet.</li>
+  <li><strong>Pivot</strong> &mdash; Hook not validated, but the interviews surface a different, clearer use case that 20%+ of users are hacking their way toward. Re-point the product. Run a new Alpha at the new target. Do not mix the old and new populations.</li>
+  <li><strong>Kill</strong> &mdash; Hook not validated, interviews surface no coherent alternative use. Write the post-mortem, extract the learning for the portfolio, reassign the team. This is the AZ book's &ldquo;Bold Failure &gt; Timid Success&rdquo; doctrine operationalized.</li>
+</ul>
+
+<p>The kill decision is the hardest one in the playbook. It is also the most important. A company that cannot kill its own Alphas is a company that will eventually run out of money because it refuses to read its own sieve.</p>
+
+<!-- ═══════════════════ PART V ═══════════════════ -->
+<div class="part-break" id="part-v">
+  <div class="part-label">Part V</div>
+  <h2>Beta (Private &rarr; Public)</h2>
+</div>
+
+<p>Private Beta validates <strong>Legs</strong> &mdash; does the product hold in the hands of people who chose to use it, and do the holders love it enough to start recruiting others? Public Beta validates the <strong>Flywheel</strong> &mdash; can the product sustain its own growth through user-driven sharing, and can it do so for years without the team being the engine? The arc from Private to Public Beta is the arc from retention to community, from curve-flattening to word-of-mouth, from early evangelists forming in private to a franchise-capable population forming in public.</p>
+
+<h2 id="s22">&sect;22. The purpose of Beta &mdash; retention, habit, and the aha moment</h2>
+
+<p>Beta's job is to validate <strong>Legs</strong>. In Roham's vocabulary, Legs is not cost. Legs is not quality-at-scale. Legs is a single, concrete question with no rhetorical cover: <strong>does the product hold?</strong> And its corollary: <strong>among the people for whom it holds, what is the behavior that makes it hold?</strong></p>
+
+<p>Alpha proved a stranger can get the Hook in a single session. Beta proves that same stranger comes back. And the next day. And the week after. And the month after that. Private Beta is where we discover which users retain, what they are actually doing when they retain, and how to design the onboarding so more users pass through the same keyhole.</p>
+
+<p>Five things have to be true inside your head before you can run a Private Beta well.</p>
+
+<h3>a) The retention cascade is ordered</h3>
+
+<p>D1 is the hook holding &mdash; the user returned at least once after first touch. D2 is the first time the product is not a novelty. D7 is the end of the honeymoon. D14 is the start of a second curve. D30 is where habit either exists or doesn't. The cascade is strictly ordered: strong D1 and D2 are necessary but not sufficient for D7; strong D7 is a prerequisite for D14; strong D14 gates D30; strong D30 gates M3. You cannot skip a rung. A product that has great D1 and poor D7 has a marketing win and a product loss. A product that has flat D7 and flat D14 has a skeleton of a habit, and the job is to build muscle on top of it. Each day's retention gates the next day's. Read the cascade in order.</p>
+
+<h3>b) The smile curve is the signal we are hunting for</h3>
+
+<p>Draw a weekly-cohort retention plot. Week 0 is 100% by definition. Week 1 is some fraction. Week 2 is lower. If the plot continues falling linearly, you do not have a product &mdash; you have an experience. If the plot <em>flattens</em> by week 2&ndash;3, you have the beginnings of a habit: early decay slows, and the cohort that is still around is stable. That is the minimum. The <em>smile</em> is better: after flattening, the curve picks up in the tail &mdash; days 14 &rarr; 30, or weeks 4 &rarr; 12 &mdash; as the retained users re-engage more frequently, invite friends, deepen usage. The smile is the signal that the product has found its ritual. A pure flat is Legs. A smile is Legs with a Flywheel forming underneath. Teams should track both the flattening inflection and the smile tendency, and celebrate the smile as a leading indicator of Public Beta readiness.</p>
+
+<h3>c) The aha moment is discovered, not designed</h3>
+
+<p>This is the canon. Sean Ellis's original activation framework, Casey Winters' Reforge formulation, Amplitude's North Star methodology, and Mixpanel's &ldquo;event of value&rdquo; all land at the same point: <strong>the aha moment is the event that predicts long-term retention, and you find it by studying the cohort that already retained.</strong> You do not specify it upfront. You cohort-analyze the week-4 actives or the month-3 actives and ask, &ldquo;what did this retaining cohort do in their first N sessions that the churned cohort didn't?&rdquo; The aha moment <em>emerges from the behavior of the retained population</em>. Engineering's job is to recognize it, then to accelerate the rest of the cohort toward it. If the team is arguing about which feature is the aha in week one of Beta, the team is doing it wrong. If the team is arguing about which of three candidate events has the best coverage &times; lift in week six, the team is doing it right.</p>
+
+<h3>d) Habit-forming actions are the substrate</h3>
+
+<p>Users with high retention exhibit habit-forming actions. A daily ritual (check-in, scroll, open). A weekly rhythm (create, share, review). A network trigger (invite, respond, @-mention). The high-retention cohort teaches you what their habit is. Draw from the behavioral literature to structure the search: BJ Fogg's Behavior Model (behavior = motivation &times; ability &times; prompt) tells you to look for low-friction, prompt-triggered actions with sufficient motivation. Nir Eyal's Hooked model (trigger &rarr; action &rarr; variable reward &rarr; investment) tells you that habits form when variable reward and investment compound over repeated cycles. Reforge's three-moment model &mdash; setup moment, aha moment, habit moment &mdash; tells you that the aha is not the end of the onboarding journey; the habit is. Engineering in Private Beta is instrumenting for these moments and redesigning onboarding to accelerate users toward them.</p>
+
+<h3>e) Segmentation is non-negotiable</h3>
+
+<p>The aha moment for your primary persona is rarely the aha moment for the secondary persona. Averaging them away is how teams ship onboarding flows that work for no one. Identify the personas inside the cohort, compute retention and activation candidates for each, and accept that one persona may retain and another may not. It is better to ship a Private Beta that wins one persona outright than one that half-serves three.</p>
+
+<h3>Industry folklore &mdash; use with care</h3>
+
+<p>Case studies are scaffolds, not answers. Facebook's <em>7 friends in 10 days</em> is widely reported (Chamath's framing) and directionally useful, but the original analysis was more nuanced than the meme suggests. Slack's <em>2,000 messages</em> is reported at the <em>team</em> level and associated with ~93% paid conversion &mdash; a team-level gate, not a per-user activation target. Twitter's <em>30 follows</em> is reported with follow-back context that most copies drop. Dropbox's <em>1 file in 1 folder on 1 device</em> is folklore-grade &mdash; often quoted, rarely sourced. <strong>Never import a number from another company's mythology as your own activation target.</strong> Use them as scaffolds to know what a real activation metric looks like, then discover your own. Confidence tier on all four: primary-source reported, subject to framing drift in retelling.</p>
+
+<h3>Practical Private Beta operations &mdash; weekly cadence</h3>
+
+<p>Every week, the team runs the following analyses:</p>
+
+<ol>
+  <li><strong>Cohort retention plot.</strong> Weekly signup cohorts overlaid. Track D1, D2, D7, D14 points. Annotate the inflection where flattening begins. Flag if a new cohort is materially worse than the last (cohort decay = pipeline problem).</li>
+  <li><strong>Retaining-cohort behavior diff.</strong> Pull the top-quartile retained users (week-4 actives or better). Pull the churned users. Diff their event logs. Which events show up in the retained cohort at materially higher rates? Those are aha candidates.</li>
+  <li><strong>Activation candidate scoring.</strong> For each candidate event, compute coverage (what % of signups ever hit this event) and lift (retention of users who hit it vs. users who didn't). Keep candidates with coverage &ge;30% and lift &ge;2&times;. Discard the rest.</li>
+  <li><strong>Forced-onboarding A/B.</strong> For the top candidate, run a feature-flag experiment: one arm of new signups gets nudged hard toward the candidate event during onboarding; the other doesn't. Compare D7 and D14 retention between arms. If retention lifts in the nudged arm, the event is causal. If it doesn't, it was correlation &mdash; and you quietly retire it.</li>
+  <li><strong>Segment breakouts.</strong> Run the above per primary persona. Do not collapse personas into a single chart until you have confirmed their retention and aha events align.</li>
+</ol>
+
+<p>This loop &mdash; plot, diff, score, A/B, segment &mdash; is the Private Beta engine. Teams that run it weekly, with honest discipline, discover the aha moment within 6&ndash;10 weeks of opening a real cohort. Teams that run it quarterly discover it a year late.</p>
+
+<h3>Exit criteria from Private Beta &mdash; when Legs is validated</h3>
+
+<p>Private Beta has validated Legs, and the bet can move to Public Beta, when all of the following hold for two consecutive weekly cohorts at the current cohort size:</p>
+
+<ul>
+  <li><strong>D1 retention</strong> &ge; 60% of new users returning the day after signup (AZ-book &ldquo;Good&rdquo; tier for consumer products; for gaming/collectibles the tier bar lifts &mdash; see &sect;30).</li>
+  <li><strong>D7 retention</strong> &ge; 40% of the cohort active at day 7 (AZ-book default; higher tiers apply per category).</li>
+  <li><strong>Retention curve flattens</strong> by week 3&ndash;4 on the weekly-cohort plot, with a smile tendency (rising re-engagement) emerging by week 6+.</li>
+  <li><strong>Activation event identified</strong> with coverage &ge;30%, lift &ge;2&times;, and a forced-onboarding A/B that produced a statistically meaningful retention lift.</li>
+  <li><strong>Cohort-generation stability.</strong> Cohort 5 is as good or better than cohort 1. If cohort 5 is worse, the pipeline is polluting itself &mdash; the team has grown faster than its ability to onboard.</li>
+  <li><strong>Primary-persona segment hits Good tier; secondary personas hit OK tier or are explicitly de-scoped.</strong> An honest segment chart, not an averaged chart.</li>
+  <li><strong>Sean Ellis PMF sustained &ge;35%</strong> across the full Beta cohort (the hard floor; AZ-book canonical).</li>
+</ul>
+
+<p>When those are all green, Legs is validated. The product holds. The retainers have a ritual. The aha moment is known and inducible. Now &mdash; and only now &mdash; we move to Public Beta.</p>
+
+<h2 id="s23">&sect;23. The doubling ladder</h2>
+
+<p>The canonical cadence, verbatim from operating doctrine:</p>
+
+<blockquote>
+  <p>&ldquo;If you are seeing no P0 and limited P1s and you're above water, then instead of inviting 100, invite 200. Instead of 200, invite 400. Instead of 400, invite a thousand.&rdquo;</p>
+</blockquote>
+
+<p>So the ladder is <strong>100 &rarr; 200 &rarr; 400 &rarr; 1,000 &rarr; 10,000 &rarr; open</strong>. Each rung is gated. Each rung has a rollback position.</p>
+
+<p>This cadence is Clock Speed applied to distribution: every two weeks, the cohort decides whether the team accelerates, holds, or rolls back.</p>
+
+<p><strong>The promotion rule is a three-gate check.</strong> At every rung of the ladder, three things must be true before we double:</p>
+
+<ol>
+  <li><strong>Retention gates are still passing as we add users.</strong> The new cohort's D1/D7/D14 are not materially worse than the previous cohort's at the same week. The curve still flattens. Cohort-on-cohort drift is within tolerance. If the newer cohort is retaining materially worse, the bet is outrunning its hook &mdash; freeze, re-interview, diagnose.</li>
+  <li><strong>Quality gates are still holding.</strong> P0=0 over the last 7 days. P1s resolving on the weekly cadence. Crash-free sessions above the phase threshold. Support ticket rate per 1,000 MAU flat or falling. The team is above water.</li>
+  <li><strong>Community-health gates are passing.</strong> New users are being onboarded into the product's social fabric by existing users &mdash; not by the team. Referral rate per active user is flat or rising. Share/invite artifacts are in use. Early evangelists are recognizable and visible. The community is absorbing new users; we are not papering over a cold product with concierge onboarding.</li>
+</ol>
+
+<p>All three green for two consecutive weeks &rarr; double. Any one red &rarr; freeze. Any one materially worse week-over-week &rarr; roll back a rung.</p>
+
+<p>Promotion is governed by whether the product continues to retain as the cohort widens and whether the community continues to absorb new users at a larger scale. That is what Legs becoming a Flywheel looks like.</p>
+
+<h2 id="s24">&sect;24. The gate check at every doubling</h2>
+
+<p>Each time we consider the next rung of the ladder, these are the specific checks that instantiate the three gates above:</p>
+
+<ol>
+  <li><strong>P0 count = 0</strong> over the last 7 days.</li>
+  <li><strong>P1 triage on a weekly cadence</strong>, with actual ship velocity against the list.</li>
+  <li><strong>Support ticket rate per 1,000 users flat or falling.</strong> If it is rising in absolute tickets per user, the product is getting harder to use as we widen it &mdash; a signal that something non-obvious is breaking for the newer cohorts.</li>
+  <li><strong>Hook still strong.</strong> Sean Ellis PMF not collapsing in the newer cohort. It will drift down a few points as we widen from early adopters into the mainstream. That is expected. Drift from 45% to 38% is within cohort-mix tolerance. Drift from 45% to 25% is collapse &mdash; a signal that we have outrun the hook.</li>
+  <li><strong>Retention curve still flattening</strong> at the D7, D14, D30 horizons appropriate to the product cadence.</li>
+  <li><strong>New-cohort D1/D7 within materiality band</strong> of prior cohorts at the same week.</li>
+  <li><strong>Referral/share rate per active user flat or rising.</strong> Community is absorbing the newcomers.</li>
+</ol>
+
+<p>All seven green for two consecutive weeks &rarr; double.<br>
+Any one red &rarr; freeze.<br>
+Any one materially worse week-over-week &rarr; roll back a rung.</p>
+
+<h2 id="s25">&sect;25. Fallback taxonomy</h2>
+
+<p>The options, ordered from lightest to heaviest intervention:</p>
+
+<ol>
+  <li><strong>Freeze invites.</strong> Stop admitting new users. Let the team catch up.</li>
+  <li><strong>Shrink cohort.</strong> Silently turn off access for the newest additions. (Rare; use when onboarding is the specific failure.)</li>
+  <li><strong>Pause onboarding.</strong> Keep existing users, stop the funnel at signup. The marketing site goes to waitlist mode again.</li>
+  <li><strong>Re-interview.</strong> Send the CEO or a senior operator back to the users who signed up this week. What did they expect? What did they get? This is the qualitative re-baseline.</li>
+  <li><strong>Re-baseline.</strong> Recompute the gate metrics with the new cohort excluded from comparison. Figure out whether the metric drop is a real population shift or a cohort mix effect.</li>
+  <li><strong>Feature-flag rollback.</strong> Turn off the feature that shipped this week. Does the metric recover within 48 hours?</li>
+  <li><strong>Emergency fix.</strong> A specific change, pushed fast, aimed at a specific identified cause.</li>
+  <li><strong>Return to dogfood.</strong> Full halt. Pull users back to 5&ndash;20 trusted testers. Rebuild the hook before re-opening.</li>
+</ol>
+
+<p>The doctrine is: try the lightest intervention first, measure, escalate if it does not work. Do not skip to step 8 in panic, and do not stay at step 1 in denial.</p>
+
+<h2 id="s26">&sect;26. Escalation protocol</h2>
+
+<p>Who sees what, when:</p>
+
+<ul>
+  <li><strong>P0 detected</strong> &rarr; Slack alert to on-call + VP Eng + CEO within 5 minutes. Incident channel. Status updates every 30 minutes.</li>
+  <li><strong>Gate metric trips in a doubling check</strong> &rarr; product lead reviews same day, decision within 48 hours, CEO informed on the Monday review.</li>
+  <li><strong>Three consecutive doublings stalled</strong> &rarr; CEO initiates the pivot-or-persevere meeting. Full data on the table. Pre-committed kill criteria consulted. Decision in one meeting.</li>
+</ul>
+
+<p>No anonymous escalation, no silent pocketing of bad news. The fastest way to kill a good Beta is to hide a P0.</p>
+
+<h2 id="s27">&sect;27. The Vohra segmentation move</h2>
+
+<p>Rahul Vohra's Superhuman PMF playbook lifted the &ldquo;very disappointed&rdquo; rate from 22% to 58% over roughly three quarters. The critical move was not adding features; it was segmentation.</p>
+
+<ul>
+  <li><strong>Identify the &ldquo;very disappointed&rdquo; cohort.</strong> Tag them. Learn them.</li>
+  <li><strong>Identify the &ldquo;somewhat disappointed&rdquo; cohort.</strong> These are the fence-sitters. They see the value, but something is stopping them from going all-in.</li>
+  <li><strong>Ignore the &ldquo;not disappointed&rdquo; cohort for roadmap purposes.</strong> They are never going to love it; chasing them dilutes the product.</li>
+  <li><strong>Focus the roadmap on moving &ldquo;somewhat disappointed&rdquo; &rarr; &ldquo;very disappointed&rdquo;</strong> by identifying what the already-very-disappointed have in common and what the somewhat-disappointed lack.</li>
+</ul>
+
+<p>This is the single highest-ROI move in Private Beta. Do it every six weeks. Do it with the product lead in the room. Do not let the team default to chasing detractor complaints, which is the most common trap.</p>
+
+<h2 id="s28">&sect;28. Private Beta vs Public Beta</h2>
+
+<p>The distinction is not binary but has a rhythm:</p>
+
+<ul>
+  <li><strong>Private Beta.</strong> Invite-only. Users know they are in a beta. There is a recognizable &ldquo;early&rdquo; feeling. They expect instability, reply to us, treat the team as accessible. Signups are capped. Goal: validate Legs (retention cascade + aha moment + habit-forming action) and seed the evangelists who will carry Public Beta.</li>
+  <li><strong>Public Beta.</strong> Open signup, but the product is still labeled &ldquo;beta.&rdquo; The cap comes off. Marketing engages. But we are still comfortable shipping breaking changes and rolling back. Gate checks continue at roughly weekly cadence. Goal: validate the Flywheel &mdash; word-of-mouth, artifact gravity, referral rate &mdash; as the dominant source of new users. Public Beta can last years. Word-of-mouth is the franchise.</li>
+</ul>
+
+<p>Promotion from Private to Public Beta requires:</p>
+
+<ol>
+  <li>All Legs-validation exit criteria from &sect;22 met.</li>
+  <li>All gate metrics green for 4 consecutive weeks at the current cohort size.</li>
+  <li>Support ticket rate per 1,000 users below the GA target (not just flat &mdash; below target).</li>
+  <li>Onboarding completion &ge;60% entering Public Beta, target &ge;70% at Public Beta exit.</li>
+  <li>Referral/invite rate per active user above the K-factor threshold for Public Beta entry (&ge;0.4).</li>
+  <li>A credible narrative for the Public Beta launch. (See &ldquo;new hotel, spa's not open yet,&rdquo; &sect;37.)</li>
+</ol>
+
+<h2 id="s29">&sect;29. Activation point discovery (continued)</h2>
+
+<p>Section 22 established that the aha moment is discovered, not designed. This section is the operational checklist for that discovery, and the catalog of wrong activation points that look right.</p>
+
+<p>The methodology, done honestly:</p>
+
+<ol>
+  <li><strong>Generate candidates</strong> from the event funnel. Look for events that correlate with D30 retention.</li>
+  <li><strong>Screen for coverage.</strong> The activation event must be achievable by &ge;30% of signups. A correlation that only applies to 5% of users is not an activation point; it is a curiosity.</li>
+  <li><strong>Screen for lift.</strong> Users who hit the event must have &ge;2&times; the retention of users who did not. Less than 2&times; and you have a weak signal.</li>
+  <li><strong>Test causally.</strong> Run a forced-onboarding A/B test. One arm gets nudged toward the activation event; the other doesn't. If retention lifts in the nudged arm, the event is causal. If it doesn't, it was correlation.</li>
+</ol>
+
+<p><strong>Wrong activation-point traps, catalogued:</strong></p>
+
+<ul>
+  <li><strong>Facebook's &ldquo;7 friends in 10 days.&rdquo;</strong> Reported widely by Chamath; the metric is real but the causality was always more complicated than the mythology. The team had to rebuild the analysis to separate <em>what drove growth</em> from <em>what growth looked like</em>.</li>
+  <li><strong>Slack's &ldquo;2,000 messages.&rdquo;</strong> Reported, but at the <em>team level</em>, not the user level, and associated with 93% paid conversion &mdash; so the number is correct as a team-level gate, wrong as a user-level activation target. Many teams have copied the number to individual user analyses and drawn the wrong conclusion.</li>
+  <li><strong>Dropbox's &ldquo;1 file in 1 folder on 1 device.&rdquo;</strong> Folklore-grade. Often quoted, rarely sourced. Treat as directional intuition, not causal finding.</li>
+  <li><strong>Twitter's &ldquo;30 follows.&rdquo;</strong> Reported with follow-back context; naive copy-paste misses half the mechanic.</li>
+  <li><strong>LinkedIn's &ldquo;N connections&rdquo; as an activation point.</strong> Pure folklore. Use with caution.</li>
+</ul>
+
+<p>The lesson: <strong>folklore is not causation.</strong> Every activation point you import from another company must be re-tested against your own cohort, with coverage, lift, and a forced-onboarding A/B. Don't borrow someone else's magic number and brag about it. Find your own and prove it.</p>
+
+<!-- ═══════════════════ PART VI ═══════════════════ -->
+<div class="part-break" id="part-vi">
+  <div class="part-label">Part VI</div>
+  <h2>The Gate Metrics Table</h2>
+</div>
+
+<h2 id="s30">&sect;30. The canonical metrics table</h2>
+
+<p>This is the canonical, single-source-of-truth metrics table. Every Alpha, every Beta, every promotion decision references this table. Numbers below reflect the AZ-book-calibrated benchmarks that anchor the portfolio's doctrine.</p>
+
+<p><strong>Calibration:</strong> at N&lt;200, apply a 14-day rolling window and a &plusmn;5pp materiality band before acting on any quantitative gate. At N&lt;100, treat quantitative gates as directional and weight qualitative signal (session replays, user interviews) more heavily. Statistical power on a 50-person cohort is not an illusion to overcome &mdash; it is a constraint to acknowledge.</p>
+
+<p><strong>Category note.</strong> Thresholds vary materially by category. The table below uses AZ-book consumer defaults. Apply the following adjustments:</p>
+
+<ul>
+  <li><strong>Consumer mobile (games, social, collectibles).</strong> D1/D7 targets are higher than SaaS because session cadence is daily; crash-free targets per mobile norms. Gaming and collectibles often see higher D1 (70%+) but sharper D30 decay absent habit.</li>
+  <li><strong>Consumer web.</strong> D1/D7 similar to mobile; crash-free redefined as error-free session (no fatal JS error), with looser absolute targets (99.5% as baseline) because browser variance is higher.</li>
+  <li><strong>SaaS (PLG / sales-led).</strong> Activation rate and onboarding completion targets per Mixpanel/Userpilot SaaS benchmarks. Retention windows expressed weekly/monthly rather than daily.</li>
+  <li><strong>Fintech / regulated.</strong> Support ticket volumes materially higher due to compliance and KYC; target bands are looser. Activation rate gated by compliance funnel.</li>
+  <li><strong>Creator / marketplace.</strong> Two-sided; gate metrics applied per side. Activation event may be creation on one side and consumption on the other.</li>
+</ul>
+
+<table class="metrics-table">
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Measurement</th>
+      <th>Alpha Exit</th>
+      <th>Private Beta Exit</th>
+      <th>Public Beta Exit</th>
+      <th>GA</th>
+      <th>Source</th>
+      <th>Confidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Sean Ellis PMF %</strong> (&ldquo;very disappointed&rdquo;)</td><td>In-product or email survey to WAU, n&ge;100</td><td>&ge;40%</td><td>&ge;35% sustained (hard floor)</td><td>&ge;35% sustained at cohort &ge;10K</td><td>&ge;35% w/ segment depth &ge;50% on primary persona</td><td>Sean Ellis / pmfsurvey.com</td><td>primary-source reported</td></tr>
+    <tr><td><strong>D1 retention</strong> (consumer)</td><td>% of new users active the day after signup</td><td>&ge;50%</td><td>&ge;60%</td><td>&ge;60%</td><td>&ge;70%</td><td>AZ-book canonical; Adjust mobile median D1 26%</td><td>AZ-canonical; Adjust baseline industry-report</td></tr>
+    <tr><td><strong>D7 retention</strong> (consumer)</td><td>% active at day 7</td><td>&ge;35%</td><td>&ge;40%</td><td>&ge;40%</td><td>&ge;50%</td><td>AZ-book canonical; Adjust D7 13% median</td><td>AZ-canonical; Adjust industry-report</td></tr>
+    <tr><td><strong>D14 retention</strong></td><td>Curve flattening inflection (2nd derivative)</td><td>Curve flattening</td><td>Flat or rising</td><td>Flat or rising (smile tendency)</td><td>Stable flat with smile</td><td>Andrew Chen &ldquo;curve flattening is the magic number&rdquo;</td><td>primary-source reported</td></tr>
+    <tr><td><strong>D30 retention</strong> (consumer)</td><td>% active at day 30</td><td>&ge;20%</td><td>&ge;25%</td><td>&ge;25%</td><td>&ge;30%</td><td>AZ-book canonical; Adjust D30 7% median</td><td>AZ-canonical; Adjust industry-report</td></tr>
+    <tr><td><strong>Retention curve shape</strong></td><td>Weekly cohort plot</td><td>Flattening</td><td>Flat</td><td>Flat, with smile forming</td><td>Flat, with sustained smile</td><td>Reforge / Amplitude North Star</td><td>primary-source reported</td></tr>
+    <tr><td><strong>Activation rate</strong></td><td>% of signups completing activation event</td><td>Discover the event</td><td>&ge;30%</td><td>&ge;40%</td><td>&ge;50%</td><td>Mixpanel/Userpilot 37.5% SaaS avg</td><td>industry-report (SaaS); AZ thresholds</td></tr>
+    <tr><td><strong>K-factor</strong></td><td>Referral invites &times; conversion rate</td><td>&ge;0.15</td><td>&ge;0.4</td><td>&ge;0.7</td><td>&ge;1.0</td><td>David Skok K = i &times; c &times; (1/cycle_time)</td><td>primary-source reported</td></tr>
+    <tr><td><strong>NPS</strong> (directional only)</td><td>Standard 0&ndash;10 scale</td><td>Directional</td><td>&ge;+30</td><td>&ge;+30</td><td>&ge;+40</td><td>Bain / Retently SaaS benchmarks</td><td>industry-report; consumer NPS bands differ</td></tr>
+    <tr><td><strong>Crash-free sessions (mobile)</strong></td><td>% sessions without fatal crash</td><td>&ge;99.5%</td><td>&ge;99.7%</td><td>&ge;99.9%</td><td>&ge;99.95%</td><td>Firebase / Sentry mobile norms</td><td>industry-report (mobile)</td></tr>
+    <tr><td><strong>Error-free sessions (web)</strong></td><td>% sessions with no fatal JS error</td><td>&ge;99.0%</td><td>&ge;99.3%</td><td>&ge;99.5%</td><td>&ge;99.7%</td><td>Sentry web benchmarks</td><td>industry-report; web is more variable</td></tr>
+    <tr><td><strong>Support tickets / 1K MAU / mo</strong></td><td>From support system</td><td>&lt;200</td><td>&lt;100</td><td>&lt;75</td><td>&lt;50</td><td>Zendesk/Intercom cohort benchmarks</td><td>industry-report; fintech/gaming higher</td></tr>
+    <tr><td><strong>P0 count (rolling 7d)</strong></td><td>Incident log</td><td>0</td><td>0</td><td>0</td><td>0</td><td>AZ-book canonical</td><td>AZ-canonical</td></tr>
+    <tr><td><strong>P1 resolution SLO</strong></td><td>Median time to close</td><td>Weekly cadence</td><td>&le;7 days</td><td>&le;5 days</td><td>&le;3 days</td><td>AZ-book canonical</td><td>AZ-canonical</td></tr>
+    <tr><td><strong>Onboarding completion %</strong></td><td>Signup &rarr; activation event</td><td>&ge;50%</td><td>&ge;60%</td><td>&ge;70%</td><td>&ge;80%</td><td>Userpilot 40&ndash;60% good / 70&ndash;80% excellent</td><td>industry-report (SaaS)</td></tr>
+    <tr><td><strong>Cohort-on-cohort drift</strong></td><td>New D7 vs prior D7 at same week</td><td>&plusmn;5pp</td><td>Within &plusmn;3pp</td><td>Within &plusmn;3pp</td><td>Within &plusmn;2pp</td><td>Derived from cohort-of-cohort methodology</td><td>AZ-canonical</td></tr>
+    <tr><td><strong>Referral rate per active user (30d)</strong></td><td>% of MAU who invited/shared in 30d</td><td>Directional</td><td>&ge;10%</td><td>&ge;20%</td><td>&ge;30%</td><td>Bass q &asymp; 0.39; Rogers observability</td><td>primary-source reported (Bass); AZ thresholds</td></tr>
+  </tbody>
+</table>
+
+<p><strong>How to read the table.</strong> A row is not a promotion criterion on its own. The pattern that matters is: <strong>all rows in a column must be green, for two consecutive weeks, at the current cohort size.</strong> If all are green, double. If any is red, freeze. If any is materially worse week-over-week, roll back a rung.</p>
+
+<p><strong>Sean Ellis floor is &ge;35% through Beta.</strong> The &ge;40% Alpha exit is the higher early-adopter bar. From Private Beta onward, the hard floor is &ge;35% sustained. Any reference elsewhere to &ge;40% as a Beta bar is an error.</p>
+
+<p><strong>NPS is a thermometer, not a gate.</strong> Use it directionally. Do not let a +55 NPS override a D30 drop from 25% to 15%. People lie on surveys. They do not lie in their behavior.</p>
+
+<p><strong>Metric calculation traps.</strong> The same raw events produce different retention numbers depending on method. Classic cohort retention, rolling retention, and range retention can differ by 16 points on the same dataset. Pick one definition, write it down, do not let anyone switch mid-stream.</p>
+
+<p><strong>Benchmark sources (expanded):</strong></p>
+
+<ul>
+  <li>Adjust &mdash; mobile app retention benchmarks 2023 (D1 26%, D7 13%, D30 7% medians). Ecosystem baseline; AZ targets are more ambitious.</li>
+  <li>GameAnalytics &mdash; mobile gaming 2023 (D1 29&ndash;33%, D7 16%, D30 8.7%). Category-specific.</li>
+  <li>Mixpanel &mdash; SaaS activation averages 37.5% overall, 34.6% PLG, 41.6% sales-led. SaaS-skewed; consumer/collectibles differ.</li>
+  <li>Userpilot &mdash; onboarding completion 40&ndash;60% good, 70&ndash;80% excellent. SaaS-skewed.</li>
+  <li>Bain / Retently &mdash; SaaS NPS average +36, good 30+, excellent 50+. B2B-SaaS-skewed.</li>
+  <li>Firebase / Sentry &mdash; mobile crash-free 99.5% floor, 99.95% top. Mobile-specific.</li>
+  <li>Sentry / DataDog &mdash; web error-free session norms run looser.</li>
+  <li>Zendesk / Intercom &mdash; support tickets per 1,000 MAU; fintech and gaming materially higher than SaaS.</li>
+  <li>First Round Review + SaaS Capital &mdash; CAC/LTV (payback &lt;18 months GA-ready, &lt;12 top; LTV/CAC 3&times; standard, 5&times; great).</li>
+  <li>Sean Ellis / pmfsurvey.com &mdash; 40% &ldquo;very disappointed&rdquo; Alpha threshold.</li>
+  <li>Reforge / Casey Winters / Amplitude &mdash; aha moment discovery methodology (coverage &ge;30%, lift &ge;2&times;, forced-onboarding A/B).</li>
+  <li>Andrew Chen &mdash; retention curve flattening as the &ldquo;magic number.&rdquo;</li>
+  <li>Bass 1969 / Sultan-Farley-Lehmann 1990 &mdash; diffusion coefficients p &asymp; 0.035, q &asymp; 0.390; imitation drives 65&ndash;90% of adoption in meta-analysis.</li>
+</ul>
+
+<!-- ═══════════════════ PART VII ═══════════════════ -->
+<div class="part-break" id="part-vii">
+  <div class="part-label">Part VII</div>
+  <h2>Behavioral Signal Mining (The Hound Dog)</h2>
+</div>
+
+<h2 id="s31">&sect;31. Product is behavior, not PRD</h2>
+
+<p>The PRD is what we <em>thought</em> we were building. The product is what users <em>do</em> with what we shipped. These are never the same thing. The gap between them is where the next version lives.</p>
+
+<p>Steve Blank: <em>get out of the building.</em> Cindy Alvarez: <em>customer development is the job, not a phase.</em> Rob Fitzpatrick: <em>The Mom Test</em> &mdash; don't ask leading questions; ask about specific past behavior. Kathy Sierra: <em>build users who feel badass using your product, not a product that feels clever to its builder.</em></p>
+
+<p>This whole section is one instruction: <strong>be a hound dog. Chase the scent.</strong></p>
+
+<h2 id="s32">&sect;32. Signal taxonomy</h2>
+
+<p>Three kinds of signal. Trust them in this order:</p>
+
+<ul>
+  <li><strong>Implicit (high trust).</strong> What users actually do. Event logs, session replays, feature usage distributions, time-on-task, funnel drop-off, retention curves. This is what you believe, because humans do not lie with their fingers in the same way they lie with their mouths.</li>
+  <li><strong>Meta (medium trust).</strong> Patterns in how users talk <em>among themselves</em> &mdash; subreddit posts, Discord threads, in-product community, screenshots shared to Twitter. This is how the world describes your product when you are not in the room. Mostly honest, occasionally performed.</li>
+  <li><strong>Explicit (low trust).</strong> What users tell you directly &mdash; surveys, NPS, interviews, feature requests. Useful as <em>hypothesis generator</em>, not as <em>decision input</em>. Users will tell you they want faster horses because they don't have the language for cars. Henry Ford (possibly apocryphal; use the intuition anyway).</li>
+</ul>
+
+<p>Rank: implicit &gt; meta &gt; explicit. Teams that invert this rank will ship the wrong feature, politely, on schedule.</p>
+
+<h2 id="s33">&sect;33. The Hound Dog ritual</h2>
+
+<p>Weekly, 90 minutes, product + data + design + engineering. Four parts:</p>
+
+<div class="archetype-box">
+  <p><strong>1. Anomalies review.</strong> What moved this week that we can't explain? Not &ldquo;why did signups drop&rdquo; (usually marketing spend or seasonality) but &ldquo;why did 8% of users start using feature X as an entry point to feature Y?&rdquo; Anomalies are scent trails.</p>
+
+  <p><strong>2. Jerry-rig catalog.</strong> Where are users hacking around the product to do something we did not design for? A jerry-rig is a signal that the product is one small change away from doing something better than we imagined.</p>
+
+  <p>Three canonical examples show the shape:</p>
+  <ul>
+    <li><strong>Slack emerged from Tiny Speck's game.</strong> The team built internal chat to coordinate work on a multiplayer game that was failing. The chat tool was the jerry-rig; the game was the product. They shipped the jerry-rig.</li>
+    <li><strong>Instagram emerged from Burbn.</strong> Burbn was a check-in app. Users ignored the check-ins and photographed the moments. Systrom and Krieger ripped out everything except the photo feature.</li>
+    <li><strong>Chris Messina invented the hashtag on Twitter.</strong> Uninvited. Twitter took roughly two years to institutionalize it as product. The lag is the price of not watching your own jerry-rigs.</li>
+  </ul>
+
+  <p>Other jerry-rig-to-product moves in the same family:</p>
+  <ul>
+    <li>Twitch spun out of Justin.tv when streamers started broadcasting games instead of lives.</li>
+    <li>Notion's templates emerged from ambassador behavior, not roadmap.</li>
+    <li>Figma realized multiplayer was the product when a user tweeted &ldquo;we had a design party in Figma.&rdquo;</li>
+    <li>AWS services repeatedly spawned from internal customer use cases.</li>
+  </ul>
+
+  <p>This is the single highest-leverage source of pivot signal in the company. Treat it that way.</p>
+
+  <p><strong>3. Intent-vs-reality diff, per feature.</strong> For each of the top five features: what did we <em>expect</em> usage to look like? What does it look like? The delta is the briefing for next sprint.</p>
+
+  <p><strong>4. Outlier interview queue.</strong> Pick two users whose behavior is strange in either direction (power user who uses 3&times; the average, or lapsed user who loved it week 1 and never returned). Schedule calls. The CEO or product lead does them.</p>
+</div>
+
+<p>Decision output per ritual: for each signal identified, one of <strong>institutionalize</strong> (ship it into the product's main flow), <strong>ignore</strong> (document it and move on), <strong>build around</strong> (adapt the product to support the jerry-rig without absorbing it yet).</p>
+
+<p>The team closest to the behavior ships against it fastest &mdash; which is why the playbook <em>Engineering in the Signal Loop</em> is the necessary companion to this one.</p>
+
+<h2 id="s34">&sect;34. The silent supermajority</h2>
+
+<p>For every user who files a bug report, there are 10 who noticed and worked around it, and 100 who noticed and churned. The vocal minority is legible; the silent supermajority is the market. Every ritual above must include a question: <strong>what are we not seeing?</strong> That is what session replays, funnel drop-offs, and cohort retention curves tell us. They are the only channel the silent supermajority has to speak.</p>
+
+<h2 id="s35">&sect;35. Pivot vs polish decision rule</h2>
+
+<p>The rule, in one sentence: <strong>polish if the scent trail goes toward the product we thought we were building; pivot if the scent trail goes somewhere else and a significant share of your weekly active users are already walking there.</strong></p>
+
+<p>The jerry-rig threshold is expressed as a share of weekly active users (WAU) exhibiting the behavior, measured on a rolling 4-week window so that noise and week-to-week swings don't drive a pivot call:</p>
+
+<ul>
+  <li><strong>Below 20% of WAU (rolling 4-week):</strong> curiosity, not signal. Document the behavior, keep watching, do not ship against it yet.</li>
+  <li><strong>20&ndash;40% of WAU (rolling 4-week):</strong> strong signal. Feature-flag a version of the product that supports the jerry-rig natively. Compare retention between the cohort that gets the flag and the cohort that doesn't. If the flagged cohort retains better, you have a causal case to institutionalize.</li>
+  <li><strong>Above 40% of WAU (rolling 4-week):</strong> pivot. The market has decided. Ship the product your users are already using, and re-frame the positioning to match.</li>
+</ul>
+
+<p>Apply the same measurement convention (share of WAU, rolling 4-week) to any jerry-rig threshold elsewhere in the playbook. &ldquo;20%&rdquo; on its own is ambiguous &mdash; 20% of signups, of MAU, of a given session? &mdash; and ambiguity is how pivot decisions get made on shaky ground.</p>
+
+<!-- ═══════════════════ PART VIII ═══════════════════ -->
+<div class="part-break" id="part-viii">
+  <div class="part-label">Part VIII</div>
+  <h2>PLG and Word-of-Mouth Engineering</h2>
+</div>
+
+<h2 id="s36">&sect;36. The math of WOM is not opinion &mdash; it's observed</h2>
+
+<p>The Bass diffusion model &mdash; Frank Bass, 1969 &mdash; fits the S-curve of every durable product adoption we have observable data for. It has two coefficients:</p>
+
+<ul>
+  <li><em>p</em> = coefficient of innovation (spontaneous adoption, external factors like marketing)</li>
+  <li><em>q</em> = coefficient of imitation (word-of-mouth adoption)</li>
+</ul>
+
+<p>Across products studied in meta-analyses, the empirical averages are roughly <strong>p &asymp; 0.035, q &asymp; 0.390</strong>.</p>
+
+<p>q is roughly an order of magnitude larger than p. Empirical meta-analyses across consumer-product categories find imitation drives 65&ndash;90% of cumulative adoption once diffusion completes [Bass 1969; Sultan, Farley &amp; Lehmann 1990 meta-analysis of 213 products]. The implication holds either way: imitation dominates innovation. The product's job is to make imitation easy.</p>
+
+<p>If p &gt; q &mdash; innovation dominates imitation &mdash; you get the decline-from-launch signature of a flop. If q &gt; p substantially, you get the classic S-curve. A product that does not engineer for imitation ships, spikes on paid marketing, and collapses.</p>
+
+<p><strong>Word-of-mouth is not a nice-to-have. It is the dominant term in the equation.</strong></p>
+
+<h2 id="s37">&sect;37. PLG works &mdash; with boundary conditions</h2>
+
+<p>Product-led growth is the name we give to engineering word-of-mouth <em>into the product itself</em>. Not the campaign. The product. The product that carries its own growth mechanism.</p>
+
+<p>The doctrine: <strong>PLG works when product shape supports it.</strong> Conditions where it fails:</p>
+
+<ul>
+  <li>Enterprise products above ~$25K ACV. The buying center has too many people; the product does not touch them all; the CFO signs, not the user. Sales-assisted is the right motion.</li>
+  <li>Regulated verticals. If trials require KYC, credit checks, or compliance review, there is no self-serve.</li>
+  <li>Infrequent-use consumer products. If the product is used once per quarter, there is no session to invite-share from.</li>
+</ul>
+
+<p>Where it works: collaboration tools, developer tools, creator tools, consumer social, consumer fintech (with compliance engineered in), marketplaces with two-sided network gravity.</p>
+
+<p>For everything that passes the shape test, PLG is not an option &mdash; it is the default. It is the only 2026-durable growth engine.</p>
+
+<h2 id="s38">&sect;38. Loops, ranked by viability in Alpha/Beta</h2>
+
+<p>There are roughly five growth loop archetypes. In Alpha/Beta, only two are real.</p>
+
+<ul>
+  <li><strong>Invite loop.</strong> User invites user. Works in Alpha/Beta. Requires the product to be socially configured &mdash; i.e., it's better with others, or there's an asymmetric incentive, or the share artifact is useful in itself.</li>
+  <li><strong>Artifact-gravity loop (content/algo).</strong> The product produces an artifact that travels &mdash; a link, a doc, a graph, a video. People who encounter the artifact are pulled into the product. Slack's public-shared channel, Figma's shared-file URL, Notion's public page, Calendly's booking link. Works in Alpha/Beta <em>if the Alpha cohort is active enough to produce enough artifacts</em>. Usually requires 1K+ weekly active users to produce visible gravity.</li>
+  <li><strong>Content loop.</strong> User or company publishes content that brings in users. Requires sustained publication volume. Does not produce meaningful inbound until 10K+ users.</li>
+  <li><strong>Algo loop.</strong> Platform algorithm surfaces the product to lookalike users. Requires scale + ad budget. Not a Beta mechanic.</li>
+  <li><strong>Paid + sales-assisted.</strong> Not a loop. A pump. Use to prime the atomic network, then turn off.</li>
+</ul>
+
+<p>In Alpha/Beta, optimize for invite loops and artifact gravity. The rest come later.</p>
+
+<h2 id="s39">&sect;39. Rogers' five attributes as the WOM scorecard</h2>
+
+<p>Everett Rogers' <em>Diffusion of Innovations</em> (1962) identified five attributes that predict 49&ndash;87% of variance in adoption rates. Use them as a scorecard for every feature that is supposed to carry growth.</p>
+
+<ol>
+  <li><strong>Relative advantage.</strong> Is it clearly better than the alternative on one dimension that users care about?</li>
+  <li><strong>Compatibility.</strong> Does it fit the user's existing habits and values, or does it demand they become a new kind of person?</li>
+  <li><strong>Complexity</strong> (inverse &mdash; lower is better). How many steps to first value?</li>
+  <li><strong>Trialability.</strong> Can someone sample it at low cost, no commitment?</li>
+  <li><strong>Observability.</strong> When someone uses it, can others see?</li>
+</ol>
+
+<p>Score every feature 1&ndash;5 on each. A feature that scores &lt;3 on relative advantage or observability will not carry WOM no matter how much the team wants it to.</p>
+
+<h2 id="s40">&sect;40. STEPPS &mdash; the feature-sharing checklist</h2>
+
+<p>Jonah Berger's <em>Contagious</em> (2013). For any feature whose growth depends on users sharing:</p>
+
+<ul>
+  <li><strong>Social currency.</strong> Does sharing this make the sharer look smart, in-the-know, generous?</li>
+  <li><strong>Triggers.</strong> Is there an environmental cue &mdash; a time of day, a situation, a common moment &mdash; that makes users think of the product?</li>
+  <li><strong>Emotion.</strong> Does it produce high-arousal emotion (awe, anger, delight) or low-arousal (contentment, sadness)? High arousal shares; low arousal does not.</li>
+  <li><strong>Public.</strong> Is usage visible to others, or private?</li>
+  <li><strong>Practical.</strong> Is the knowledge useful enough to pass on?</li>
+  <li><strong>Stories.</strong> Does it have a narrative that travels intact through retelling?</li>
+</ul>
+
+<p>Features that tick 3+ of these have a WOM ceiling measured in multiples. Features that tick &le;1 will not share, regardless of quality.</p>
+
+<h2 id="s41">&sect;41. NPS is a thermometer, not a gate</h2>
+
+<p>NPS correlates with revenue growth at the company level only weakly; at the feature level, almost not at all. As a gating metric it is useless. As a thermometer &mdash; <em>is this getting worse or better over time, for the same cohort?</em> &mdash; it is fine.</p>
+
+<p>The signal you want instead of NPS is <strong>actual referral rate</strong>: what percentage of active users sent an invite or shared an artifact in the last 30 days? That is a behavior. Behaviors don't lie.</p>
+
+<h2 id="s42">&sect;42. Atomic network seeding</h2>
+
+<p>Andrew Chen: the first network of a multi-sided product must be dense enough that the first user has a good experience. Density requires boundedness. A 500-person Alpha that is 500 people spread across 500 cities is not a network; it is 500 singletons. A 500-person Alpha concentrated in one vertical, one city, or one social graph <em>is</em> a network. The first cohort's job is not to test distribution; it is to <em>be a functioning network</em>.</p>
+
+<p>This is why Facebook's campus-by-campus launch worked: Harvard &rarr; Columbia / Yale / Stanford &rarr; Ivy &rarr; Boston universities &rarr; state schools, with &gt;50% penetration required before opening the next. It is why Slack's first 6&ndash;10 customer companies mattered more than the next 6,000. It is why Superhuman's 100-per-week gating was the right ceiling.</p>
+
+<p>When selecting the Alpha cohort from the waitlist, prefer 500 users in one cluster to 5,000 distributed users. Always.</p>
+
+<!-- ═══════════════════ PART IX ═══════════════════ -->
+<div class="part-break" id="part-ix">
+  <div class="part-label">Part IX</div>
+  <h2>Programmatic Execution</h2>
+</div>
+
+<h2 id="s43">&sect;43. Promotion as a deterministic function</h2>
+
+<p>The promotion decision should not be a meeting. It should be the output of a function that reads the gate metrics table.</p>
+
+<pre><code>for each metric in GATE_METRICS:
+    if metric.value &lt; metric.threshold[current_phase_exit]:
+        return FREEZE
+    elif metric.value &lt; metric.value_last_week * 0.90:
+        # 10% materiality floor prevents noise-driven rollbacks on small cohorts
+        return ROLLBACK_CANDIDATE
+
+if all metrics green for 14 consecutive days:
+    return DOUBLE
+else:
+    return HOLD</code></pre>
+
+<p>Replace the meeting with the function. Founders review the output, not the raw data, weekly. Exceptions are rare and must be written down: &ldquo;We are overriding the function because X.&rdquo; If the overrides happen more than once per quarter, the function is wrong and needs recalibration.</p>
+
+<p>That is the goal state. Remove the human from the recurring decision loop. The human's job is to set the thresholds, not to re-decide them every Wednesday.</p>
+
+<h2 id="s44">&sect;44. Pre-committed kill criteria</h2>
+
+<p>Ries' pivot-or-persevere meeting is scheduled <em>before the experiment runs</em>, with the thresholds written down in advance. We do the same.</p>
+
+<p>Before we open an Alpha or a new Beta rung, we write:</p>
+
+<ul>
+  <li><strong>Kill criteria.</strong> The numbers that, if observed, will cause us to kill the product. Example: &ldquo;If Sean Ellis PMF is below 25% at the end of closed Alpha, we kill.&rdquo;</li>
+  <li><strong>Pivot criteria.</strong> The observations that will cause us to repoint. Example: &ldquo;If &gt;20% of the Alpha cohort is using feature X as their primary entry point to the product, we investigate a pivot to an X-first product.&rdquo;</li>
+  <li><strong>Persevere criteria.</strong> The conditions under which we keep going despite mixed signal. Example: &ldquo;Sean Ellis PMF 35&ndash;40%, cohort flattening, no P0s &mdash; we continue to Private Beta.&rdquo;</li>
+</ul>
+
+<p>These are signed off by the founders before the cohort opens. The pivot-or-persevere meeting is on the calendar. When the meeting happens, the decision has already been made by the data. The meeting is where we read it.</p>
+
+<p>Each cohort opening is a Bold Beat &mdash; time-limited, in-universe, falsifiable. The kill threshold is written down before the cohort starts. Bold Failure beats Timid Success; we do not extend a failing cohort to avoid the post-mortem.</p>
+
+<h2 id="s45">&sect;45. Programmatic enough &mdash; automate what should be automated</h2>
+
+<p>What can and should be programmatic:</p>
+
+<ul>
+  <li><strong>Dashboards.</strong> Every gate metric, real-time or daily refresh, visible to the team. No one should need to ask for the numbers.</li>
+  <li><strong>Alerts.</strong> P0 detection, gate metric thresholds, anomalies. Slack + on-call paging.</li>
+  <li><strong>Invite batch management.</strong> Waitlist-to-Alpha and Alpha-to-Beta invite dispatch, automated on a cadence, gated on the function above.</li>
+  <li><strong>Post-mortem templates.</strong> Every incident, every kill, every pivot &mdash; templated. The template itself is the institution.</li>
+  <li><strong>Weekly gate-check report.</strong> Auto-generated, CEO reads Monday 8am.</li>
+</ul>
+
+<p>What stays human:</p>
+
+<ul>
+  <li><strong>Customer interviews.</strong> Founders. First 100 users, no exceptions.</li>
+  <li><strong>Pivot decisions.</strong> Humans in a room with the data. Function doesn't make this call.</li>
+  <li><strong>Kill decisions.</strong> Humans in a room with the data. This is the most important meeting of the quarter for the bet in question.</li>
+  <li><strong>Narrative framing.</strong> Launch posts, positioning, new and &ldquo;unprecedented&rdquo; kind of work.</li>
+</ul>
+
+<h2 id="s46">&sect;46. The agent layer</h2>
+
+<p>Where AI agents take over:</p>
+
+<ul>
+  <li><strong>Metric monitoring.</strong> Agents watch dashboards 24/7. Flag anomalies. Draft incident tickets.</li>
+  <li><strong>Invite dispatch.</strong> Agents manage waitlist batching per the function. Rate-limit, cluster, personalize at scale.</li>
+  <li><strong>Anomaly detection.</strong> Agents pre-read session recordings and funnel data, surface the interesting 5%, schedule the weekly hound dog ritual inputs.</li>
+  <li><strong>First-pass user interviews.</strong> Agents run preliminary qualitative interviews, synthesize themes, flag outliers for team follow-up.</li>
+  <li><strong>Gate-check report drafting.</strong> Agents draft the weekly gate report for the team to approve.</li>
+</ul>
+
+<p>What stays firmly in human hands:</p>
+
+<ul>
+  <li>Final pivot/kill decisions.</li>
+  <li>High-trust customer conversations &mdash; the ones where the relationship is the point.</li>
+  <li>Narrative, brand, cultural framing.</li>
+  <li>The unwritten judgments where pattern-matching against the AZ book matters.</li>
+</ul>
+
+<p>This division is not static. As agents get better, the line moves. The founders' job includes moving the line deliberately, so the company extracts every efficiency the agent layer offers without surrendering the decisions that define it.</p>
+
+<!-- ═══════════════════ PART X ═══════════════════ -->
+<div class="part-break" id="part-x">
+  <div class="part-label">Part X</div>
+  <h2>Appendix</h2>
+</div>
+
+<h2 id="s47">&sect;47. Quote library</h2>
+
+<h3>Rollout doctrine (verbatim)</h3>
+
+<blockquote><p>&ldquo;I do not feel confident in my ability or in anyone's ability to just rip the band-aid. People will be disappointed. The right way to do a change like this is to have them opt into it.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;At least 500 testers before ripping the band-aid.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;The response is going to be the community's response. They're going to beg us to flip the thing.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;Is the hook strong? The value proposition. Are people actually installing, downloading, and using it? If not, then we should talk about it. If so, then we move to the next question.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;Week one, we fix this first P1; week two, we fix the second P1; week three, we fix all the P1s.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;If P0/P1 reports are kind of overwhelming us, then we need to pause the rollout, get above water, and then continue accelerating the rollout.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;If you are seeing no P0 and limited P1s and you're above water, then instead of inviting 100, invite 200. Instead of 200, invite 400. Instead of 400, invite a thousand.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;It's programmatic enough&hellip; it should be programmatic. You don't need to talk to me anymore.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;I'm pretty confident we can do a lot of AI agent work for it as well when it comes to: are the metrics good? Are there concerns? No? Cool. Add on new users. Or yes? Okay, delay it.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;New hotel, spa's not open yet.&rdquo; &mdash; positioning framing for a foundation-rewrite launch.</p></blockquote>
+<blockquote><p>&ldquo;Oh s***, I'm getting in early. Oh s***, they're responding to my feedback quickly. Oh s***, this time it's different.&rdquo; &mdash; the renewed beta feeling.</p></blockquote>
+
+<h3>What Roham has said about specific feature rollouts (not general Beta doctrine)</h3>
+
+<p>On a specific feature-rewrite rollout where the goal was maintenance at scale rather than metric lift: <em>&ldquo;Users coming back and using it more frequently, users spending more &mdash; those are all gravy. We didn't build this necessarily to lift metrics.&rdquo;</em> Context: a migration to a rewritten version of an existing product, where the success condition was <em>don't regress</em>. This is explicitly not the general Beta promotion doctrine; Beta promotion is governed by retention, quality, and community-absorption gates (see &sect;22&ndash;24). Preserved here because the language recurs; do not import it into the general playbook frame.</p>
+
+<h3>Funnel doctrine (verbatim)</h3>
+
+<blockquote><p>&ldquo;Percentage of visitors &rarr; sign up. Percentage of sign-up &rarr; deposit. Percentage of first-deposit &rarr; return day 1. Return day 2, day 3, day 4.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;I would keep it all in beta this whole time.&rdquo;</p></blockquote>
+<blockquote><p>&ldquo;~100 people&rdquo; &mdash; the empirical floor for conviction-building via personal interviews.</p></blockquote>
+
+<h3>Load-bearing academic / practitioner quotes</h3>
+
+<ul>
+  <li><strong>Pasteur 1854:</strong> &ldquo;Dans les champs de l'observation, le hasard ne favorise que les esprits pr&eacute;par&eacute;s.&rdquo; (&ldquo;In the fields of observation, chance favors only the prepared mind.&rdquo;)</li>
+  <li><strong>Fleming, Nobel Lecture 1945</strong> (as quoted): &ldquo;I used the same technique which I had found successful when working with the lysozyme&hellip;&rdquo;</li>
+  <li><strong>Horace Walpole 1754:</strong> coined &ldquo;serendipity&rdquo; &mdash; <em>sagacity</em> + accident, not pure luck. (Folklore-audit: the letter is real; the word is Walpole's; the modern meaning has drifted.)</li>
+  <li><strong>Royston Roberts:</strong> serendipity (unexpected solution to unrelated problem) vs pseudo-serendipity (fortunate finding of what was sought).</li>
+  <li><strong>Simonton:</strong> equal-odds rule &mdash; hit-rate constant within creator; volume is the variable.</li>
+  <li><strong>Csikszentmihalyi:</strong> creativity = domain &times; field &times; individual (systems model).</li>
+  <li><strong>Amabile:</strong> componential model &mdash; domain &times; creative process &times; intrinsic motivation.</li>
+  <li><strong>Granovetter:</strong> weak ties carry novel information.</li>
+  <li><strong>Taleb:</strong> convexity, optionality, barbell, antifragility.</li>
+  <li><strong>Bahcall:</strong> bush (early-protected) vs franchise (mature-optimized) &mdash; different phases, different environments.</li>
+  <li><strong>Kauffman:</strong> adjacent possible &mdash; the next viable move is defined by the current boundary.</li>
+  <li><strong>Steven Johnson:</strong> slow hunch, liquid networks, &ldquo;chance favors the connected mind.&rdquo;</li>
+  <li><strong>Jason Roberts:</strong> luck surface area = doing &times; telling.</li>
+  <li><strong>Wiseman:</strong> four principles of lucky people &mdash; maximize opportunities, listen to intuition, expect good fortune, turn bad luck to good.</li>
+  <li><strong>Sean Ellis:</strong> 40% &ldquo;very disappointed&rdquo; PMF threshold. [pmfsurvey.com]</li>
+  <li><strong>Rahul Vohra:</strong> segmentation move &mdash; focus roadmap on the &ldquo;somewhat disappointed.&rdquo;</li>
+  <li><strong>Andrew Chen:</strong> &ldquo;Retention is king.&rdquo; Curve flattening is the magic metric.</li>
+  <li><strong>Casey Winters / Reforge:</strong> three-moment model &mdash; setup, aha, habit.</li>
+  <li><strong>Amplitude:</strong> North Star activation methodology &mdash; event of value, coverage &times; lift &times; causality.</li>
+  <li><strong>Mixpanel:</strong> &ldquo;compass metric&rdquo; / &ldquo;event of value.&rdquo;</li>
+  <li><strong>BJ Fogg:</strong> Behavior = motivation &times; ability &times; prompt.</li>
+  <li><strong>Nir Eyal:</strong> Hooked &mdash; trigger, action, variable reward, investment.</li>
+  <li><strong>David Skok:</strong> cycle-time is the underappreciated lever in K.</li>
+  <li><strong>Frank Bass:</strong> <em>p</em> &asymp; 0.035, <em>q</em> &asymp; 0.390 across products in meta-analyses. (As reported; individual product coefficients vary widely.)</li>
+  <li><strong>Sultan, Farley &amp; Lehmann 1990:</strong> meta-analysis of 213 products establishing imitation dominates innovation in diffusion.</li>
+  <li><strong>Everett Rogers:</strong> relative advantage, compatibility, complexity, trialability, observability.</li>
+  <li><strong>Jonah Berger:</strong> STEPPS &mdash; social currency, triggers, emotion, public, practical, stories.</li>
+  <li><strong>Duncan Watts:</strong> cascades driven by influenceable-connected-to-influenceable, not influencers.</li>
+  <li><strong>Keller &amp; Fay:</strong> ~90% of WOM is offline.</li>
+  <li><strong>Paul Graham:</strong> &ldquo;Do Things That Don't Scale.&rdquo;</li>
+  <li><strong>Steve Blank:</strong> Customer Development.</li>
+  <li><strong>Eric Ries:</strong> pivot-or-persevere, pre-scheduled with pre-committed thresholds.</li>
+  <li><strong>Marty Cagan:</strong> Discovery vs Delivery.</li>
+  <li><strong>Brian Balfour:</strong> Four Fits &mdash; Market-Product, Product-Channel, Channel-Model, Model-Market.</li>
+</ul>
+
+<h2 id="s48">&sect;48. Benchmark sources</h2>
+
+<ul>
+  <li><strong>Mobile retention medians.</strong> Adjust: D1 26%, D7 13%, D30 7%. Industry-report; ecosystem baseline rather than target.</li>
+  <li><strong>Mobile gaming retention.</strong> GameAnalytics: D1 29&ndash;33%, D7 16%, D30 8.7%. Category-specific.</li>
+  <li><strong>SaaS activation averages.</strong> Mixpanel / Userpilot 2024: 37.5% overall, 34.6% PLG, 41.6% sales-led. SaaS-skewed.</li>
+  <li><strong>SaaS NPS.</strong> Bain / Retently: average +36, good 30+, excellent 50+. B2B-SaaS-skewed.</li>
+  <li><strong>Onboarding completion.</strong> Userpilot: 40&ndash;60% good, 70&ndash;80% excellent. SaaS-skewed.</li>
+  <li><strong>Crash-free sessions (mobile).</strong> Firebase / Sentry industry norms: 99.5% floor, 99.95% top.</li>
+  <li><strong>Error-free sessions (web).</strong> Sentry/Datadog norms: 99.0% floor, 99.7% top &mdash; looser than mobile due to browser variance.</li>
+  <li><strong>Support tickets.</strong> Benchmark from Zendesk / Intercom cohorts: &lt;100/1000/mo good, &lt;50 top 5%. Highly category-sensitive &mdash; fintech and gaming often run 3&ndash;5&times; higher.</li>
+  <li><strong>CAC / LTV.</strong> First Round Review + SaaS Capital: payback &lt;18 months GA-ready, &lt;12 top; LTV/CAC 3&times; standard, 5&times; great.</li>
+</ul>
+
+<h2 id="s49">&sect;49. Pre-flight checklists</h2>
+
+<h3>Before opening Alpha (12 items)</h3>
+
+<ol class="checklist">
+  <li>Dogfood complete; zero P0 in final 72 hours.</li>
+  <li>Instrumentation deployed; every funnel event queryable in production.</li>
+  <li>Session recording live with user consent flow.</li>
+  <li>Sean Ellis PMF survey built and ready to fire at W2 and W4.</li>
+  <li>Onboarding flow hardened for strangers, not employees.</li>
+  <li>Target cluster identified from waitlist, &ge;500 addressable.</li>
+  <li>Invite mechanism tested end-to-end.</li>
+  <li>Support coverage sized for 50&ndash;200 users with &lt;24hr response.</li>
+  <li>Pre-committed Alpha exit, pivot, kill criteria written and signed.</li>
+  <li>CEO's 50 hours of user interviews booked.</li>
+  <li>Weekly hound dog ritual on the calendar.</li>
+  <li>Post-mortem template loaded and ready.</li>
+</ol>
+
+<h3>Before opening Private Beta (12 items)</h3>
+
+<ol class="checklist">
+  <li>Alpha exit criteria met: Sean Ellis PMF &ge;40%, cohort retention flattening.</li>
+  <li>Three-gate check green for &ge;2 consecutive weeks.</li>
+  <li>Gate metrics dashboard live and auto-refreshing.</li>
+  <li>Support ticket rate per 1,000 MAU below 200 at entry; target &lt;100 by Private Beta exit.</li>
+  <li>Activation candidate hypotheses framed and measurable; cohort-of-cohort retention diffing in place.</li>
+  <li>Vohra segmentation round complete; roadmap re-weighted toward fence-sitters.</li>
+  <li>Invite batching automated at the 100 &rarr; 200 &rarr; 400 cadence.</li>
+  <li>Rollback playbook tested (feature-flag off + cohort freeze).</li>
+  <li>Incident escalation protocol tested with a simulated P0.</li>
+  <li>Pre-committed doubling-rung kill and freeze criteria written.</li>
+  <li>Weekly gate-check report auto-generated.</li>
+  <li>CEO removed from the routine doubling decision loop; exceptions-only.</li>
+</ol>
+
+<h3>Before opening Public Beta (12 items)</h3>
+
+<ol class="checklist">
+  <li>Legs-validation exit criteria from &sect;22 met: D1/D7 thresholds, smile-tendency curve, activation event proven causal, cohort-on-cohort stable, primary persona at Good tier.</li>
+  <li>All gate metrics green for &ge;4 consecutive weeks at Private Beta cohort size.</li>
+  <li>Support ticket rate per 1,000 MAU below 75 and stable.</li>
+  <li>Crash-free sessions &ge;99.9% (mobile) / error-free sessions &ge;99.5% (web).</li>
+  <li>Onboarding completion &ge;70%.</li>
+  <li>Activation rate &ge;40%.</li>
+  <li>Invite loop live with measurable K-factor &ge;0.4; referral rate per active user &ge;20%.</li>
+  <li>At least one artifact-gravity mechanism live (shared artifact with out-of-product visibility).</li>
+  <li>Public launch narrative drafted and approved.</li>
+  <li>Marketing site updated; waitlist CTA replaced with signup.</li>
+  <li>Customer support team sized for 10&times; current ticket volume.</li>
+  <li>Finance has approved the CAC envelope for the public phase.</li>
+</ol>
+
+<h3>Before GA (12 items)</h3>
+
+<ol class="checklist">
+  <li>All gate metrics green for &ge;6 consecutive weeks at public-beta cohort.</li>
+  <li>D30 retention &ge;30%.</li>
+  <li>CAC payback &lt;18 months modeled; &lt;12 is the stretch.</li>
+  <li>LTV/CAC &ge;3&times; realized at current cohort.</li>
+  <li>Crash-free sessions &ge;99.95%.</li>
+  <li>Support tickets per 1,000 MAU below 50.</li>
+  <li>P1 resolution SLO &le;3 days sustained.</li>
+  <li>A franchise-appropriate pricing / packaging structure live and tested.</li>
+  <li>Brand assets updated: no more &ldquo;beta&rdquo; label; positioning aligned to maturity.</li>
+  <li>A GA-appropriate SLO / SLA published externally if B2B.</li>
+  <li>Quarterly operating plan built for the EBU this bet is becoming.</li>
+  <li>Exit from BBP tier formally recorded; EBU tier sponsorship in place.</li>
+</ol>
+
+<h2 id="s50">&sect;50. Anti-pattern catalog</h2>
+
+<ul>
+  <li><strong>Clubhouse graduation bust.</strong> Invite-only scarcity with no retention substrate. Growth optically huge, retention under a rock. Lesson: scarcity is a top-of-funnel amplifier, not a bottom-of-funnel solution. Scarcity plus weak hook equals cliff.</li>
+  <li><strong>Notion v1 crash.</strong> Monolithic launch, infrastructure not ready, long rebuild. Lesson: the doubling ladder exists because the infrastructure learns in doublings, not leaps.</li>
+  <li><strong>Arc waitlist decay.</strong> 500K Windows waitlist stretched 9+ months without communication. Sentiment shifted from &ldquo;dying for it&rdquo; to &ldquo;did they give up.&rdquo; Lesson: silence kills the waitlist asset.</li>
+  <li><strong>Twitter hashtag lag.</strong> User invented the hashtag; Twitter took two years to institutionalize it. Lesson: the hound dog ritual exists because platforms that don't watch their jerry-rigs will be out-evolved by their own users.</li>
+  <li><strong>PMF theater.</strong> Team publishes Sean Ellis 45% without disclosing the denominator (cohort size, cohort definition, self-selection). Board claps. Reality: the measured cohort was 18 power users. Lesson: method is as important as number. Define the cohort.</li>
+  <li><strong>Vocal-minority capture.</strong> Team builds the top 20 feature requests from the subreddit. Churn accelerates. Lesson: the subreddit is not the market; it is the loudest 2% of the market. Behavior &gt; requests.</li>
+  <li><strong>HiPPO override.</strong> Any senior voice &mdash; CEO, investor, advisor &mdash; overriding the gate function without a written exception entry. The function exists because Wednesday-morning judgment is systematically worse than the threshold-setting decision made when the bet was framed. When the gate needs to move, document the new threshold and why; do not move it silently.</li>
+  <li><strong>Folklore activation point.</strong> Team copies &ldquo;7 friends in 10 days&rdquo; or &ldquo;2,000 messages&rdquo; from another company's mythology. Retention doesn't lift. Lesson: find your own activation point, prove it with coverage, lift, and a forced-onboarding A/B.</li>
+  <li><strong>Opening Alpha without tier alignment.</strong> Team runs a 6-month Alpha, validates the Hook, then discovers the bet was never authorized as a BBP. Sunk cost recovery mode. Lesson: Alpha is a financing event. Confirm the tier first.</li>
+  <li><strong>Retention math switcheroo.</strong> Team reports classic retention early, switches to rolling retention when classic declines. Numbers look stable; real retention is collapsing. Lesson: pick one definition, write it down, do not let anyone switch.</li>
+  <li><strong>Globally distributed Alpha.</strong> 500 users across 50 cities. No network effect possible; the product feels dead to every user because none of them know each other. Lesson: cluster the first cohort.</li>
+  <li><strong>&ldquo;We will fix it post-launch.&rdquo;</strong> P1 debt compounds into P0s once volume multiplies. Lesson: the weekly-cadence P1 discipline is not optional. Enter Beta with a clean list or do not enter Beta.</li>
+  <li><strong>Averaged personas.</strong> Team charts retention as a single line that is actually the weighted average of two personas &mdash; one retaining, one churning &mdash; and concludes the product is &ldquo;OK.&rdquo; Lesson: segment first, average second. The averaged chart hides the win and the loss alike.</li>
+</ul>
+
+<h2 id="s51">&sect;51. Forthcoming companion docs</h2>
+
+<ul>
+  <li><strong>Engineering in the Signal Loop.</strong> How engineering org design, on-call rotations, PM/engineer ratios, user-contact cadence, and instrumentation ownership change when the product is in Alpha/Beta. Draws on GitLab Remote Handbook, Stripe's Collison-installation tradition, Intercom's PM-interviews-5-users-per-quarter norm, Amazon's working-backwards PRFAQ, and Linear's founder-time-on-support practice. Case studies with cadence specifics, role descriptions, and anti-patterns. Companion to &sect;33 of this book.</li>
+  <li><strong>Private Beta Retention Runbook.</strong> A standalone operational runbook for the weekly Private Beta cadence described in &sect;22 &mdash; templates for cohort plots, activation-candidate scoring sheets, forced-onboarding A/B designs, segment breakouts.</li>
+</ul>
+
+<hr>
+
+<h2 id="coda">Coda</h2>
+
+<p>The Axiom Zen book ends with the scientific method as the operating system of the whole company. This book is the operating system in action. Nothing here is inventing principles &mdash; it is applying them to the single hardest moment in any product's life, which is the transition from <em>we made this</em> to <em>strangers use this.</em></p>
+
+<p>Every sentence here is downstream of a small set of observations:</p>
+
+<ul>
+  <li>Innovation is not random, but it is luck-dependent. Luck is farmable. The farming is work we can do.</li>
+  <li>Customers do not know what they want until they use something. What they do with what we ship overrides what they or we said they wanted.</li>
+  <li>Retention is the question Beta answers, and the aha moment is what you discover inside the retained cohort &mdash; not what you specify at launch.</li>
+  <li>Word-of-mouth is the only durable growth mechanism in 2026. Product-led growth is word-of-mouth engineered into the product itself.</li>
+  <li>The gate between one stage and the next has to be a function, not a meeting. The CEO's job is to set the thresholds and stay out of the routine.</li>
+  <li>The hound dog is real. The scent trail is the product. Follow it.</li>
+  <li>Kill the bets that don't work. Fast. Without apology. The sieve is the sieve precisely because it kills.</li>
+</ul>
+
+<p>The AZ book told us how to choose what to build. This one tells us how to let strangers tell us what it becomes.</p>
+
+<p>If the pipeline is running well, you can feel it. There is a renewed beta feeling inside the company &mdash; <strong>&ldquo;Oh shit, we're getting in early. Oh shit, they're responding to my feedback quickly. Oh shit, this time it's different.&rdquo;</strong> &mdash; and that feeling is the hum of a well-calibrated luck-farming machine. Lightning in a bottle isn't a metaphor. It's a configuration of product, cohort, timing, and attention that produces an outsized reaction in a specific population, and that we captured before it evaporated.</p>
+
+<p>That is the whole game. Build the sieves. Mind the gates. Listen to the scent. Double what works. Kill what doesn't. Extract the lightning.</p>
+
+<p>Then do it again.</p>
+
+<p style="text-align: right; font-family: var(--serif); font-style: italic; color: var(--ink-muted); margin-top: 32px;">&mdash; Roham</p>
+
+<div class="section-divider">&#9670; &#9670; &#9670;</div>
+
+<div class="doc-footer">
+  <p><strong>Document:</strong> The Axiom Zen Innovation Process &mdash; Volume II: The Apparatus<br>
+  <strong>Version:</strong> 1.0 &mdash; April 2026<br>
+  <strong>Subtitle:</strong> Farming Luck: An Operator's Playbook for Waitlist, Alpha, and Beta<br>
+  <strong>Companion to:</strong> <a href="volume-1.html">Volume I &mdash; The Thesis</a> (required reading)<br>
+  <strong>Scope:</strong> Operational manual for the gap between Step 7 (ship it) and Step 8 (scale what works) of the Nine Steps.<br>
+  <strong>Source materials:</strong> Axiom Zen operating doctrine; Sean Ellis, Andrew Chen, Rahul Vohra, Steve Blank, Eric Ries, Paul Graham, Bass, Rogers, Berger, Fogg, Eyal, Reforge, Amplitude, Mixpanel.</p>
+</div>
+
+</div><!-- end page-container -->
+</body>
+</html>
