@@ -94,45 +94,63 @@
     }
   }
 
-  /* Warm cream-to-transparent veil for legibility at bottom */
+  /* Warm cream-to-transparent veil for legibility at bottom — fully opaque cream where H1 lives */
   .hero::after{
     content:"";
     position:absolute;
     left:0; right:0; bottom:0;
-    height:62%;
+    height:72%;
     background:linear-gradient(180deg,
       rgba(241,232,212,0) 0%,
-      rgba(241,232,212,.35) 38%,
-      rgba(241,232,212,.88) 78%,
-      rgba(241,232,212,.98) 100%);
+      rgba(241,232,212,0) 18%,
+      rgba(241,232,212,.42) 38%,
+      rgba(241,232,212,.86) 54%,
+      rgba(241,232,212,1) 66%,
+      rgba(241,232,212,1) 100%);
     pointer-events:none;
   }
 
   .hero-content{
     position:absolute;
     left:0; right:0; bottom:0;
-    padding:0 24px 72px;
+    padding:0 24px 60px;
     text-align:center;
     z-index:2;
   }
   @media (max-width:720px){
-    .hero-content{padding-bottom:52px}
+    .hero-content{padding-bottom:48px}
   }
 
+  /* H1 sits on solid cream with a soft halo + extra weight for legibility */
   .hero h1{
     font-family:'Tiempos Headline',Georgia,serif;
     font-style:italic;
     font-weight:400;
-    font-size:88px;
-    line-height:1.02;
-    letter-spacing:-.02em;
+    font-size:78px;
+    line-height:1.04;
+    letter-spacing:-.018em;
     color:var(--ink);
     max-width:980px;
     margin:0 auto 22px;
+    text-shadow:
+      0 1px 0 rgba(241,232,212,.6),
+      0 0 24px rgba(241,232,212,.5);
   }
-  @media (max-width:960px){ .hero h1{font-size:68px} }
-  @media (max-width:720px){ .hero h1{font-size:50px;letter-spacing:-.01em} }
-  @media (max-width:400px){ .hero h1{font-size:42px} }
+  @media (max-width:960px){ .hero h1{font-size:62px} }
+  @media (max-width:720px){ .hero h1{font-size:46px;letter-spacing:-.01em} }
+  @media (max-width:400px){ .hero h1{font-size:38px} }
+
+  /* Eyebrow tagline sits ABOVE H1 to anchor the reading zone */
+  .hero-eyebrow{
+    font-family:'Söhne Breit','Söhne',sans-serif;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin:0 0 22px;
+    opacity:.75;
+  }
 
   .hero-sub{
     font-family:'Tiempos Text',Georgia,serif;
