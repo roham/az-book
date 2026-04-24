@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The science of generating serendipity. — An operator's manual, in two volumes</title>
+<meta name="description" content="Volume I is the thesis. Volume II is the instrument. Together, a bridge — open, for anyone who wants to sit down.">
+<style>
+  /* -------- Fonts -------- */
+  @font-face { font-family:'Söhne'; src:url('../../fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne'; src:url('../../fonts/Söhne-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Breit'; src:url('../../fonts/SöhneBreit-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../../fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../../fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+
+  /* -------- Retro-Future Palette -------- */
+  :root{
+    --cream:#F1E8D4;      /* atomic cream — dominant background */
+    --teal:#0E2F3D;       /* deep teal — accent panels, gauge rings */
+    --tangerine:#E88A3C;  /* primary accent — CTAs, dial needles */
+    --vermillion:#D94E2E; /* signal / alert */
+    --gold:#C8A961;       /* champagne gold — hairlines, chrome highlights */
+    --ink:#2B2822;        /* warm ink — body text */
+    --bone:#FBF7EE;       /* bone white — cards, secondary panels */
+    --steel:#8A8780;      /* warm steel — hairline rules, shadows */
+
+    --hair-gold:rgba(200,169,97,.45);
+    --hair-gold-soft:rgba(200,169,97,.22);
+    --hair-steel:rgba(138,135,128,.25);
+    --teal-soft:rgba(14,47,61,.08);
+  }
+
+  /* -------- Reset -------- */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--cream);color:var(--ink);font-family:'Tiempos Text',Georgia,serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  .mono{font-family:'Söhne Mono','SF Mono',ui-monospace,monospace;font-weight:400}
+  .sohne{font-family:'Söhne','Inter',system-ui,sans-serif}
+  .breit{font-family:'Söhne Breit','Söhne',system-ui,sans-serif;font-weight:700;letter-spacing:.02em}
+  .tiempos{font-family:'Tiempos Text',Georgia,serif}
+  .headline{font-family:'Tiempos Headline','Tiempos Text',Georgia,serif}
+
+  /* -------- Eyebrow band -------- */
+  .eyebrow-band{
+    background:var(--cream);
+    padding:26px 24px 22px;
+    text-align:center;
+    position:relative;
+    border-bottom:1px solid var(--hair-gold-soft);
+  }
+  .eyebrow-band::before,
+  .eyebrow-band::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    width:60px;
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    transform:translateY(-50%);
+  }
+  .eyebrow-band::before{ left:calc(50% - 260px); }
+  .eyebrow-band::after{ right:calc(50% - 260px); }
+  @media (max-width:720px){
+    .eyebrow-band::before,.eyebrow-band::after{display:none}
+  }
+  .eyebrow{
+    font-family:'Söhne Breit','Söhne',sans-serif;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:.28em;
+    color:var(--teal);
+    text-transform:uppercase;
+  }
+
+  /* -------- Hero -------- */
+  .hero{
+    position:relative;
+    width:100%;
+    height:calc(100vh - 68px);
+    min-height:640px;
+    background:var(--cream) url('img/hero.png') center center / cover no-repeat;
+    overflow:hidden;
+  }
+  @media (max-width:720px){
+    .hero{
+      height:88vh;
+      min-height:560px;
+      background-size:cover;
+      background-position:center 45%;
+    }
+  }
+
+  /* Warm cream-to-transparent veil for legibility at bottom */
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:62%;
+    background:linear-gradient(180deg,
+      rgba(241,232,212,0) 0%,
+      rgba(241,232,212,.35) 38%,
+      rgba(241,232,212,.88) 78%,
+      rgba(241,232,212,.98) 100%);
+    pointer-events:none;
+  }
+
+  .hero-content{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    padding:0 24px 72px;
+    text-align:center;
+    z-index:2;
+  }
+  @media (max-width:720px){
+    .hero-content{padding-bottom:52px}
+  }
+
+  .hero h1{
+    font-family:'Tiempos Headline',Georgia,serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:88px;
+    line-height:1.02;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    max-width:980px;
+    margin:0 auto 22px;
+  }
+  @media (max-width:960px){ .hero h1{font-size:68px} }
+  @media (max-width:720px){ .hero h1{font-size:50px;letter-spacing:-.01em} }
+  @media (max-width:400px){ .hero h1{font-size:42px} }
+
+  .hero-sub{
+    font-family:'Tiempos Text',Georgia,serif;
+    color:var(--teal);
+    font-size:19px;
+    line-height:1.55;
+    max-width:640px;
+    margin:0 auto 36px;
+  }
+  @media (max-width:720px){ .hero-sub{font-size:16px;margin-bottom:28px} }
+
+  /* -------- CTA plates (brushed aluminum) -------- */
+  .cta-row{
+    display:flex;
+    gap:18px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .cta{
+    display:inline-flex;
+    flex-direction:column;
+    align-items:flex-start;
+    padding:16px 28px;
+    border-radius:18px;
+    background:linear-gradient(180deg,#F7F1DE 0%,#E8DEC5 55%,#D4C9A9 100%);
+    border:1px solid var(--gold);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.7),
+      inset 0 -1px 0 rgba(0,0,0,.08),
+      0 2px 0 rgba(200,169,97,.25),
+      0 6px 18px rgba(14,47,61,.12);
+    min-width:220px;
+    position:relative;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cta:hover{
+    transform:translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.8),
+      inset 0 -1px 0 rgba(0,0,0,.08),
+      0 3px 0 rgba(200,169,97,.3),
+      0 10px 22px rgba(14,47,61,.18);
+  }
+  .cta .cta-main{
+    font-family:'Söhne Breit','Söhne',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:.18em;
+    color:var(--teal);
+    text-transform:uppercase;
+    position:relative;
+  }
+  .cta .cta-main::after{
+    content:"";
+    display:block;
+    width:0;
+    height:2px;
+    background:var(--tangerine);
+    margin-top:5px;
+    transition:width .22s ease;
+  }
+  .cta:hover .cta-main::after{ width:100% }
+  .cta .cta-sub{
+    font-family:'Söhne Mono',ui-monospace,monospace;
+    font-size:10px;
+    letter-spacing:.15em;
+    color:var(--steel);
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+  .cta.primary .cta-main{color:var(--vermillion)}
+  .cta.primary{
+    background:linear-gradient(180deg,#F7F1DE 0%,#F1E3C6 55%,#E5D3A8 100%);
+  }
+
+  /* -------- Section dividers (atomic motif) -------- */
+  .atomic-divider{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    padding:44px 0 30px;
+    background:var(--cream);
+  }
+  .atomic-divider .line{
+    flex:0 0 120px;
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .atomic-divider svg{
+    width:28px; height:28px;
+    color:var(--gold);
+  }
+
+  /* -------- Summary -------- */
+  .summary-section{
+    background:var(--cream);
+    padding:28px 24px 96px;
+  }
+  .summary{
+    max-width:640px;
+    margin:0 auto;
+    font-family:'Tiempos Text',Georgia,serif;
+    font-size:19px;
+    line-height:1.72;
+    color:var(--ink);
+  }
+  .summary p{ margin-bottom:1.35em }
+  .summary p:last-child{ margin-bottom:0 }
+  .summary p strong{
+    font-family:'Söhne Breit','Söhne',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.16em;
+    color:var(--teal);
+    text-transform:uppercase;
+    display:inline-block;
+    margin-right:4px;
+  }
+  .dropcap::first-letter{
+    font-family:'Tiempos Headline',Georgia,serif;
+    font-style:italic;
+    font-size:82px;
+    line-height:.78;
+    float:left;
+    margin:8px 10px -4px 0;
+    color:var(--tangerine);
+    font-weight:400;
+  }
+
+  /* -------- Pull quote -------- */
+  .pull-quote{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin:56px -60px;
+    padding:32px 24px;
+    border-top:1px solid var(--hair-gold);
+    border-bottom:1px solid var(--hair-gold);
+  }
+  @media (max-width:760px){
+    .pull-quote{ margin:48px 0; gap:14px; padding:28px 8px }
+  }
+  .pull-quote .atom{
+    flex:0 0 32px;
+    color:var(--tangerine);
+  }
+  .pull-quote .atom svg{ width:32px; height:32px; display:block }
+  .pull-quote blockquote{
+    flex:1;
+    font-family:'Tiempos Headline',Georgia,serif;
+    font-style:italic;
+    font-size:28px;
+    line-height:1.3;
+    color:var(--teal);
+    letter-spacing:-.01em;
+  }
+  @media (max-width:760px){
+    .pull-quote blockquote{ font-size:22px }
+  }
+
+  /* -------- Diptych -------- */
+  .diptych-section{
+    background:var(--cream);
+    padding:40px 24px 120px;
+  }
+  .diptych{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  @media (max-width:900px){
+    .diptych{ grid-template-columns:1fr; gap:28px }
+  }
+
+  .card{
+    background:var(--bone);
+    border:1px solid var(--gold);
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.9),
+      0 3px 0 rgba(200,169,97,.18),
+      0 12px 30px rgba(14,47,61,.08);
+    display:flex;
+    flex-direction:column;
+  }
+  .card-img{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    display:block;
+    border-bottom:1px solid var(--hair-gold);
+  }
+  .card-body{
+    padding:32px 32px 36px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    flex:1;
+  }
+  .card-label{
+    font-family:'Söhne Breit','Söhne',sans-serif;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.24em;
+    color:var(--teal);
+    text-transform:uppercase;
+  }
+  .card-standfirst{
+    font-family:'Tiempos Text',Georgia,serif;
+    font-style:italic;
+    font-size:22px;
+    line-height:1.4;
+    color:var(--ink);
+  }
+  .card-cta{
+    margin-top:auto;
+    font-family:'Söhne Breit','Söhne',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.18em;
+    color:var(--tangerine);
+    text-transform:uppercase;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    align-self:flex-start;
+    padding-bottom:4px;
+    border-bottom:2px solid transparent;
+    transition:border-color .18s ease;
+  }
+  .card-cta:hover{ border-color:var(--tangerine) }
+  .card-cta .arrow{
+    transition:transform .2s ease;
+    display:inline-block;
+  }
+  .card-cta:hover .arrow{ transform:translateX(3px) }
+
+  /* -------- Closing refrain -------- */
+  .refrain{
+    background:var(--cream);
+    padding:80px 24px 60px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .refrain::before{
+    content:"";
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:520px;
+    height:520px;
+    background:
+      radial-gradient(circle at center,
+        rgba(200,169,97,.08) 0%,
+        rgba(200,169,97,.03) 40%,
+        transparent 70%);
+    pointer-events:none;
+  }
+  .refrain-text{
+    position:relative;
+    font-family:'Tiempos Headline',Georgia,serif;
+    font-style:italic;
+    font-size:34px;
+    line-height:1.4;
+    color:var(--teal);
+    max-width:720px;
+    margin:0 auto;
+  }
+  @media (max-width:720px){ .refrain-text{font-size:24px} }
+
+  /* -------- Colophon -------- */
+  .colophon{
+    background:var(--cream);
+    padding:48px 24px 68px;
+    text-align:center;
+    border-top:1px solid var(--hair-gold-soft);
+  }
+  .colophon-atom{
+    display:flex;
+    justify-content:center;
+    margin-bottom:18px;
+    color:var(--gold);
+  }
+  .colophon-atom svg{ width:24px; height:24px }
+  .colophon-text{
+    font-family:'Söhne Mono',ui-monospace,monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    color:var(--teal);
+    text-transform:uppercase;
+    line-height:1.9;
+  }
+  .colophon-text span{ opacity:.6; margin:0 6px }
+
+</style>
+</head>
+<body>
+
+<!-- =============== TOP EYEBROW BAND =============== -->
+<div class="eyebrow-band">
+  <div class="eyebrow">AN OPERATOR'S MANUAL &nbsp;·&nbsp; IN TWO VOLUMES &nbsp;·&nbsp; VOL. MMXXVI</div>
+</div>
+
+<!-- =============== HERO =============== -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>The science of generating serendipity.</h1>
+    <p class="hero-sub">Volume I is the thesis — what to build, with whom, funded how. Volume II is the instrument — how to run the experiment, read the result, and promote on evidence.</p>
+    <div class="cta-row">
+      <a class="cta primary" href="#vol1">
+        <span class="cta-main">Enter Volume I</span>
+        <span class="cta-sub">THE THESIS · CH. 01–09</span>
+      </a>
+      <a class="cta" href="#vol2">
+        <span class="cta-main">Enter Volume II</span>
+        <span class="cta-sub">THE INSTRUMENT · GATES 01–04</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =============== DIVIDER =============== -->
+<div class="atomic-divider" aria-hidden="true">
+  <span class="line"></span>
+  <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.25">
+    <circle cx="20" cy="20" r="2.2" fill="currentColor" stroke="none"/>
+    <ellipse cx="20" cy="20" rx="16" ry="5.5"/>
+    <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(60 20 20)"/>
+    <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(-60 20 20)"/>
+  </svg>
+  <span class="line"></span>
+</div>
+
+<!-- =============== SUMMARY =============== -->
+<section class="summary-section">
+  <article class="summary">
+    <p class="dropcap">I have spent twenty years trying to answer one question: can you farm innovation, or do you just get lucky? I now think the answer is both, and that the "both" is the whole craft. Lightning is real. It also lands more often on a prepared field. This book, in two volumes, is the field.</p>
+
+    <p><strong>Volume I is the thesis.</strong> There are nine steps that turn an idea into a product and a product into a business, and the order is not optional. There are six archetypes that define the <em>shape</em> of every bet — a Petri Dish (get weird), a Probe (test a falsifiable hypothesis), a Frame (draw the edges of a new space), a Beachhead (dominate a specific niche), a Lighthouse (a safe harbor for builders), and the rare Killer App (network effects at scale). Each archetype carries a different objective, a different metric, a different trap: treat a Petri Dish like a Killer App and you will run out of money. Three portfolio tiers — Sandbox Experiments &amp; Research, Big Bet Projects, and Established Business Units — govern how capital, patience, and governance flow. The Green Light Framework decides what to fund and when to shelve. Culture and finance hold the whole structure up. Volume I answers: <em>what am I building, with whom, and why.</em></p>
+
+    <div class="pull-quote" aria-hidden="true">
+      <span class="atom">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4">
+          <circle cx="20" cy="20" r="2.4" fill="currentColor" stroke="none"/>
+          <ellipse cx="20" cy="20" rx="16" ry="5.5"/>
+          <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(60 20 20)"/>
+          <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(-60 20 20)"/>
+        </svg>
+      </span>
+      <blockquote>"The thesis without the apparatus is a pitch deck. The apparatus without the thesis is a dashboard."</blockquote>
+      <span class="atom">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4">
+          <circle cx="20" cy="20" r="2.4" fill="currentColor" stroke="none"/>
+          <ellipse cx="20" cy="20" rx="16" ry="5.5"/>
+          <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(60 20 20)"/>
+          <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(-60 20 20)"/>
+        </svg>
+      </span>
+    </div>
+
+    <p><strong>Volume II is the apparatus.</strong> It is the instrument you strap to the thesis so reality can talk back to you on a clock. A waitlist is not a marketing tactic; it is an intake valve. An alpha is not a soft launch; it is a calibrated measurement where retention, activation, and signal density decide whether the next gate opens. A beta is not a bigger alpha; it is a different instrument entirely, tuned for cohort economics and hound-dog signal mining in the places users actually live. General availability is not a finish line; it is the moment the instrument hands the work to an operating unit that knows how to compound it. Volume II answers: <em>how do I run the experiment, read the result, and know — on evidence, not vibes — when to promote.</em></p>
+
+    <p>Neither volume works alone. The thesis without the apparatus is a pitch deck. The apparatus without the thesis is a dashboard. Together they are a bridge — the one I actually work at. This is that bridge, open, for anyone who wants to sit down.</p>
+  </article>
+</section>
+
+<!-- =============== DIPTYCH =============== -->
+<section class="diptych-section" id="volumes">
+  <div class="diptych">
+
+    <article class="card" id="vol1">
+      <img class="card-img" src="img/vol1.svg" alt="Retro-future archetype wheel — six-slice chrome disc with tangerine pointer, set into an atomic-cream plotting table.">
+      <div class="card-body">
+        <div class="card-label">VOLUME I &nbsp;·&nbsp; THE THESIS</div>
+        <p class="card-standfirst">Nine steps, six archetypes, three portfolio tiers. What to build, with whom, and funded how.</p>
+        <a class="card-cta" href="../../volume-1.html">
+          Enter Volume I <span class="arrow">&rarr;</span>
+        </a>
+      </div>
+    </article>
+
+    <article class="card" id="vol2">
+      <img class="card-img" src="img/vol2.png" alt="Retro-future gauge stack — four analog dials labeled WAITLIST, ALPHA, BETA, GA with tangerine boomerang hands, on a deep-teal instrument panel.">
+      <div class="card-body">
+        <div class="card-label">VOLUME II &nbsp;·&nbsp; THE INSTRUMENT</div>
+        <p class="card-standfirst">Waitlist, alpha, beta, GA. How to run the experiment, read the result, and promote on evidence.</p>
+        <a class="card-cta" href="../../volume-2.html">
+          Enter Volume II <span class="arrow">&rarr;</span>
+        </a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- =============== REFRAIN =============== -->
+<section class="refrain">
+  <p class="refrain-text">Together they are a bridge — the one I actually work at. Open, for anyone who wants to sit down.</p>
+</section>
+
+<!-- =============== COLOPHON =============== -->
+<footer class="colophon">
+  <div class="colophon-atom" aria-hidden="true">
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.25">
+      <circle cx="20" cy="20" r="2" fill="currentColor" stroke="none"/>
+      <ellipse cx="20" cy="20" rx="16" ry="5.5"/>
+      <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(60 20 20)"/>
+      <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(-60 20 20)"/>
+    </svg>
+  </div>
+  <p class="colophon-text">
+    SET IN TIEMPOS &amp; SÖHNE <span>·</span> PLATES BY THE SHIP'S CHANDLER <span>·</span> STATION MMXXVI
+  </p>
+</footer>
+
+</body>
+</html>
