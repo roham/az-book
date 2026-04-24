@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The science of generating serendipity. — An operator's manual, in two volumes</title>
+<style>
+  /* -------- Fonts -------- */
+  @font-face { font-family:'Söhne'; src:url('../../fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne'; src:url('../../fonts/Söhne-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../../fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../../fonts/SöhneMono-Extraleicht.otf') format('opentype'); font-weight:200; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../../fonts/SöhneMono-ExtraleichtKursiv.otf') format('opentype'); font-weight:200; font-style:italic; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../../fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../../fonts/TiemposHeadline-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../../fonts/TiemposText-BoldItalic.otf') format('opentype'); font-weight:700; font-style:italic; font-display:swap; }
+
+  /* -------- Tokens (Minority / Devs palette) -------- */
+  :root{
+    --abyss:#0A1628;
+    --glass:#1B3A5C;
+    --signal:#4A8FB8;
+    --precog:#7FB8D9;
+    --bone:#E8F1F8;
+    --amber:#D4A574;
+    --paper:#F4EBDD;
+    --ink:#0A0A0A;
+    --hair:rgba(127,184,217,.22);
+    --hair-amber:rgba(212,165,116,.28);
+  }
+
+  /* -------- Reset -------- */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--abyss);color:var(--bone);font-family:'Tiempos Text',Georgia,serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  .mono{font-family:'Söhne Mono','SF Mono',ui-monospace,monospace;font-weight:400}
+  .sohne{font-family:'Söhne','Inter',system-ui,sans-serif}
+  .tiempos{font-family:'Tiempos Text',Georgia,serif}
+  .headline{font-family:'Tiempos Headline','Tiempos Text',Georgia,serif}
+
+  /* -------- Hero -------- */
+  .hero{
+    position:relative;
+    width:100%;
+    height:100vh;
+    min-height:720px;
+    overflow:hidden;
+    background:#000;
+  }
+  .hero__img{
+    position:absolute;inset:0;
+    background-image:url('img/hero.png');
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+  }
+  /* subtle precog-blue haze behind H1 */
+  .hero__flare{
+    position:absolute;
+    left:0;right:0;
+    bottom:22%;
+    height:1px;
+    background:linear-gradient(90deg, transparent 0%, rgba(127,184,217,0) 12%, rgba(127,184,217,.32) 36%, rgba(212,165,116,.38) 58%, rgba(212,165,116,.06) 82%, transparent 100%);
+    filter:blur(26px);
+    opacity:.85;
+    pointer-events:none;
+  }
+  .hero__flare::after{
+    content:'';
+    position:absolute;left:0;right:0;top:-1px;height:1px;
+    background:linear-gradient(90deg, transparent 0%, rgba(127,184,217,.18) 50%, transparent 100%);
+    filter:blur(1px);
+  }
+  .hero__vignette{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(120% 80% at 45% 40%, transparent 40%, rgba(10,22,40,.55) 100%),
+      linear-gradient(180deg, rgba(10,22,40,.5) 0%, rgba(10,22,40,0) 22%, rgba(10,22,40,0) 62%, rgba(10,22,40,.72) 100%);
+    pointer-events:none;
+  }
+
+  .hero__grid{
+    position:absolute;inset:0;
+    display:grid;
+    grid-template-columns:1fr;
+    grid-template-rows:auto 1fr auto;
+    padding:40px 56px 48px 56px;
+  }
+
+  .eyebrow{
+    font-family:'Söhne Mono',monospace;
+    font-weight:400;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--precog);
+    grid-row:1;
+    align-self:start;
+    justify-self:start;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .eyebrow::before{
+    content:'';
+    display:inline-block;
+    width:28px;height:1px;
+    background:var(--precog);
+    opacity:.7;
+  }
+
+  .hero__copy{
+    grid-row:3;
+    justify-self:start;
+    max-width:820px;
+    padding-bottom:8px;
+  }
+  .hero__h1{
+    font-family:'Tiempos Headline',serif;
+    font-weight:400;
+    font-style:italic;
+    font-size:clamp(48px,7.2vw,96px);
+    line-height:1.02;
+    letter-spacing:-0.012em;
+    color:var(--bone);
+    max-width:14ch;
+    text-shadow:0 1px 40px rgba(10,22,40,.55);
+  }
+  .hero__sub{
+    margin-top:28px;
+    font-family:'Söhne',sans-serif;
+    font-weight:400;
+    font-size:clamp(16px,1.3vw,20px);
+    line-height:1.5;
+    color:var(--bone);
+    max-width:62ch;
+    opacity:.9;
+  }
+
+  .hero__ctas{
+    position:absolute;
+    right:56px;bottom:48px;
+    display:flex;
+    gap:14px;
+    align-items:flex-end;
+  }
+  .plate{
+    display:block;
+    padding:18px 22px 16px;
+    min-width:220px;
+    background:linear-gradient(180deg, rgba(27,58,92,.55) 0%, rgba(10,22,40,.78) 100%);
+    border:1px solid var(--hair);
+    border-top-color:rgba(127,184,217,.42);
+    border-bottom-color:rgba(212,165,116,.32);
+    color:var(--bone);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    position:relative;
+    transition:border-color .2s ease,transform .2s ease;
+  }
+  .plate:hover{ border-color:var(--amber); transform:translateY(-1px); }
+  .plate__coord{
+    font-family:'Söhne Mono',monospace;
+    font-size:10px;
+    letter-spacing:.08em;
+    color:var(--precog);
+    opacity:.9;
+    display:block;
+    margin-bottom:6px;
+  }
+  .plate__label{
+    font-family:'Tiempos Headline',serif;
+    font-style:italic;
+    font-size:19px;
+    line-height:1.15;
+    color:var(--bone);
+  }
+  .plate__arrow{
+    font-family:'Söhne Mono',monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--amber);
+    margin-top:10px;
+    display:block;
+  }
+
+  /* -------- Section shared -------- */
+  section{ padding:120px 40px; }
+  .wrap{ max-width:1200px; margin:0 auto; }
+  .rule{ height:1px;background:var(--hair);border:0;margin:0; }
+  .rule--amber{ height:1px;background:var(--hair-amber);border:0;margin:0; }
+
+  /* -------- Executive summary -------- */
+  .summary{
+    background:var(--abyss);
+    padding:140px 40px 160px;
+  }
+  .summary__col{
+    max-width:640px;
+    margin:0 auto;
+  }
+  .summary__kicker{
+    font-family:'Söhne Mono',monospace;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin-bottom:36px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .summary__kicker::before{
+    content:'';display:inline-block;width:24px;height:1px;background:var(--amber);opacity:.8;
+  }
+  .summary p{
+    font-family:'Tiempos Text',serif;
+    font-size:19px;
+    line-height:30px;
+    color:var(--bone);
+    margin-bottom:22px;
+  }
+  .summary p:last-child{ margin-bottom:0; }
+  .summary p.first-para::first-letter{
+    font-family:'Tiempos Headline',serif;
+    font-style:italic;
+    font-size:76px;
+    line-height:.88;
+    float:left;
+    padding:6px 14px 0 0;
+    color:var(--bone);
+  }
+  .summary strong{ font-family:'Söhne',sans-serif; font-weight:700; font-size:16.5px; letter-spacing:.01em; color:var(--bone); text-transform:none; }
+
+  .pullquote{
+    margin:52px -20px;
+    padding:36px 20px;
+    border-top:1px solid var(--hair);
+    border-bottom:1px solid var(--hair);
+    font-family:'Tiempos Headline',serif;
+    font-style:italic;
+    font-size:clamp(24px,2.4vw,32px);
+    line-height:1.28;
+    color:var(--signal);
+    text-align:left;
+  }
+  .pullquote::before{
+    content:'PRINCIPLE';
+    display:block;
+    font-family:'Söhne Mono',monospace;
+    font-style:normal;
+    font-size:10px;
+    letter-spacing:.16em;
+    color:var(--amber);
+    margin-bottom:14px;
+  }
+
+  /* -------- Diptych -------- */
+  .diptych{
+    background:var(--abyss);
+    padding:40px 40px 140px;
+  }
+  .diptych__grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    max-width:1440px;
+    margin:0 auto;
+  }
+  .panel{
+    position:relative;
+    padding:0;
+    background:linear-gradient(180deg, rgba(27,58,92,.28) 0%, rgba(10,22,40,0) 100%);
+    border:1px solid var(--hair);
+  }
+  .panel__img{
+    display:block;width:100%;
+    aspect-ratio: 16 / 10;
+    object-fit:cover;
+    background:#000;
+    border-bottom:1px solid var(--hair);
+  }
+  .panel__body{ padding:36px 36px 40px; }
+  .panel__coord{
+    font-family:'Söhne Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--precog);
+    margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .panel__coord::before{ content:'';display:inline-block;width:18px;height:1px;background:var(--precog);opacity:.7; }
+  .panel__title{
+    font-family:'Söhne',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin-bottom:18px;
+  }
+  .panel__h{
+    font-family:'Tiempos Headline',serif;
+    font-weight:400;
+    font-size:clamp(28px,2.6vw,36px);
+    line-height:1.1;
+    color:var(--bone);
+    margin-bottom:22px;
+    max-width:18ch;
+  }
+  .panel__body p{
+    font-family:'Tiempos Text',serif;
+    font-size:17px;
+    line-height:1.6;
+    color:var(--bone);
+    opacity:.86;
+    margin-bottom:26px;
+    max-width:46ch;
+  }
+  .panel__link{
+    font-family:'Söhne Mono',monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--amber);
+    border-bottom:1px solid var(--amber);
+    padding-bottom:4px;
+    display:inline-block;
+  }
+  .panel__link:hover{ color:var(--bone); border-bottom-color:var(--bone); }
+
+  /* -------- Colophon -------- */
+  .colophon{
+    padding:56px 40px 72px;
+    border-top:1px solid var(--hair);
+    background:var(--abyss);
+  }
+  .colophon__wrap{
+    max-width:1200px;margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:40px;
+    align-items:start;
+    font-family:'Söhne Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--bone);
+    opacity:.76;
+  }
+  .colophon__wrap > div{ line-height:1.9; }
+  .colophon__wrap strong{ color:var(--bone); font-weight:400; opacity:1; }
+  .colophon__coord{
+    color:var(--precog);
+    border-top:1px solid var(--hair);
+    padding-top:14px;
+    margin-top:14px;
+    display:block;
+    letter-spacing:.12em;
+  }
+
+  /* -------- Mobile 375 -------- */
+  @media (max-width: 720px){
+    .hero{ height:auto; min-height:0; }
+    .hero__img{
+      position:relative;
+      aspect-ratio: 4 / 5;
+      height:auto;
+      background-position: 60% center;
+    }
+    .hero__vignette{ inset:0; }
+    .hero__grid{
+      position:relative;
+      padding:24px 22px 28px;
+      inset:auto;
+    }
+    .eyebrow{ font-size:10px; }
+    .hero__h1{ font-size:52px; line-height:.98; max-width:12ch; }
+    .hero__sub{ font-size:15px; margin-top:20px; }
+    .hero__ctas{
+      position:relative;
+      right:auto;bottom:auto;
+      margin-top:28px;
+      flex-direction:column;
+      gap:12px;
+      width:100%;
+    }
+    .plate{ width:100%; min-width:0; }
+    section{ padding:72px 22px; }
+    .summary{ padding:80px 22px 80px; }
+    .summary p{ font-size:17px; line-height:28px; }
+    .summary p.first-para::first-letter{ font-size:60px; }
+    .pullquote{ font-size:22px; margin:40px -4px; padding:26px 4px; }
+    .diptych{ padding:12px 22px 80px; }
+    .diptych__grid{ grid-template-columns:1fr; gap:36px; }
+    .panel__body{ padding:26px 24px 30px; }
+    .panel__h{ font-size:26px; }
+    .panel__body p{ font-size:16px; }
+    .colophon{ padding:40px 22px 56px; }
+    .colophon__wrap{ grid-template-columns:1fr; gap:28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero__img" role="img" aria-label="An operator in a dark observatory, three transparent glass panels hovering at shoulder height; the left panel holds a constellation of the architecture; the right panel shows a live cohort cascade; particles flow from the right panel into the operator's open palm."></div>
+  <div class="hero__vignette" aria-hidden="true"></div>
+  <div class="hero__flare" aria-hidden="true"></div>
+
+  <div class="hero__grid">
+    <div class="eyebrow">AN OPERATOR'S MANUAL, IN TWO VOLUMES</div>
+
+    <div class="hero__copy">
+      <h1 class="hero__h1">The science of generating serendipity.</h1>
+      <p class="hero__sub">Volume&nbsp;I is the thesis — what to build, with whom, funded how. Volume&nbsp;II is the instrument — how to run the experiment, read the result, and promote on evidence.</p>
+    </div>
+
+    <nav class="hero__ctas" aria-label="Volumes">
+      <a class="plate" href="../../volume-1.html">
+        <span class="plate__coord">VOL·I · 09 STEPS · 06 ARCHETYPES · 03 TIERS</span>
+        <span class="plate__label">Vol&nbsp;I — The Thesis</span>
+        <span class="plate__arrow">ENTER ARCHITECTURE →</span>
+      </a>
+      <a class="plate" href="../../volume-2.html">
+        <span class="plate__coord">VOL·II · WAITLIST · ALPHA · BETA · GA</span>
+        <span class="plate__label">Vol&nbsp;II — The Apparatus</span>
+        <span class="plate__arrow">ENTER INSTRUMENT →</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ EXECUTIVE SUMMARY ============ -->
+<section class="summary">
+  <div class="summary__col">
+    <div class="summary__kicker">FIRST READING</div>
+
+    <p class="first-para">Most people talk about innovation the way they talk about weather — as if it arrives, as if you are lucky or unlucky, as if the only honest posture is patience. I think that is wrong, and I think it is wrong in a way that costs companies their decades.</p>
+
+    <p>Innovation is farmable. Not predictable in the small — no one knows which seed germinates — but predictable in the aggregate, if you build the right apparatus and run it for long enough with taste. Chance favors the prepared operator. These two volumes are what preparation looks like when you take that sentence seriously.</p>
+
+    <p><strong>Volume&nbsp;I is the architecture of foresight.</strong> It is the lattice you hold up to the blur of the future so that you can see through it. Nine Steps describe the motion of a bet from a private hunch to a public business, and the order is not optional; skipping one is how companies burn a generation's credibility. Six Archetypes name the humans who move bets through those steps — because teams without all six stall at identifiable stations. Three Portfolio Tiers — Sandbox Experiments &amp; Research, Big Bet Projects, and Established Business Units — govern how capital, patience, and governance flow, so that the risk posture of a two-person probe is never confused with the risk posture of a cashflow engine. And above it all sits the Green Light Framework: the small set of questions a bet must answer before it is allowed to consume more of the organization's oxygen.</p>
+
+    <blockquote class="pullquote">You cannot summon a hit, but you can build the apparatus that catches one.</blockquote>
+
+    <p><strong>Volume&nbsp;II is the instrument.</strong> It is what you put your hands on once Volume&nbsp;I has told you where to look. Every bet, regardless of tier, runs through the same cascade — Waitlist, Alpha, Beta, GA — because the point of the cascade is not launch, it is legible learning. You measure activation the way a physicist measures a signal: the specific act, in the specific window, that separates the users who will retain from the users who will leave. You send hound-dogs — one or two operators whose entire job is to find the three customers who love the thing irrationally and describe, in the first person, what they love. You promote only when the curve has flattened above the floor you set in advance, not when the quarter demands a story.</p>
+
+    <p>Do both for long enough, with taste, and the future stops being weather.</p>
+  </div>
+</section>
+
+<!-- ============ DIPTYCH ============ -->
+<section class="diptych">
+  <div class="diptych__grid">
+
+    <article class="panel">
+      <img class="panel__img" src="img/voli.png" alt="A single floating glass panel: luminous cyan constellation of nine ringed nodes with six hexagonal markers orbiting, three strata labeled SER BBP EBU beneath.">
+      <div class="panel__body">
+        <div class="panel__coord">PANEL · I · THE THESIS</div>
+        <div class="panel__title">Volume I — The Thesis</div>
+        <h2 class="panel__h">The lattice you hold up to the blur of the future.</h2>
+        <p>Nine Steps. Six Archetypes. Three Tiers — Sandbox Experiments &amp; Research, Big Bet Projects, Established Business Units. The Green Light Framework decides what graduates. Volume&nbsp;I is how you see.</p>
+        <a class="panel__link" href="../../volume-1.html">Open Volume I →</a>
+      </div>
+    </article>
+
+    <article class="panel">
+      <img class="panel__img" src="img/volii.png" alt="A single large glass panel: luminous particle rivers streaming left to right through four thresholds labeled Waitlist, Alpha, Beta, GA; a magnifier reveals individual points; a retention curve in the corner.">
+      <div class="panel__body">
+        <div class="panel__coord">PANEL · II · THE INSTRUMENT</div>
+        <div class="panel__title">Volume II — The Apparatus</div>
+        <h2 class="panel__h">What you put your hands on once you know where to look.</h2>
+        <p>Waitlist, Alpha, Beta, GA — the same cascade for every bet. Activation read like a physicist reads a signal. Hound-dogs on the first three irrational users. Volume&nbsp;II is how you run it.</p>
+        <a class="panel__link" href="../../volume-2.html">Open Volume II →</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ COLOPHON ============ -->
+<footer class="colophon">
+  <div class="colophon__wrap">
+    <div>
+      <strong>AUTHOR</strong><br>
+      Roham Gharegozlou<br>
+      First reading, April 2026
+    </div>
+    <div>
+      <strong>TYPE</strong><br>
+      Tiempos Headline · Tiempos Text<br>
+      Söhne · Söhne Mono<br>
+      Set on abyss blue
+    </div>
+    <div>
+      <strong>STATION</strong><br>
+      The Observatory — R2.3 · candidate<br>
+      Two volumes, one apparatus<br>
+      <span class="colophon__coord">COORD 40°44′N 73°59′W · PRECOG DECK · T+00:00:00</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

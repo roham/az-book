@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Style directions — Pick the landing aesthetic</title>
+<style>
+  @font-face { font-family:'Söhne'; src:url('../fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne'; src:url('../fonts/Söhne-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+
+  :root{
+    --void:#05070C; --graphite:#0E1420; --silver:#D9DCE1;
+    --ivory:#F3EFE6; --amber:#E9A85C; --cyan:#6FA8C7;
+    --hair:rgba(233,168,92,.32); --hair-silver:rgba(217,220,225,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--void);color:var(--ivory);font-family:'Söhne',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  .page{max-width:1400px;margin:0 auto;padding:80px 40px 120px}
+  .intro{max-width:720px;margin-bottom:80px}
+  .eyebrow{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:24px}
+  .title{font-family:'Tiempos Headline',serif;font-style:italic;font-size:56px;line-height:1.05;letter-spacing:-.015em;color:var(--ivory);margin-bottom:24px}
+  @media(max-width:700px){.title{font-size:40px}}
+  .body{font-family:'Tiempos Text',serif;font-size:19px;line-height:1.55;color:var(--silver)}
+  .body em{font-style:italic;color:var(--ivory)}
+  .body strong{color:var(--ivory);font-weight:400}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+  .style{display:block;border:1px solid var(--hair-silver);background:var(--graphite);overflow:hidden;transition:border-color .3s ease, transform .3s ease}
+  .style:hover{border-color:var(--hair);transform:translateY(-3px)}
+  .style__hero{position:relative;aspect-ratio:16/10;background-size:cover;background-position:center center;background-repeat:no-repeat;background-color:#000}
+  .style__hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.1) 50%, rgba(0,0,0,.7) 100%)}
+  .style__label{position:absolute;top:24px;left:24px;z-index:2;font-family:'Söhne Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.9);padding:6px 12px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(4px)}
+  .style__name{position:absolute;bottom:24px;left:24px;right:24px;z-index:2;font-family:'Tiempos Headline',serif;font-style:italic;font-size:32px;line-height:1.1;color:var(--ivory);text-shadow:0 2px 12px rgba(0,0,0,.6)}
+
+  .style__meta{padding:28px 32px 32px;border-top:1px solid var(--hair-silver)}
+  .style__tag{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+  .style__desc{font-family:'Tiempos Text',serif;font-size:15px;line-height:1.5;color:var(--silver);margin-bottom:16px}
+  .style__view{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+
+  .style--bridge .style__hero{background-image:url('../candidates/r2-bridge/img/hero.png')}
+  .style--geometer .style__hero{background-image:url('../candidates/r2-geometer/img/hero.png')}
+  .style--nautical .style__hero{background-image:url('../candidates/r2-nautical/img/hero.png')}
+  .style--minority .style__hero{background-image:url('../candidates/r2-minority/img/hero.png')}
+
+  .footer{margin-top:80px;padding-top:32px;border-top:1px solid var(--hair-silver);font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--silver);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .footer a{color:var(--cyan)}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="intro">
+    <div class="eyebrow">STYLE TOURNAMENT · FOUR DIRECTIONS</div>
+    <h1 class="title">Pick the landing aesthetic.</h1>
+    <p class="body">Four distinct visual directions, each built as a full landing page with real OpenAI-generated imagery and identical copy — same H1, same subtitle, same executive summary — so the only variable is <em>style</em>. Click through to experience each in full. Once you pick one, <strong>Volume I</strong> and <strong>Volume II</strong> get remade to match that aesthetic: same palette, same typography register, same editorial discipline.</p>
+  </div>
+
+  <div class="grid">
+
+    <a class="style style--bridge" href="../candidates/r2-bridge/">
+      <div class="style__hero">
+        <div class="style__label">R2.2 · THE BRIDGE</div>
+        <div class="style__name">The science of generating serendipity.</div>
+      </div>
+      <div class="style__meta">
+        <div class="style__tag">★ STAR TREK / SPACEX-100YR · STELLAR DASHBOARD</div>
+        <div class="style__desc">Lone operator on observation deck. Holographic portfolio sphere (Vol I) + interferometric instrument strip (Vol II). Villeneuve/Expanse/Foundation restraint. Void black + amber/cyan.</div>
+        <div class="style__view">View full landing →</div>
+      </div>
+    </a>
+
+    <a class="style style--geometer" href="../candidates/r2-geometer/">
+      <div class="style__hero">
+        <div class="style__label">R2.4 · THE GEOMETER</div>
+        <div class="style__name">The science of generating serendipity.</div>
+      </div>
+      <div class="style__meta">
+        <div class="style__tag">★ DOCTOR STRANGE · MODERN OCCULT</div>
+        <div class="style__desc">Two suspended sigils — 9-ring mandala (Vol I) + copper 4-stage instrument-glyph (Vol II) — connected by dust-arc. Hickman / Pentagram / Zaha Hadid discipline. Velvet ink + ritual gold.</div>
+        <div class="style__view">View full landing →</div>
+      </div>
+    </a>
+
+    <a class="style style--nautical" href="../candidates/r2-nautical/">
+      <div class="style__hero">
+        <div class="style__label">R2.1 · THE NAVIGATOR'S BENCH</div>
+        <div class="style__name">The science of generating serendipity.</div>
+      </div>
+      <div class="style__meta">
+        <div class="style__tag">★ CYBERPUNK NAUTICAL · CRAFTSMAN FUTURE</div>
+        <div class="style__desc">Overhead walnut bench — brass sextant with phosphor-cyan telemetry, vellum chart with compass rose, chronometer, logbook, matte-black dongle as deadpan wink. Cyan as ink, not screen.</div>
+        <div class="style__view">View full landing →</div>
+      </div>
+    </a>
+
+    <a class="style style--minority" href="../candidates/r2-minority/">
+      <div class="style__hero">
+        <div class="style__label">R2.3 · THE PRESCIENT OPERATOR</div>
+        <div class="style__name">The science of generating serendipity.</div>
+      </div>
+      <div class="style__meta">
+        <div class="style__tag">★ MINORITY REPORT · PREDICTIVE INTERFACE</div>
+        <div class="style__desc">Gestural holographic panels. Vol I constellation on left, Vol II particle-flow cascade on right, operator's palm catching particles between. Devs/Garland/Anadol register. Not 2002 Spielberg.</div>
+        <div class="style__view">View full landing →</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <span>AZ · Style Tournament · 2026</span>
+    <span><a href="../">← Current landing (Bridge)</a></span>
+  </div>
+</main>
+</body>
+</html>
