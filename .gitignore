@@ -1,0 +1,42 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.secret
+secrets.txt
+tokens.txt
+credentials/
+.credentials/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs + scratch
+*.log
+logs/
+tmp/
+.tmp/
+scratch/
+
+# Node / build (future-proof)
+node_modules/
+dist/
+.cache/
+.next/
+
+# Python (future-proof)
+__pycache__/
+*.pyc
+.venv/
+venv/
