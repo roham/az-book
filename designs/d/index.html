@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="en" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Manuscript — The science of generating serendipity</title>
+<script>
+  // No-FOUC mode read.
+  try {
+    var m = localStorage.getItem('manuscript-mode');
+    if (m === 'light' || m === 'dark') document.documentElement.setAttribute('data-mode', m);
+  } catch (e) {}
+</script>
+<style>
+/* ==========================================================================
+   FONTS
+   ========================================================================== */
+@font-face { font-family: "Tiempos Headline"; src: url("../../fonts/TiemposHeadline-Regular.otf") format("opentype"); font-weight: 300 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Headline"; src: url("../../fonts/TiemposHeadline-Bold.otf") format("opentype"); font-weight: 600 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Text"; src: url("../../fonts/TiemposText-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Text"; src: url("../../fonts/TiemposText-RegularItalic.otf") format("opentype"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Tiempos Text"; src: url("../../fonts/TiemposText-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Text"; src: url("../../fonts/TiemposText-BoldItalic.otf") format("opentype"); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Sohne"; src: url("../../fonts/Söhne-Buch.otf") format("opentype"); font-weight: 400 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Sohne"; src: url("../../fonts/Söhne-Fett.otf") format("opentype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Sohne Breit"; src: url("../../fonts/SöhneBreit-Fett.otf") format("opentype"); font-weight: 500 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Sohne Mono"; src: url("../../fonts/SöhneMono-Buch.otf") format("opentype"); font-weight: 400 500; font-style: normal; font-display: swap; }
+
+/* ==========================================================================
+   ROOT TOKENS — DARK (default) AND LIGHT
+   ========================================================================== */
+:root[data-mode="dark"] {
+  --bg-canvas: #14110D;
+  --bg-panel: #1F1A14;
+  --ink-primary: #F0E6D2;
+  --ink-secondary: #A89B82;
+  --accent-1: #E8A05C;     /* drop-cap tangerine */
+  --accent-2: #C94F3F;     /* warning vermillion */
+  --accent-3: #D4B66A;     /* champagne gold */
+  --hairline: rgba(212, 182, 106, 0.28);
+  --hairline-strong: rgba(212, 182, 106, 0.55);
+  --grain-opacity: 0.06;
+  --leaf-shadow: inset 0 0 80px rgba(0,0,0,0.4);
+  --glow-warm: radial-gradient(ellipse at center, rgba(232,160,92,0.18), transparent 60%);
+  --dropcap-shadow: 0 0 24px rgba(232,160,92,0.35);
+  --dropcap-shadow-hover: 0 0 32px rgba(232,160,92,0.5);
+  --pullquote-bg: rgba(212,182,106,0.06);
+}
+:root[data-mode="light"] {
+  --bg-canvas: #F4ECD8;
+  --bg-panel: #FAF3E0;
+  --ink-primary: #1F1A14;
+  --ink-secondary: #5C5246;
+  --accent-1: #D2691E;
+  --accent-2: #B22222;
+  --accent-3: #C9A961;
+  --hairline: rgba(201, 169, 97, 0.35);
+  --hairline-strong: rgba(201, 169, 97, 0.7);
+  --grain-opacity: 0.04;
+  --leaf-shadow: inset 0 0 60px rgba(201,169,97,0.06);
+  --glow-warm: radial-gradient(ellipse at center, rgba(210,105,30,0.10), transparent 60%);
+  --dropcap-shadow: none;
+  --dropcap-shadow-hover: none;
+  --pullquote-bg: rgba(201,169,97,0.04);
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-family: "Tiempos Text", Georgia, serif;
+  font-size: 19px;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 180ms ease, color 180ms ease;
+  animation: pageFadeIn 600ms ease both;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Paper-grain noise overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.05 0 0 0 0 0.04 0 0 0 0 0.03 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent-3); text-decoration-thickness: 1px; text-underline-offset: 4px; transition: color 150ms ease, text-decoration-color 150ms ease; }
+a:hover { color: var(--ink-primary); text-decoration-color: var(--accent-1); }
+
+/* ==========================================================================
+   TOP NAV — volume toggle + mode + progress rule
+   ========================================================================== */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg-canvas) 92%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--hairline);
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+.topnav__row {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  gap: 24px;
+}
+.vol-toggle {
+  font-family: "Sohne Breit", "Sohne", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.vol-toggle__sep { color: var(--accent-3); }
+.vol-toggle__item {
+  cursor: pointer;
+  padding: 4px 0;
+  color: var(--ink-secondary);
+  border: none;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  transition: color 150ms ease, box-shadow 150ms ease;
+}
+.vol-toggle__item:hover { color: var(--ink-primary); }
+.vol-toggle__item[aria-current="true"] {
+  color: var(--ink-primary);
+  box-shadow: inset 0 -3px 0 var(--accent-3);
+}
+
+.mode-toggle {
+  background: none;
+  border: 1px solid var(--hairline);
+  color: var(--accent-3);
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
+}
+.mode-toggle:hover { border-color: var(--accent-3); }
+:root[data-mode="dark"] .mode-toggle__sun { display: none; }
+:root[data-mode="dark"] .mode-toggle__moon { display: inline; }
+:root[data-mode="light"] .mode-toggle__sun { display: inline; }
+:root[data-mode="light"] .mode-toggle__moon { display: none; }
+
+.progress-rule {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: var(--accent-3);
+  width: 0%;
+  transition: width 80ms linear;
+}
+
+/* ==========================================================================
+   PAGE LAYOUT — leaf on canvas
+   ========================================================================== */
+.page {
+  position: relative;
+  z-index: 2;
+  max-width: 1180px;
+  margin: 40px auto;
+  background: var(--bg-panel);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--leaf-shadow);
+  padding: 96px 64px;
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.leaf {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 62ch) 220px;
+  column-gap: 40px;
+  justify-content: center;
+}
+.leaf__gutter { grid-column: 1; font-family: "Sohne Mono", monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-3); padding-top: 4px; }
+.leaf__col { grid-column: 2; min-width: 0; }
+.leaf__margin { grid-column: 3; padding-top: 4px; }
+
+@media (max-width: 1279px) {
+  .leaf { grid-template-columns: minmax(0, 62ch) 220px; }
+  .leaf__gutter { display: none; }
+  .leaf__col { grid-column: 1; }
+  .leaf__margin { grid-column: 2; }
+}
+@media (max-width: 1023px) {
+  .leaf { grid-template-columns: minmax(0, 1fr); }
+  .leaf__col { grid-column: 1; }
+  .leaf__margin { display: none; }
+}
+@media (max-width: 768px) {
+  .page { margin: 16px; padding: 56px 24px; }
+}
+
+/* ==========================================================================
+   FRONTISPIECE / HERO
+   ========================================================================== */
+.frontis { text-align: center; padding: 40px 0 24px; }
+.frontis__metadata {
+  font-family: "Sohne Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin-bottom: 32px;
+}
+.dingbat {
+  color: var(--accent-3);
+  font-size: 32px;
+  line-height: 1;
+  margin: 0 auto 28px;
+  display: inline-block;
+}
+.dingbat--orbit { font-size: 40px; }
+.frontis__title {
+  font-family: "Tiempos Headline", Georgia, serif;
+  font-weight: 300;
+  font-size: 88px;
+  line-height: 1.0;
+  letter-spacing: -0.015em;
+  margin: 0 0 20px;
+  color: var(--ink-primary);
+}
+.frontis__title em {
+  font-style: italic;
+  display: block;
+  font-weight: 300;
+}
+.frontis__subtitle {
+  font-family: "Tiempos Text", serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  max-width: 30ch;
+  margin: 0 auto 40px;
+}
+.hairline-rule {
+  width: 60%;
+  height: 1px;
+  border: 0;
+  background: var(--accent-3);
+  opacity: 0.55;
+  margin: 0 auto 56px;
+}
+.hairline-rule--full { width: 100%; opacity: 0.6; margin: 24px 0 32px; }
+
+.volumes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.volume-plate {
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg-canvas);
+  border: 1px solid var(--hairline);
+  padding: 0 0 24px;
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+.volume-plate:hover {
+  transform: translateY(-2px);
+  border-color: var(--hairline-strong);
+  box-shadow: 0 0 0 1px var(--accent-3);
+}
+.volume-plate__img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--hairline);
+}
+.volume-plate__body { padding: 22px 24px 0; }
+.volume-plate__label {
+  font-family: "Sohne Breit", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin-bottom: 10px;
+}
+.volume-plate__title {
+  font-family: "Tiempos Headline", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.2;
+  margin: 0 0 10px;
+  color: var(--ink-primary);
+}
+.volume-plate__desc {
+  font-family: "Tiempos Text", serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+  margin: 0 0 18px;
+}
+.volume-plate__cta {
+  font-family: "Sohne Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+}
+
+@media (max-width: 768px) {
+  .frontis__title { font-size: 44px; line-height: 1.1; }
+  .frontis__subtitle { font-size: 17px; line-height: 1.65; }
+  .volumes { grid-template-columns: 1fr; gap: 20px; }
+  .volume-plate__img { height: 220px; }
+}
+
+/* ==========================================================================
+   FRONTISPIECE TOC
+   ========================================================================== */
+.toc {
+  max-width: 760px;
+  margin: 80px auto 24px;
+  padding-top: 48px;
+  border-top: 1px solid var(--hairline);
+}
+.toc__heading {
+  font-family: "Sohne Breit", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  text-align: center;
+  margin: 0 0 36px;
+}
+.toc__list { list-style: none; padding: 0; margin: 0; }
+.toc__row {
+  display: grid;
+  grid-template-columns: 24px auto 1fr auto;
+  gap: 16px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px dotted var(--hairline);
+}
+.toc__row:last-child { border-bottom: 0; }
+.toc__dingbat { color: var(--accent-3); text-align: center; font-size: 16px; }
+.toc__part {
+  font-family: "Sohne Breit", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  white-space: nowrap;
+}
+.toc__title {
+  font-family: "Tiempos Headline", serif;
+  font-style: italic;
+  font-size: 19px;
+  color: var(--ink-primary);
+  /* dotted leader fakery via gradient */
+  background-image: radial-gradient(circle, var(--ink-secondary) 0.5px, transparent 0.5px);
+  background-position: bottom left;
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+  padding-bottom: 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.toc__page {
+  font-family: "Sohne Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--accent-3);
+}
+
+@media (max-width: 600px) {
+  .toc__row { grid-template-columns: 18px auto 1fr auto; gap: 10px; }
+  .toc__title { font-size: 16px; }
+}
+
+/* ==========================================================================
+   CHAPTER DIVIDER (full-bleed plate + opener)
+   ========================================================================== */
+.divider-plate {
+  position: relative;
+  height: 100vh;
+  margin: 80px -64px 0;
+  background: var(--bg-canvas);
+  overflow: hidden;
+}
+.divider-plate__img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.95) saturate(1.05);
+}
+.divider-plate__inner-border {
+  position: absolute;
+  inset: 24px;
+  border: 1px solid rgba(212,182,106,0.55);
+  pointer-events: none;
+}
+.chapter-opener {
+  text-align: center;
+  padding: 80px 0 48px;
+}
+.chapter-opener__meta {
+  font-family: "Sohne Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin-bottom: 12px;
+}
+.chapter-opener__partlabel {
+  font-family: "Sohne Breit", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin-bottom: 28px;
+}
+.chapter-opener__title {
+  font-family: "Tiempos Headline", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--ink-primary);
+  margin: 0 auto 36px;
+  max-width: 18ch;
+}
+.chapter-opener__rule {
+  width: min(62ch, 100%);
+  margin: 0 auto;
+  height: 1px;
+  background: var(--accent-3);
+  opacity: 0.55;
+}
+
+@media (max-width: 1279px) {
+  .divider-plate { margin: 80px -64px 0; }
+}
+@media (max-width: 768px) {
+  .divider-plate { margin: 60px -24px 0; height: 70vh; }
+  .chapter-opener__title { font-size: 36px; }
+}
+
+/* ==========================================================================
+   BODY PROSE
+   ========================================================================== */
+.prose p {
+  margin: 0 0 1.4em;
+}
+.prose .lede {
+  font-size: 22px;
+  line-height: 1.6;
+  font-style: italic;
+  color: var(--ink-primary);
+  margin-bottom: 1.5em;
+}
+.dropcap {
+  font-family: "Tiempos Headline", serif;
+  font-weight: 300;
+  float: left;
+  font-size: 5.6em;
+  line-height: 0.85;
+  margin: 0.05em 0.12em 0 0;
+  color: var(--accent-1);
+  font-feature-settings: "lnum";
+  font-style: normal;
+  text-shadow: var(--dropcap-shadow);
+  transition: text-shadow 200ms ease, opacity 200ms ease;
+  opacity: 0;
+  animation: dropcapFade 600ms ease 200ms forwards, dropcapBloom 800ms ease 200ms forwards;
+}
+.dropcap:hover { text-shadow: var(--dropcap-shadow-hover); }
+@keyframes dropcapFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes dropcapBloom {
+  0%, 60% { filter: brightness(1); }
+  70% { filter: brightness(1.15); }
+  100% { filter: brightness(1); }
+}
+
+.runin {
+  font-family: "Sohne Breit", sans-serif;
+  font-size: 0.85em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin-right: 0.5em;
+}
+
+.prose h2 {
+  font-family: "Tiempos Headline", serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.2;
+  margin: 2em 0 0.8em;
+  color: var(--ink-primary);
+}
+.prose h3 {
+  font-family: "Sohne Breit", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin: 2em 0 0.6em;
+}
+
+@media (max-width: 768px) {
+  body { font-size: 17px; line-height: 1.65; }
+  .prose .lede { font-size: 19px; }
+  .dropcap { font-size: 4.2em; }
+}
+
+/* Pull-quote */
+.pullquote {
+  margin: 2em 0 2em 40px;
+  padding: 20px 40px;
+  font-family: "Tiempos Headline", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.35;
+  color: var(--ink-primary);
+  background: var(--pullquote-bg);
+  border-left: 1px solid var(--hairline);
+  position: relative;
+}
+.pullquote::before,
+.pullquote::after {
+  color: var(--accent-3);
+  font-family: serif;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+}
+.pullquote::before { content: "✦  "; margin-right: 4px; }
+.pullquote::after  { content: "  ✦"; margin-left: 4px; }
+:root[data-mode="dark"] .pullquote {
+  box-shadow: 0 0 60px -10px rgba(212,182,106,0.15);
+}
+.pullquote--warning { border-left-color: var(--accent-2); color: var(--accent-2); }
+@media (max-width: 768px) {
+  .pullquote { margin-left: 0; padding: 16px 20px; font-size: 22px; }
+  .pullquote::after { content: ""; margin: 0; }
+}
+
+/* Section break */
+.section-break {
+  text-align: center;
+  color: var(--accent-3);
+  font-size: 22px;
+  margin: 32px 0;
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+}
+
+/* Lists */
+.prose ol, .prose ul {
+  padding-left: 1.6em;
+  margin: 0 0 1.4em;
+}
+.prose ul { list-style: none; padding-left: 0; }
+.prose ul li {
+  position: relative;
+  padding-left: 1.6em;
+  margin-bottom: 0.4em;
+}
+.prose ul li::before {
+  content: "✦";
+  color: var(--accent-3);
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  font-size: 0.9em;
+}
+.prose ol.roman {
+  list-style: none;
+  counter-reset: roman;
+  padding-left: 0;
+}
+.prose ol.roman li {
+  counter-increment: roman;
+  position: relative;
+  padding-left: 3em;
+  margin-bottom: 0.5em;
+}
+.prose ol.roman li::before {
+  content: counter(roman, upper-roman) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.4em;
+  text-align: right;
+  font-family: "Sohne Breit", sans-serif;
+  font-size: 0.85em;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--accent-3);
+}
+
+/* Footnote markers + sidenotes */
+.fn-marker {
+  font-family: "Sohne Mono", monospace;
+  font-size: 0.75em;
+  vertical-align: super;
+  color: var(--accent-3);
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 1px;
+}
+.fn-marker:hover { color: var(--accent-1); }
+
+.sidenote {
+  font-family: "Tiempos Text", serif;
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  margin-bottom: 24px;
+  padding-left: 0;
+}
+.sidenote__num {
+  font-family: "Sohne Mono", monospace;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--accent-3);
+  margin-right: 6px;
+  font-weight: 500;
+}
+
+/* Mobile sidenote becomes inline details */
+.sidenote-inline {
+  display: none;
+  margin: 0 0 1.4em;
+  padding: 12px 14px;
+  border: 1px solid var(--hairline);
+  background: var(--bg-canvas);
+}
+.sidenote-inline > summary {
+  list-style: none;
+  cursor: pointer;
+  font-family: "Sohne Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.sidenote-inline > summary::-webkit-details-marker { display: none; }
+.sidenote-inline > summary::before {
+  content: attr(data-num);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-3);
+  font-size: 10px;
+  font-weight: 500;
+}
+.sidenote-inline > p {
+  margin: 12px 0 0;
+  font-family: "Tiempos Text", serif;
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+@media (max-width: 1023px) {
+  .sidenote-inline { display: block; }
+}
+
+/* Tables */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2em 0;
+  font-size: 16px;
+  font-feature-settings: "tnum", "lnum";
+}
+.prose table thead th {
+  border-top: 1px solid var(--hairline-strong);
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+  padding: 12px 14px 10px 0;
+  font-family: "Sohne Breit", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+}
+.prose table tbody td {
+  padding: 12px 14px 12px 0;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-primary);
+  font-family: "Tiempos Text", serif;
+}
+.prose table tbody td.num {
+  font-family: "Sohne Mono", monospace;
+  font-size: 14px;
+  font-feature-settings: "tnum";
+}
+.prose table tbody tr:last-child td {
+  border-bottom: 1px solid var(--hairline-strong);
+}
+
+/* Code */
+.codeblock {
+  margin: 2em 0;
+  background: var(--bg-canvas);
+  border: 1px solid var(--hairline);
+  padding: 18px 22px;
+  font-family: "Sohne Mono", monospace;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-primary);
+  white-space: pre;
+  overflow-x: auto;
+}
+.codeblock .kw  { color: var(--accent-1); }
+.codeblock .str { color: var(--accent-3); }
+.codeblock .cm  { color: var(--ink-secondary); font-style: italic; }
+.codeblock::-webkit-scrollbar { height: 6px; }
+.codeblock::-webkit-scrollbar-thumb { background: var(--accent-3); }
+
+/* Figure */
+.figure {
+  margin: 2.4em 0;
+}
+.figure__frame {
+  border: 2px solid var(--hairline-strong);
+  padding: 12px;
+  background: var(--bg-canvas);
+}
+.figure__img { width: 100%; height: auto; display: block; }
+.figure__caption {
+  margin-top: 12px;
+  font-family: "Sohne Breit", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  text-align: left;
+}
+
+/* ==========================================================================
+   READING-PROGRESS PAGE COUNTER
+   ========================================================================== */
+.page-counter {
+  position: fixed;
+  bottom: 18px;
+  right: 22px;
+  z-index: 60;
+  font-family: "Sohne Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--accent-3);
+  background: color-mix(in srgb, var(--bg-canvas) 80%, transparent);
+  padding: 6px 10px;
+  border: 1px solid var(--hairline);
+  backdrop-filter: blur(6px);
+}
+
+/* ==========================================================================
+   FOOTER / COLOPHON
+   ========================================================================== */
+.colophon {
+  max-width: 1180px;
+  margin: 56px auto 80px;
+  padding: 48px 32px;
+  text-align: center;
+  border-top: 1px solid var(--hairline);
+}
+.colophon__dingbat { font-size: 22px; color: var(--accent-3); margin-bottom: 18px; }
+.colophon__line {
+  font-family: "Sohne Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  margin: 4px 0;
+}
+
+/* Skip-to-content + a11y */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- =================================================================== -->
+<!-- TOP NAV                                                              -->
+<!-- =================================================================== -->
+<nav class="topnav" aria-label="Volume and mode">
+  <div class="topnav__row">
+    <div class="vol-toggle" role="tablist" aria-label="Volume">
+      <button class="vol-toggle__item" role="tab" aria-current="true">Vol. I — The Thesis</button>
+      <span class="vol-toggle__sep" aria-hidden="true">·</span>
+      <button class="vol-toggle__item" role="tab" aria-current="false">Vol. II — The Apparatus</button>
+    </div>
+    <button class="mode-toggle" id="modeToggle" type="button" aria-label="Toggle light/dark mode">
+      <span class="mode-toggle__moon" aria-hidden="true">☾</span>
+      <span class="mode-toggle__sun"  aria-hidden="true">☀</span>
+    </button>
+  </div>
+  <div class="progress-rule" id="progressRule" aria-hidden="true"></div>
+</nav>
+
+<!-- =================================================================== -->
+<!-- PAGE / LEAF                                                          -->
+<!-- =================================================================== -->
+<main class="page" id="page">
+
+  <!-- HERO / FRONTISPIECE -->
+  <section class="frontis" aria-labelledby="hero-title">
+    <div class="frontis__metadata">MMXXVI · A Monograph in Two Volumes · First Edition</div>
+    <div class="dingbat dingbat--orbit" aria-hidden="true">☉</div>
+    <h1 class="frontis__title" id="hero-title">
+      The science of generating
+      <em>serendipity.</em>
+    </h1>
+    <p class="frontis__subtitle">Volume I is the thesis. Volume II is the instrument.</p>
+    <hr class="hairline-rule" aria-hidden="true">
+
+    <div class="volumes">
+      <a href="#volume-1" class="volume-plate">
+        <img src="../../img/v1/prologue.png" alt="" class="volume-plate__img" loading="lazy">
+        <div class="volume-plate__body">
+          <div class="volume-plate__label">Vol. I · The Thesis</div>
+          <div class="volume-plate__title">Why serendipity can be farmed.</div>
+          <p class="volume-plate__desc">Ten parts on luck, waves, archetypes, and the moats that hold them. The argument before the apparatus.</p>
+          <div class="volume-plate__cta">→ Enter</div>
+        </div>
+      </a>
+      <a href="#chapter" class="volume-plate">
+        <img src="../../img/v2/part-i-frame.png" alt="" class="volume-plate__img" loading="lazy">
+        <div class="volume-plate__body">
+          <div class="volume-plate__label">Vol. II · The Apparatus</div>
+          <div class="volume-plate__title">How to build the instrument.</div>
+          <p class="volume-plate__desc">Frames, places, waitlists, alphas, betas, gates, and the daily clockspeed that compounds them.</p>
+          <div class="volume-plate__cta">→ Enter</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Frontispiece TOC -->
+    <section class="toc" aria-labelledby="toc-heading">
+      <h2 class="toc__heading" id="toc-heading">⁂  Frontispiece — Contents  ⁂</h2>
+      <ol class="toc__list">
+        <li class="toc__row">
+          <span class="toc__dingbat" aria-hidden="true">☉</span>
+          <span class="toc__part">Part I</span>
+          <span class="toc__title">The Frame: Farming Luck</span>
+          <span class="toc__page">p. 003</span>
+        </li>
+        <li class="toc__row">
+          <span class="toc__dingbat" aria-hidden="true">⁂</span>
+          <span class="toc__part">Part II</span>
+          <span class="toc__title">The Place: Where the Apparatus Lives</span>
+          <span class="toc__page">p. 027</span>
+        </li>
+        <li class="toc__row">
+          <span class="toc__dingbat" aria-hidden="true">✦</span>
+          <span class="toc__part">Part III</span>
+          <span class="toc__title">The Waitlist: A Door Worth Standing At</span>
+          <span class="toc__page">p. 052</span>
+        </li>
+        <li class="toc__row">
+          <span class="toc__dingbat" aria-hidden="true">☉</span>
+          <span class="toc__part">Part IV</span>
+          <span class="toc__title">The Alpha: First Light</span>
+          <span class="toc__page">p. 081</span>
+        </li>
+        <li class="toc__row">
+          <span class="toc__dingbat" aria-hidden="true">⁂</span>
+          <span class="toc__part">Part V</span>
+          <span class="toc__title">The Beta: Pressure-Testing the Gate</span>
+          <span class="toc__page">p. 109</span>
+        </li>
+      </ol>
+    </section>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- CHAPTER DIVIDER                                                       -->
+  <!-- =================================================================== -->
+  <section id="chapter" aria-labelledby="ch-title">
+    <div class="divider-plate" aria-hidden="true">
+      <img src="../../img/v2/part-i-frame.png" alt="" class="divider-plate__img" loading="lazy">
+      <div class="divider-plate__inner-border"></div>
+    </div>
+
+    <div class="chapter-opener">
+      <div class="chapter-opener__meta">Part II · Chapter 1</div>
+      <div class="chapter-opener__partlabel">The Apparatus</div>
+      <h2 class="chapter-opener__title" id="ch-title">The Frame:<br>Farming Luck</h2>
+      <hr class="chapter-opener__rule" aria-hidden="true">
+    </div>
+
+    <!-- =============================================================== -->
+    <!-- CHAPTER BODY — leaf grid                                          -->
+    <!-- =============================================================== -->
+    <div class="leaf prose">
+
+      <aside class="leaf__gutter" aria-hidden="true">
+        Vol. II<br>P. II<br>Ch. 1
+      </aside>
+
+      <div class="leaf__col">
+
+        <p class="lede"><span class="dropcap">L</span>uck looks unrepeatable from the outside and farmable from the inside. The collector who happened to walk past the right card-shop window, the founder who happened to ship the right feature on the right Tuesday — both stories read like fortune. They are not. Underneath every single one is an <em>apparatus</em>: a posture, a place, a clockspeed, a set of standing invitations to be surprised. The thesis of Volume I told you this can exist. This volume builds it.</p>
+
+        <p>What follows is the operator's manual for that apparatus. We will not philosophize about luck. We will measure it, gate it, instrument it, and ship it to a small group of people whose feedback is worth more than every dashboard you have ever loved. Volume II is not theory. It is shop-floor.</p>
+
+        <!-- Mobile-only inline sidenote 1 -->
+        <details class="sidenote-inline" data-num="1">
+          <summary data-num="1">Sidenote 1</summary>
+          <p>"Apparatus" is a deliberate word — Vesalius used it for his anatomical plates, Tufte for his small multiples. We owe the lineage.</p>
+        </details>
+
+        <p><span class="runin">The frame is the first move.</span>Before any tool, before any roadmap, before any single line of code, the operator chooses what counts as a hit and what counts as noise.<a href="#fn1" class="fn-marker" id="fnref1">1</a> Frames are cheap to write and expensive to fix mid-flight. So write them carefully, and write them down. The frame is the contract you make with yourself about which surprises you intend to honor.</p>
+
+        <blockquote class="pullquote">You don't make lightning. You build the apparatus that catches it when it strikes.</blockquote>
+
+        <p>A good frame has three properties. It is <em>narrow enough to falsify</em> — so a single week of data can tell you the truth. It is <em>wide enough to surprise</em> — so a real signal isn't dismissed as scope creep. And it is <em>cheap enough to repeat</em> — so the operator can run twelve frames in a quarter, not two.</p>
+
+        <!-- Mobile-only inline sidenote 2 -->
+        <details class="sidenote-inline" data-num="2">
+          <summary data-num="2">Sidenote 2</summary>
+          <p>The Sean Ellis "very disappointed" question survives because it is unfakeable. Pricing flinches. Retention curves bend. The PMF question stays.</p>
+        </details>
+
+        <h3>Promotion gates, defined</h3>
+
+        <p>Every alpha lives behind a gate. Every gate is a fixed list of metrics with fixed thresholds and a fixed source-of-truth. The list is short. The thresholds are written before the cohort opens.<a href="#fn2" class="fn-marker" id="fnref2">2</a> The source is named. If those three things are not on paper before you ship, you are not running an alpha — you are running on vibes.</p>
+
+        <figure class="figure">
+          <div class="figure__frame">
+            <img src="../../img/v2/part-iii-waitlist.png" alt="A waitlist queue rendered as an architectural plate." class="figure__img" loading="lazy">
+          </div>
+          <figcaption class="figure__caption">Fig. 3 · Chapter 1 · The diffusion curve, observed at the gate.</figcaption>
+        </figure>
+
+        <p>Below is a representative gate sheet. The numbers are illustrative — your apparatus will have its own — but the <em>shape</em> generalizes. Five metrics, three thresholds, one named source per row. No essay. No appendix. This is the table that decides whether the alpha graduates.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Alpha exit</th>
+              <th>Beta exit</th>
+              <th>GA</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>D7 retention</td>          <td class="num">≥ 35%</td>  <td class="num">≥ 45%</td>  <td class="num">≥ 50%</td>  <td>Heimdall · cohort</td></tr>
+            <tr><td>Activation rate</td>       <td class="num">≥ 60%</td>  <td class="num">≥ 70%</td>  <td class="num">≥ 78%</td>  <td>Mixpanel · funnel</td></tr>
+            <tr><td>Support tickets / 100 DAU</td><td class="num">≤ 8.0</td><td class="num">≤ 4.0</td>  <td class="num">≤ 2.0</td>  <td>Intercom · weekly</td></tr>
+            <tr><td>NPS (top-2 box)</td>       <td class="num">≥ 40</td>   <td class="num">≥ 50</td>   <td class="num">≥ 55</td>   <td>In-app survey</td></tr>
+            <tr><td>Sean Ellis PMF</td>        <td class="num">≥ 30%</td>  <td class="num">≥ 40%</td>  <td class="num">≥ 50%</td>  <td>Quarterly panel</td></tr>
+          </tbody>
+        </table>
+
+        <p>The gate is not a wish. It is a function — input cohort, output verdict. The operator's job is to make that function legible to a stranger reading the manuscript a year from now. The clearest implementation is a few lines of code:</p>
+
+        <pre class="codeblock"><span class="cm"># promotion_gate.py — alpha → beta promotion</span>
+<span class="kw">def</span> promote(cohort):
+    metrics = heimdall.snapshot(cohort, window=<span class="str">"7d"</span>)
+    <span class="kw">return</span> all([
+        metrics.d7_retention      &gt;= <span class="str">0.35</span>,
+        metrics.activation_rate   &gt;= <span class="str">0.60</span>,
+        metrics.tickets_per_100   &lt;= <span class="str">8.0</span>,
+        metrics.nps_top2          &gt;= <span class="str">40</span>,
+        metrics.sean_ellis_pmf    &gt;= <span class="str">0.30</span>,
+    ])</pre>
+
+        <p>That is the apparatus, in nine lines. Everything else in this chapter — the rituals, the room, the ratios — exists to keep that function honest. Now: what does it take to <em>earn</em> an honest input?</p>
+
+        <ol class="roman">
+          <li>Pick the cohort before the gate runs. Never after.</li>
+          <li>Name the source-of-truth before the question. Never after.</li>
+          <li>Write the threshold before the data. Never after.</li>
+          <li>Show the verdict to a stranger. They should agree.</li>
+        </ol>
+
+        <div class="section-break" aria-hidden="true">⁂</div>
+
+        <p>The four rules above look like bureaucracy and behave like aerodynamics. They are how the apparatus stays pointed into the wind when the founder gets excited, the investor gets nervous, or the Slack thread gets loud. Pre-commit, then look. The order matters more than the rigor.</p>
+
+        <p>The operator who treats the gate as sacred will find, after twelve cycles, that the gate has become a piece of <em>infrastructure</em> — a thing the team trusts the way they trust a thermometer. From there, every subsequent decision gets cheaper. That, more than any single launch, is the compounding asset Volume II is here to build.</p>
+
+        <hr class="hairline-rule hairline-rule--full" aria-hidden="true">
+
+        <p style="font-family:'Sohne Mono',monospace;font-size:12px;letter-spacing:0.05em;color:var(--ink-secondary);">
+          <span style="color:var(--accent-3);">[1]</span> Including, painfully, the surprises you don't want.<br>
+          <span style="color:var(--accent-3);">[2]</span> "Pre-registration" is the same idea, borrowed from clinical trials.
+        </p>
+
+      </div>
+
+      <!-- Sidenotes column (desktop) -->
+      <aside class="leaf__margin" aria-label="Sidenotes">
+        <div class="sidenote">
+          <span class="sidenote__num">1</span>
+          "Apparatus" is a deliberate word — Vesalius used it for his anatomical plates, Tufte for his small multiples. We owe the lineage.
+        </div>
+        <div class="sidenote">
+          <span class="sidenote__num">2</span>
+          The Sean Ellis "very disappointed" question survives because it is unfakeable. Pricing flinches. Retention curves bend. The PMF question stays.
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- =================================================================== -->
+<!-- COLOPHON                                                              -->
+<!-- =================================================================== -->
+<footer class="colophon">
+  <div class="colophon__dingbat" aria-hidden="true">⁂</div>
+  <p class="colophon__line">Set in Tiempos Headline · Tiempos Text · Söhne · Söhne Breit · Söhne Mono</p>
+  <p class="colophon__line">Composed at the kitchen table · MMXXVI · First Edition</p>
+</footer>
+
+<!-- Reading progress counter -->
+<div class="page-counter" id="pageCounter" aria-live="polite">p. 1 / 137</div>
+
+<!-- =================================================================== -->
+<!-- MINIMAL JS — mode toggle + scroll progress + page counter            -->
+<!-- =================================================================== -->
+<script>
+(function () {
+  // Mode toggle
+  var btn = document.getElementById('modeToggle');
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-mode') === 'light' ? 'light' : 'dark';
+    var next = cur === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-mode', next);
+    try { localStorage.setItem('manuscript-mode', next); } catch (e) {}
+  });
+
+  // Top progress rule + page counter
+  var rule = document.getElementById('progressRule');
+  var counter = document.getElementById('pageCounter');
+  var totalPages = 137;
+  function onScroll() {
+    var h = document.documentElement;
+    var max = (h.scrollHeight - h.clientHeight) || 1;
+    var pct = Math.min(1, Math.max(0, h.scrollTop / max));
+    rule.style.width = (pct * 100).toFixed(2) + '%';
+    var p = Math.max(1, Math.round(pct * totalPages));
+    counter.textContent = 'p. ' + p + ' / ' + totalPages;
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Volume tab toggle (visual only in this prototype)
+  var tabs = document.querySelectorAll('.vol-toggle__item');
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      tabs.forEach(function (x) { x.setAttribute('aria-current', 'false'); });
+      t.setAttribute('aria-current', 'true');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

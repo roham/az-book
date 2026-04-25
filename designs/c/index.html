@@ -1,0 +1,1293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The Innovation Atlas — Vol I — The Observatory</title>
+
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Tiempos Headline"; src: url("../../fonts/TiemposHeadline-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Headline"; src: url("../../fonts/TiemposHeadline-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Text"; src: url("../../fonts/TiemposText-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Text"; src: url("../../fonts/TiemposText-RegularItalic.otf") format("opentype"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Söhne"; src: url("../../fonts/Söhne-Buch.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Söhne"; src: url("../../fonts/Söhne-Fett.otf") format("opentype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Söhne Mono"; src: url("../../fonts/SöhneMono-Buch.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens ---------- */
+:root {
+  --bg-canvas: #07090C;
+  --bg-panel: #0E1218;
+  --bg-elevated: #141923;
+  --ink-primary: rgba(241,233,216,0.92);
+  --ink-secondary: #A39A86;
+  --ink-tertiary: #6B6555;
+  --accent-1: #E8722C;     /* tangerine */
+  --accent-2: #C2412A;     /* vermillion */
+  --accent-3: #C9A961;     /* champagne gold — DOMINANT */
+  --hairline-gold: rgba(201,169,97,0.35);
+  --hairline-gold-strong: rgba(201,169,97,0.7);
+  --hairline-cyan: rgba(120,180,200,0.25);
+  --glow-warm: rgba(241,233,216,0.08);
+
+  --display: "Tiempos Headline", "Iowan Old Style", Georgia, serif;
+  --body:    "Tiempos Text", "Iowan Old Style", Georgia, serif;
+  --ui:      "Söhne", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono:    "Söhne Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  --reading-w: 66ch;
+  --left-rail: 80px;
+  --right-rail: 240px;
+  --container-max: 1280px;
+  --pad-x: 80px;
+
+  --scroll-progress: 0;     /* 0..1, set by JS */
+  --parallax-y: 0px;        /* set by JS */
+}
+
+/* ---------- Reset ---------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background: var(--bg-canvas); }
+body {
+  background: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-family: var(--body);
+  font-size: 19px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  animation: pageFade 600ms ease both;
+}
+@keyframes pageFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--accent-3); text-decoration: none; }
+
+/* Hover underline trace — gradient + bg-size, no JS */
+.prose a, .colophon a, .epigraph a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 300ms cubic-bezier(0.2, 0, 0.2, 1);
+  padding-bottom: 1px;
+}
+.prose a:hover, .colophon a:hover, .epigraph a:hover {
+  background-size: 100% 1px;
+}
+
+/* ---------- Top sticky thin label ---------- */
+.sticky-label {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 36px;
+  z-index: 40;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  background: linear-gradient(180deg, rgba(7,9,12,0.92) 0%, rgba(7,9,12,0.6) 70%, rgba(7,9,12,0));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.sticky-label .ctx { color: var(--ink-secondary); }
+.sticky-label .ctx em { color: var(--ink-primary); font-style: normal; }
+.sticky-label .vol-toggle {
+  display: inline-flex; align-items: center; gap: 10px;
+  cursor: pointer;
+  border: none; background: transparent;
+  color: var(--ink-secondary);
+  font: inherit; letter-spacing: inherit; text-transform: inherit;
+  padding: 4px 8px;
+}
+.sticky-label .vol-toggle:hover { color: var(--accent-3); }
+.sticky-label .vol-toggle .moon {
+  width: 14px; height: 14px; flex: 0 0 auto;
+}
+.sticky-label .vol-toggle .moon path,
+.sticky-label .vol-toggle .moon circle {
+  fill: var(--accent-3);
+}
+.sticky-label .coords {
+  display: inline-block;
+  color: var(--ink-tertiary);
+}
+
+/* ---------- Reading horizon (Sugimoto) ---------- */
+.horizon {
+  position: fixed;
+  bottom: 0; left: 0;
+  height: 1px;
+  width: calc(var(--scroll-progress) * 100%);
+  background: var(--accent-3);
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(201,169,97,0.4);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero .bg {
+  position: absolute; inset: -8% -2%;
+  background: url("../../img/hero.png") center/cover no-repeat;
+  transform: translate3d(0, var(--parallax-y), 0);
+  will-change: transform;
+  z-index: 0;
+}
+.hero::after {
+  /* vignette + bottom fade into canvas */
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 60% 35%, rgba(7,9,12,0) 0%, rgba(7,9,12,0.55) 70%, rgba(7,9,12,0.9) 100%),
+    linear-gradient(180deg, rgba(7,9,12,0) 55%, rgba(7,9,12,0.85) 92%, var(--bg-canvas) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+.hero .frame {
+  position: relative; z-index: 2;
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 56px var(--pad-x) 56px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.hero .top-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+.hero .top-row .obs { color: var(--accent-3); }
+.hero .top-row .coords-block { text-align: right; line-height: 1.7; }
+.hero .top-row .coords-block span { display: block; color: var(--ink-tertiary); }
+.hero .top-row .coords-block span.live { color: var(--accent-3); }
+
+.hero .title-block {
+  align-self: end;
+  max-width: 720px;
+  padding-bottom: 6vh;
+}
+.hero .kicker {
+  font-family: var(--ui);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin: 0 0 28px;
+}
+.hero .kicker::before {
+  content: ""; display: inline-block;
+  width: 36px; height: 1px; background: var(--accent-3);
+  vertical-align: middle; margin-right: 14px; transform: translateY(-3px);
+}
+.hero h1 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 7.4vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin: 0 0 18px;
+  color: var(--ink-primary);
+  text-shadow: 0 0 60px rgba(241,233,216,0.18);
+}
+.hero h1 .vol {
+  display: block;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(28px, 4.4vw, 56px);
+  color: var(--accent-3);
+  margin-top: 12px;
+  letter-spacing: -0.005em;
+}
+.hero .author {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  align-self: end;
+  justify-self: end;
+  text-align: right;
+}
+
+/* ---------- Cosmic dust (page-load only, decorative) ---------- */
+.dust {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.dust span {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: rgba(241,233,216,0.6);
+  filter: blur(0.5px);
+  opacity: 0;
+  animation: drift 12s ease-out forwards;
+}
+@keyframes drift {
+  0%   { opacity: 0; transform: translate3d(0,0,0); }
+  20%  { opacity: 0.4; }
+  100% { opacity: 0; transform: translate3d(40px, -120px, 0); }
+}
+.dust span:nth-child(1) { left: 8%;  top: 80%; animation-delay: 0.2s; }
+.dust span:nth-child(2) { left: 22%; top: 65%; animation-delay: 1.4s; }
+.dust span:nth-child(3) { left: 38%; top: 88%; animation-delay: 2.6s; }
+.dust span:nth-child(4) { left: 51%; top: 70%; animation-delay: 0.8s; }
+.dust span:nth-child(5) { left: 64%; top: 92%; animation-delay: 3.6s; }
+.dust span:nth-child(6) { left: 76%; top: 78%; animation-delay: 1.0s; }
+.dust span:nth-child(7) { left: 84%; top: 60%; animation-delay: 4.2s; }
+.dust span:nth-child(8) { left: 92%; top: 86%; animation-delay: 2.0s; }
+
+/* ---------- Star Map TOC (sticky right rail >=1400px, drawer otherwise) ---------- */
+.starmap {
+  position: fixed;
+  top: 0; right: 0;
+  height: 100vh;
+  width: 220px;
+  z-index: 30;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 24px;
+  pointer-events: none;
+}
+.starmap-inner { pointer-events: auto; }
+.starmap svg { display: block; overflow: visible; }
+.starmap .dot {
+  fill: var(--hairline-gold);
+  stroke: var(--hairline-gold-strong);
+  stroke-width: 0.5;
+  cursor: pointer;
+  transition: fill 200ms ease, r 200ms ease;
+}
+.starmap .dot:hover { fill: var(--accent-3); r: 4.5; }
+.starmap .dot.active {
+  fill: var(--accent-3);
+  animation: pulse 2s ease-in-out infinite;
+  r: 4.5;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1.0; }
+}
+.starmap .conn {
+  stroke: var(--hairline-gold);
+  stroke-width: 0.6;
+  fill: none;
+}
+.starmap .conn.passed { stroke: var(--hairline-gold-strong); }
+.starmap .lbl {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: var(--ink-secondary);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+.starmap g:hover .lbl,
+.starmap g.active .lbl { opacity: 1; }
+.starmap g.active .lbl { fill: var(--accent-3); }
+.starmap .legend {
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  text-align: center;
+}
+
+/* drawer button (mobile / narrow) */
+.starmap-toggle {
+  display: none;
+  position: fixed;
+  top: 48px; right: 16px;
+  z-index: 45;
+  background: var(--bg-elevated);
+  border: 1px solid var(--hairline-gold);
+  color: var(--accent-3);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* ---------- Chapter divider plate ---------- */
+.divider {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  width: 100%;
+  background: url("../../img/v2/part-i-frame.png") center/cover no-repeat;
+  isolation: isolate;
+}
+.divider::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7,9,12,0.4) 0%, rgba(7,9,12,0.15) 30%, rgba(7,9,12,0.65) 100%);
+  z-index: 1;
+}
+.divider .frame {
+  position: relative; z-index: 2;
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 56px var(--pad-x);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.divider .part-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+}
+.divider .center {
+  align-self: center;
+  display: grid;
+  justify-items: start;
+  gap: 32px;
+}
+.divider h2 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(36px, 6vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+  max-width: 14ch;
+}
+.divider .gold-rule {
+  width: 100%; max-width: 720px;
+  height: 1px;
+  background: var(--hairline-gold);
+}
+.divider .glyph { width: 80px; height: 80px; }
+.divider .epigraph {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ink-secondary);
+  max-width: 40ch;
+  margin: 0;
+}
+.divider .epigraph cite {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+}
+
+/* ---------- Body / three-column reading grid ---------- */
+.chapter-body {
+  position: relative;
+  background: var(--bg-canvas);
+  padding: 96px 0 120px;
+}
+.chapter-body .grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  display: grid;
+  grid-template-columns: var(--left-rail) minmax(0, var(--reading-w)) 1fr;
+  column-gap: 40px;
+}
+.chapter-body .leftrail {
+  position: relative;
+}
+.chapter-body .leftrail .glyph-rail {
+  position: sticky; top: 80px;
+  display: grid; gap: 22px; justify-items: start;
+}
+.chapter-body .leftrail .glyph-rail svg { width: 36px; height: 36px; opacity: 0.85; }
+.chapter-body .leftrail .glyph-rail .partno {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+}
+
+.prose { color: var(--ink-primary); }
+
+/* Lede */
+.prose .lede {
+  font-size: 22px;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+.prose .lede::first-letter,
+.prose .has-dropcap::first-letter {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent-1);
+  float: left;
+  font-size: 88px;
+  line-height: 0.86;
+  padding: 8px 14px 0 0;
+  margin-top: 6px;
+}
+
+.prose p { margin: 0 0 16px; }
+.prose p + p { text-indent: 1.5em; }
+.prose p.lede + p { text-indent: 0; }   /* first body para after lede no indent */
+.prose p.no-indent + p { text-indent: 1.5em; }
+
+/* Headings */
+.prose h2 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.2;
+  margin: 64px 0 16px;
+  position: relative;
+  padding-top: 24px;
+}
+.prose h2::before {
+  content: "";
+  position: absolute; left: 0; right: 0; top: 0;
+  height: 1px;
+  background: var(--hairline-gold);
+}
+.prose h2 .secno {
+  display: block;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin-bottom: 8px;
+}
+.prose h3 {
+  font-family: var(--ui);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin: 40px 0 12px;
+}
+
+/* Blockquote */
+.prose blockquote {
+  margin: 28px 0;
+  padding: 4px 0 4px 24px;
+  border-left: 1px solid var(--hairline-gold-strong);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.65;
+  color: var(--ink-secondary);
+}
+
+/* Pull quote */
+.pullquote {
+  position: relative;
+  margin: 56px auto;
+  padding: 32px 16px;
+  text-align: center;
+  max-width: 56ch;
+  isolation: isolate;
+}
+.pullquote::before {
+  content: "";
+  position: absolute; inset: -10% -20%;
+  background: radial-gradient(ellipse at center, var(--glow-warm) 0%, transparent 60%);
+  z-index: -1;
+}
+.pullquote q {
+  display: inline-block;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(26px, 3.4vw, 36px);
+  line-height: 1.3;
+  color: var(--ink-primary);
+  quotes: "\201C" "\201D";
+  max-width: 22ch;
+}
+.pullquote q::before { content: open-quote; color: var(--accent-3); margin-right: 0.05em; }
+.pullquote q::after  { content: close-quote; color: var(--accent-3); margin-left: 0.05em; }
+.pullquote .orbit {
+  width: 32px; height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 18px;
+  opacity: 0.85;
+}
+.pullquote .row {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Inline figure */
+figure.inline {
+  margin: 48px 0;
+  padding: 24px;
+  border: 1px solid var(--hairline-gold);
+  background: rgba(14,18,24,0.4);
+}
+figure.inline img { width: 100%; height: auto; }
+figure.inline figcaption {
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  display: flex; align-items: center; gap: 12px;
+  justify-content: center;
+}
+figure.inline figcaption::before,
+figure.inline figcaption::after {
+  content: ""; flex: 1; height: 1px; background: var(--hairline-gold);
+}
+
+/* Table */
+.table-wrap {
+  margin: 48px 0;
+  overflow-x: auto;
+}
+table.gates {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+table.gates thead th {
+  text-align: left;
+  padding: 12px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  border-bottom: 1px solid var(--hairline-gold-strong);
+  border-top: 1px solid var(--hairline-gold-strong);
+  background: rgba(14,18,24,0.5);
+}
+table.gates tbody td {
+  padding: 14px 14px;
+  border-bottom: 1px solid var(--hairline-gold);
+  color: var(--ink-primary);
+  vertical-align: top;
+}
+table.gates tbody tr:last-child td { border-bottom: 1px solid var(--hairline-gold-strong); }
+table.gates td .num {
+  font-family: var(--mono);
+  color: var(--ink-secondary);
+  font-size: 14px;
+}
+
+/* Code block (Vol II) */
+pre.code {
+  margin: 40px 0;
+  padding: 22px 24px;
+  background: var(--bg-panel);
+  border: 1px solid var(--hairline-cyan);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  overflow-x: auto;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 18px;
+}
+pre.code .ln {
+  color: var(--ink-tertiary);
+  text-align: right;
+  user-select: none;
+}
+pre.code .src { white-space: pre; }
+pre.code .kw  { color: var(--accent-3); }
+pre.code .str { color: var(--accent-1); }
+pre.code .cm  { color: var(--ink-tertiary); font-style: italic; }
+
+/* Lists */
+.prose ul { list-style: none; padding: 0 0 0 1em; margin: 16px 0 24px; }
+.prose ul li {
+  position: relative;
+  padding-left: 1.4em;
+  margin-bottom: 8px;
+}
+.prose ul li::before {
+  content: "•";
+  position: absolute; left: 0; top: 0;
+  color: var(--accent-3);
+  font-size: 18px;
+  line-height: 1.7;
+}
+.prose ol {
+  list-style: none;
+  counter-reset: oli;
+  padding: 0;
+  margin: 16px 0 24px;
+}
+.prose ol li {
+  counter-increment: oli;
+  position: relative;
+  padding-left: 3.2em;
+  margin-bottom: 10px;
+}
+.prose ol li::before {
+  content: counter(oli, decimal-leading-zero);
+  position: absolute; left: 0; top: 0.18em;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-tertiary);
+}
+
+/* Sidenotes — Tufte */
+.sidenotes { position: relative; }
+.sidenotes .sidenote {
+  position: absolute;
+  left: calc(100% + 32px);
+  width: var(--right-rail);
+  font-family: var(--ui);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  border-top: 1px solid var(--hairline-gold);
+  padding-top: 6px;
+  font-feature-settings: "tnum" 1;
+}
+.sidenotes .sidenote .sn-marker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin-right: 6px;
+}
+.sn-ref {
+  font-family: var(--mono);
+  vertical-align: super;
+  font-size: 0.75em;
+  color: var(--accent-3);
+  cursor: pointer;
+  margin-left: 2px;
+}
+.sn-pop {
+  display: block;
+  margin: 10px 0;
+  padding: 12px 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--hairline-gold);
+  font-family: var(--ui);
+  font-size: 14px;
+  color: var(--ink-secondary);
+}
+
+/* Section break */
+.section-break {
+  margin: 80px 0;
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 24px;
+}
+.section-break .rule {
+  height: 1px; background: var(--hairline-gold);
+}
+.section-break svg { width: 36px; height: 36px; opacity: 0.85; }
+
+/* Footer / colophon */
+.colophon {
+  border-top: 1px solid var(--hairline-gold);
+  background: var(--bg-canvas);
+  padding: 64px var(--pad-x) 96px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: center;
+}
+.colophon .c1 { text-align: left; }
+.colophon .c2 { text-align: center; }
+.colophon .c3 { text-align: right; color: var(--ink-secondary); }
+.colophon .dingbat { width: 22px; height: 22px; vertical-align: middle; opacity: 0.85; margin: 0 8px; }
+.colophon .types {
+  margin-top: 28px;
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--ink-tertiary);
+  border-top: 1px solid var(--hairline-gold);
+  padding-top: 24px;
+}
+.colophon .types em { color: var(--ink-secondary); font-style: normal; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1399px) {
+  .starmap {
+    position: fixed;
+    top: 36px;
+    right: -260px;
+    height: auto;
+    width: 260px;
+    background: var(--bg-elevated);
+    border-left: 1px solid var(--hairline-gold);
+    transition: right 320ms cubic-bezier(0.2,0,0.2,1);
+    padding: 24px 18px;
+    align-items: flex-start;
+  }
+  .starmap.open { right: 0; }
+  .starmap-toggle { display: inline-flex; }
+}
+@media (max-width: 1024px) {
+  :root { --pad-x: 28px; }
+  .chapter-body .grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+  .chapter-body .leftrail { display: none; }
+  .sidenotes .sidenote {
+    position: static;
+    width: auto;
+    margin: 16px 0;
+    padding: 12px 14px;
+    background: var(--bg-panel);
+    border: 1px solid var(--hairline-gold);
+    border-top: 1px solid var(--hairline-gold);
+  }
+  .hero .frame { padding: 72px 28px 56px; }
+}
+@media (max-width: 640px) {
+  :root { --pad-x: 20px; }
+  body { font-size: 17px; line-height: 1.65; }
+  .hero { min-height: 560px; }
+  .hero h1 { font-size: 38px; }
+  .hero h1 .vol { font-size: 22px; }
+  .hero .top-row { flex-direction: column; gap: 18px; }
+  .hero .top-row .coords-block { text-align: left; }
+  .divider .frame { padding: 72px 20px 56px; }
+  .pullquote q { font-size: 22px; }
+  .colophon { grid-template-columns: 1fr; text-align: center; }
+  .colophon .c1, .colophon .c2, .colophon .c3 { text-align: center; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+  .dust { display: none; }
+  .hero .bg { transform: none !important; }
+  .starmap .dot.active { animation: none; }
+  .prose a, .colophon a, .epigraph a { transition: none; }
+}
+
+/* ---------- Selection ---------- */
+::selection { background: rgba(201,169,97,0.28); color: var(--ink-primary); }
+</style>
+</head>
+
+<body>
+
+<!-- ====================================================== -->
+<!--                          DUST                            -->
+<!-- ====================================================== -->
+<div class="dust" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- ====================================================== -->
+<!--                   STICKY THIN LABEL                      -->
+<!-- ====================================================== -->
+<header class="sticky-label" role="banner">
+  <span class="ctx">Part 03 · Ch 02 — <em>The Observation</em></span>
+  <span class="coords" aria-hidden="true">RA 14h 32m 06s · DEC −47° 12′</span>
+  <button class="vol-toggle" id="volToggle" type="button" aria-label="Switch volume">
+    <svg class="moon" id="moonGlyph" viewBox="0 0 16 16" aria-hidden="true">
+      <!-- Vol I = waxing gibbous (default) -->
+      <path id="moonPath" d="M8 1a7 7 0 1 0 0 14A5.6 5.6 0 0 1 8 1z"/>
+    </svg>
+    <span id="volLabel">Vol I</span>
+  </button>
+</header>
+
+<!-- ====================================================== -->
+<!--                         HERO                             -->
+<!-- ====================================================== -->
+<section class="hero" aria-label="Title plate">
+  <div class="bg" aria-hidden="true"></div>
+  <div class="frame">
+
+    <div class="top-row">
+      <div class="obs">The Observatory · Vol I</div>
+      <div class="coords-block" aria-hidden="true">
+        <span class="live">RA 14h 32m 06s</span>
+        <span>DEC −47° 12′ 04″</span>
+        <span>EPOCH J2026.04</span>
+      </div>
+    </div>
+
+    <div class="title-block">
+      <p class="kicker">The Innovation Atlas</p>
+      <h1>
+        The Innovation Atlas
+        <span class="vol">Volume I — The Thesis</span>
+      </h1>
+    </div>
+
+    <div class="author">
+      R. Gharegozlou · Observations 2005–2026
+    </div>
+
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!--                STAR MAP TOC + DRAWER BTN                 -->
+<!-- ====================================================== -->
+<button class="starmap-toggle" id="smToggle" aria-controls="starmap" aria-expanded="false">Star Map</button>
+<aside class="starmap" id="starmap" aria-label="Chapter star map">
+  <div class="starmap-inner">
+    <svg viewBox="0 0 180 360" width="180" height="360" aria-hidden="true">
+      <!-- Vol I constellation -->
+      <polyline class="conn passed" points="40,40 70,90 50,150 95,200" />
+      <!-- Vol II constellation -->
+      <polyline class="conn"        points="95,200 130,260 80,300 120,335" />
+
+      <!-- Chapters -->
+      <g data-ch="01"><circle class="dot" cx="40"  cy="40"  r="3.5"/><text class="lbl" x="60"  y="44">Prologue</text></g>
+      <g data-ch="02"><circle class="dot" cx="70"  cy="90"  r="3.5"/><text class="lbl" x="88"  y="94">The Thesis</text></g>
+      <g data-ch="03"><circle class="dot" cx="50"  cy="150" r="3.5"/><text class="lbl" x="68"  y="154">The Wave</text></g>
+      <g data-ch="04" class="active"><circle class="dot active" cx="95"  cy="200" r="3.5"/><text class="lbl" x="113" y="204">The Frame</text></g>
+      <g data-ch="05"><circle class="dot" cx="130" cy="260" r="3.5"/><text class="lbl" x="22"  y="264" text-anchor="end">Place</text></g>
+      <g data-ch="06"><circle class="dot" cx="80"  cy="300" r="3.5"/><text class="lbl" x="98"  y="304">Waitlist</text></g>
+      <g data-ch="07"><circle class="dot" cx="120" cy="335" r="3.5"/><text class="lbl" x="138" y="339">Coda</text></g>
+    </svg>
+    <div class="legend">CH 04 · Vol II</div>
+  </div>
+</aside>
+
+<!-- ====================================================== -->
+<!--                  CHAPTER DIVIDER PLATE                   -->
+<!-- ====================================================== -->
+<section class="divider" aria-label="Chapter divider — The Frame: Farming Luck">
+  <div class="frame">
+
+    <div class="part-tag">Part · 03 · Vol II</div>
+
+    <div class="center">
+      <h2>The Frame: Farming Luck</h2>
+      <div class="gold-rule" aria-hidden="true"></div>
+
+      <!-- Atomic-orbit chapter glyph -->
+      <svg class="glyph" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="#C9A961" stroke-width="0.9">
+          <circle cx="50" cy="50" r="44"/>
+          <ellipse cx="50" cy="50" rx="44" ry="14"/>
+          <ellipse cx="50" cy="50" rx="44" ry="14" transform="rotate(60 50 50)"/>
+          <ellipse cx="50" cy="50" rx="44" ry="14" transform="rotate(120 50 50)"/>
+        </g>
+        <circle cx="50" cy="50" r="3" fill="#C9A961"/>
+        <circle cx="94" cy="50" r="2" fill="#E8722C"/>
+        <circle cx="28" cy="14" r="1.6" fill="#C9A961"/>
+        <circle cx="72" cy="86" r="1.6" fill="#C9A961"/>
+      </svg>
+
+      <p class="epigraph">
+        We are not praying for lightning. We are building rods, placing them in fields during storm season, and watching the sky.
+        <cite>— Operator's note, Vol II</cite>
+      </p>
+    </div>
+
+    <div></div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!--                    CHAPTER BODY                          -->
+<!-- ====================================================== -->
+<article class="chapter-body" id="ch-frame">
+  <div class="grid">
+
+    <!-- Decorative left rail -->
+    <aside class="leftrail" aria-hidden="true">
+      <div class="glyph-rail">
+        <svg viewBox="0 0 40 40">
+          <g fill="none" stroke="#C9A961" stroke-width="0.8">
+            <circle cx="20" cy="20" r="18"/>
+            <ellipse cx="20" cy="20" rx="18" ry="6"/>
+            <ellipse cx="20" cy="20" rx="18" ry="6" transform="rotate(60 20 20)"/>
+          </g>
+          <circle cx="20" cy="20" r="1.4" fill="#C9A961"/>
+        </svg>
+        <div class="partno">Part 03 · Ch 02</div>
+      </div>
+    </aside>
+
+    <!-- Reading column -->
+    <div class="prose sidenotes">
+
+      <p class="lede has-dropcap">
+        Innovation is not random, but it is luck-dependent — and luck is farmable. The job of a serious operator is not to summon weather; it is to build the apparatus that catches it. The waitlist, the closed alpha, the private and public betas: these are not stages on a marketing calendar. They are screens of progressively finer mesh, each one tuned to a different signal, each one promoting only the cohorts that earn the doubling and freezing the ones that don't.<sup class="sn-ref" data-sn="sn1">1</sup>
+      </p>
+
+      <p>
+        This is the central doctrine and it sits behind every decision downstream. Every gate, every metric, every cohort ladder exists for one purpose: to increase the number of shots we take while sharpening the instrument we use to hear when one lands. Treat each promotion as a programmatic function of the numbers and not the room, and most of the failure modes of growth-stage product simply stop happening. The political launches die first.
+      </p>
+
+      <h2><span class="secno">§ 02.01</span>The doctrine, briefly</h2>
+
+      <p class="no-indent">
+        Two commitments precede every cohort. The first is <em>programmatic gating</em>: before we open the door, we write down the numbers that will permit doubling, the numbers that will force freeze, and the numbers that will trigger rollback. The second is <em>customer-driven shape</em>: what users do with the product overrides what we thought we were building. From the moment a stranger touches it, the customer is a co-pilot — not a co-decider.
+      </p>
+
+      <p>
+        Together these commitments make a sieve. The waitlist is the coarsest screen — interest, not intent. The Alpha is the second screen — Hook validation through founder-led interviews and Sean Ellis 40%.<sup class="sn-ref" data-sn="sn2">2</sup> The Private Beta is the third — Legs, retention cascades, the smile curve, the surprise use case. Public Beta is the fourth — Flywheel, Bass diffusion, the word-of-mouth coefficient. By the time a product reaches GA it has survived four progressively harder questions, each pre-committed in writing.
+      </p>
+
+      <h3>Apparatus, not weather</h3>
+
+      <p class="no-indent">
+        The temptation in every promising cohort is to declare victory at the first encouraging chart. The discipline is the opposite. A gate is binding; a metric is observed before it is interpreted; a freeze is a feature, not a failure.
+      </p>
+
+      <!-- Pull quote -->
+      <div class="pullquote" role="figure" aria-label="Pull quote">
+        <div class="row">
+          <svg class="orbit" viewBox="0 0 32 32" aria-hidden="true">
+            <g fill="none" stroke="#C9A961" stroke-width="0.9">
+              <circle cx="16" cy="16" r="14"/>
+              <ellipse cx="16" cy="16" rx="14" ry="5"/>
+              <ellipse cx="16" cy="16" rx="14" ry="5" transform="rotate(60 16 16)"/>
+            </g>
+            <circle cx="16" cy="16" r="1.4" fill="#C9A961"/>
+          </svg>
+          <q>You don't make lightning. You build the apparatus that catches it.</q>
+          <svg class="orbit" viewBox="0 0 32 32" aria-hidden="true">
+            <g fill="none" stroke="#C9A961" stroke-width="0.9">
+              <circle cx="16" cy="16" r="14"/>
+              <ellipse cx="16" cy="16" rx="14" ry="5"/>
+              <ellipse cx="16" cy="16" rx="14" ry="5" transform="rotate(60 16 16)"/>
+            </g>
+            <circle cx="16" cy="16" r="1.4" fill="#C9A961"/>
+          </svg>
+        </div>
+      </div>
+
+      <h2><span class="secno">§ 02.02</span>Inline figure — the observation grid</h2>
+
+      <p class="no-indent">
+        A waitlist is a measurement instrument before it is a marketing tool. The shape of the curve — its decay slope, its referral coefficient, the geographic and persona clustering of its top decile — tells you what the Alpha cohort should look like before you have written its first invitation email.
+      </p>
+
+      <figure class="inline">
+        <img src="../../img/v2/part-iii-waitlist.png" alt="Waitlist observation grid — sign-up curves, decay slopes, and referral fan-out as a measurement instrument."/>
+        <figcaption>— Fig. 02.04 · Observation Grid —</figcaption>
+      </figure>
+
+      <h2><span class="secno">§ 02.03</span>Gate metrics, written down first</h2>
+
+      <p class="no-indent">
+        The table below is illustrative, not prescriptive. Numbers are tuned to category, surface, and clock speed; what matters is that they exist on paper before the cohort opens, that they are read weekly, and that the team has agreed in advance what each band means. The point of the table is not the numbers — it is the act of writing them down.
+      </p>
+
+      <div class="table-wrap">
+        <table class="gates" aria-label="Promotion-gate metrics for Alpha → Private Beta">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Floor</th>
+              <th>Promote</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>D7 retention</td>
+              <td><span class="num">≥ 22%</span></td>
+              <td><span class="num">≥ 38%</span></td>
+              <td>Double cohort; widen funnel two notches.</td>
+            </tr>
+            <tr>
+              <td>Activation (first key action)</td>
+              <td><span class="num">≥ 55%</span></td>
+              <td><span class="num">≥ 75%</span></td>
+              <td>Promote onboarding; revisit empty-state.</td>
+            </tr>
+            <tr>
+              <td>Support tickets / DAU</td>
+              <td><span class="num">≤ 4.0%</span></td>
+              <td><span class="num">≤ 1.5%</span></td>
+              <td>Freeze if exceeded two consecutive weeks.</td>
+            </tr>
+            <tr>
+              <td>NPS (rolling 30-day)</td>
+              <td><span class="num">≥ 28</span></td>
+              <td><span class="num">≥ 50</span></td>
+              <td>Thermometer, not a gate. Read for trend.</td>
+            </tr>
+            <tr>
+              <td>Sean Ellis PMF</td>
+              <td><span class="num">≥ 30%</span></td>
+              <td><span class="num">≥ 40%</span></td>
+              <td>Below floor: kill or pivot, do not scale.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Promotion as a function</h3>
+
+      <p class="no-indent">
+        The gate is implemented in code, not in a meeting. The function below is pseudocode, but the discipline it encodes is real: pre-commit thresholds, read weekly, let the numbers decide. The role of the operator is to set the thresholds — not to override them.
+      </p>
+
+      <pre class="code" aria-label="Promotion-gate pseudocode">
+<span class="ln">01
+02
+03
+04
+05
+06
+07</span><span class="src"><span class="cm"># gate.py — promotion function for cohort N → N+1</span>
+<span class="kw">def</span> promote(cohort):
+    m = cohort.metrics(window=<span class="str">"7d"</span>)
+    <span class="kw">if</span> m.d7 &gt;= 0.38 <span class="kw">and</span> m.act &gt;= 0.75 <span class="kw">and</span> m.tix &lt;= 0.015:
+        <span class="kw">return</span> <span class="str">"DOUBLE"</span>
+    <span class="kw">if</span> m.d7 &lt; 0.22 <span class="kw">or</span> m.tix &gt; 0.04:
+        <span class="kw">return</span> <span class="str">"FREEZE"</span>
+    <span class="kw">return</span> <span class="str">"HOLD"</span></span></pre>
+
+      <blockquote>
+        Promotion from one stage to the next is a function of metrics, not meetings. Our job is to set direction and then refuse to override the gate.
+      </blockquote>
+
+      <h2><span class="secno">§ 02.04</span>Order of operations</h2>
+
+      <p class="no-indent">
+        For an operator opening a cohort this week, the sequence is fixed. Everything else is taste; the order is doctrine.<sup class="sn-ref" data-sn="sn3">3</sup>
+      </p>
+
+      <ol>
+        <li>Write the gate. Floors, promotes, kill criteria — on paper, signed.</li>
+        <li>Open the waitlist. Measure shape before you measure size.</li>
+        <li>Run founder-led interviews on the first ten Alpha invites; read the replays.</li>
+        <li>Promote programmatically. Freeze without ceremony when the numbers say so.</li>
+      </ol>
+
+      <ul>
+        <li>The waitlist is a sieve, not a lottery.</li>
+        <li>The Alpha is a Hook test, not a polish exercise.</li>
+        <li>The Private Beta is the retention cascade, not the press cycle.</li>
+      </ul>
+
+      <!-- Section break -->
+      <div class="section-break" aria-hidden="true">
+        <div class="rule"></div>
+        <svg viewBox="0 0 100 100">
+          <g fill="none" stroke="#C9A961" stroke-width="0.9">
+            <circle cx="50" cy="50" r="42"/>
+            <ellipse cx="50" cy="50" rx="42" ry="14"/>
+            <ellipse cx="50" cy="50" rx="42" ry="14" transform="rotate(60 50 50)"/>
+            <ellipse cx="50" cy="50" rx="42" ry="14" transform="rotate(120 50 50)"/>
+          </g>
+          <circle cx="50" cy="50" r="2.6" fill="#C9A961"/>
+        </svg>
+        <div class="rule"></div>
+      </div>
+
+      <p>
+        The remainder of this chapter takes each stage in turn — waitlist, Alpha, Private Beta, Public Beta — and works through the doctrine, the gate, and the failure modes. The reader who finishes will not be guaranteed a hit. They will be guaranteed an apparatus capable of catching one.
+      </p>
+
+      <!-- Sidenotes (Tufte) -->
+      <aside class="sidenote" id="sn1" style="top: 80px;">
+        <span class="sn-marker">Note 1</span>
+        Each gate is a finer screen than the last. Coarse → fine, never the reverse: a Public Beta with a broken Alpha is just an expensive press release.
+      </aside>
+      <aside class="sidenote" id="sn2" style="top: 600px;">
+        <span class="sn-marker">Note 2</span>
+        Sean Ellis 40% — the canonical "very disappointed without it" cut — is a floor for Hook, not a target. Above 40% is necessary, not sufficient.
+      </aside>
+      <aside class="sidenote" id="sn3" style="top: 1700px;">
+        <span class="sn-marker">Note 3</span>
+        Order matters more than tooling. Most launch failures are not bad metrics — they are the right metrics read in the wrong order, after the cohort is already open.
+      </aside>
+
+    </div>
+
+    <!-- Sidenote column placeholder -->
+    <div></div>
+
+  </div>
+</article>
+
+<!-- ====================================================== -->
+<!--                       COLOPHON                           -->
+<!-- ====================================================== -->
+<footer class="colophon" role="contentinfo">
+  <div class="c1">The Innovation Atlas · Vol I</div>
+  <div class="c2">
+    <svg class="dingbat" viewBox="0 0 100 100" aria-hidden="true">
+      <g fill="none" stroke="#C9A961" stroke-width="1">
+        <circle cx="50" cy="50" r="40"/>
+        <ellipse cx="50" cy="50" rx="40" ry="13"/>
+        <ellipse cx="50" cy="50" rx="40" ry="13" transform="rotate(60 50 50)"/>
+        <ellipse cx="50" cy="50" rx="40" ry="13" transform="rotate(120 50 50)"/>
+      </g>
+      <circle cx="50" cy="50" r="3" fill="#C9A961"/>
+    </svg>
+  </div>
+  <div class="c3">R. Gharegozlou · 2005–2026</div>
+  <div class="types">
+    Set in <em>Tiempos Headline</em> &amp; <em>Tiempos Text</em> (display &amp; body) ·
+    <em>Söhne</em> (UI) · <em>Söhne Mono</em> (metadata, code).
+    The Observatory is rendered dark-only.
+  </div>
+</footer>
+
+<!-- ====================================================== -->
+<!--                       HORIZON                            -->
+<!-- ====================================================== -->
+<div class="horizon" aria-hidden="true"></div>
+
+<!-- ====================================================== -->
+<!--                         JS                               -->
+<!-- ====================================================== -->
+<script>
+(function () {
+  'use strict';
+
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var heroBg = document.querySelector('.hero .bg');
+  var root = document.documentElement;
+  var ticking = false;
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      var sTop = window.scrollY || window.pageYOffset;
+      var sH = document.documentElement.scrollHeight - window.innerHeight;
+      var prog = sH > 0 ? Math.max(0, Math.min(1, sTop / sH)) : 0;
+      root.style.setProperty('--scroll-progress', prog.toFixed(4));
+      if (!reduced && heroBg && sTop < window.innerHeight * 1.4) {
+        root.style.setProperty('--parallax-y', (-sTop * 0.15).toFixed(1) + 'px');
+      }
+      updateStarMap(sTop);
+      ticking = false;
+    });
+  }
+
+  var smGroups = document.querySelectorAll('#starmap g[data-ch]');
+  function updateStarMap(sTop) {
+    if (!smGroups.length) return;
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docH > 0 ? sTop / docH : 0;
+    var bands = smGroups.length;
+    var idx = Math.min(bands - 1, Math.floor(pct * bands));
+    smGroups.forEach(function (g, i) {
+      var dot = g.querySelector('.dot');
+      if (i === idx) { g.classList.add('active');  if (dot) dot.classList.add('active'); }
+      else           { g.classList.remove('active'); if (dot) dot.classList.remove('active'); }
+    });
+  }
+
+  // Volume toggle — moon-phase glyph swap (waxing gibbous <-> waning crescent)
+  var volBtn = document.getElementById('volToggle');
+  var moonPath = document.getElementById('moonPath');
+  var lbl    = document.getElementById('volLabel');
+  var volI   = true;
+  var WAXING_GIBBOUS = 'M8 1a7 7 0 1 0 0 14A5.6 5.6 0 0 1 8 1z';
+  var WANING_CRESCENT = 'M8 1a7 7 0 1 1 0 14A5.6 5.6 0 0 0 8 1z';
+  if (volBtn && moonPath && lbl) {
+    volBtn.addEventListener('click', function () {
+      volI = !volI;
+      lbl.textContent = volI ? 'Vol I' : 'Vol II';
+      moonPath.setAttribute('d', volI ? WAXING_GIBBOUS : WANING_CRESCENT);
+    });
+  }
+
+  // Star Map drawer toggle (mobile / narrow)
+  var smToggle = document.getElementById('smToggle');
+  var sm = document.getElementById('starmap');
+  if (smToggle && sm) {
+    smToggle.addEventListener('click', function () {
+      var open = sm.classList.toggle('open');
+      smToggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+
+  // Star Map dot click — smooth-scroll back to chapter
+  smGroups.forEach(function (g) {
+    g.addEventListener('click', function () {
+      var target = document.getElementById('ch-frame');
+      if (target) target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+
+  // Sidenote sup -> mobile inline panel: tap toggles a temporary inline note (text-only, safe DOM)
+  document.querySelectorAll('.sn-ref').forEach(function (sup) {
+    sup.addEventListener('click', function () {
+      if (window.matchMedia('(min-width: 1025px)').matches) return;
+      var id = sup.getAttribute('data-sn');
+      var src = document.getElementById(id);
+      if (!src) return;
+      var existing = sup.nextElementSibling;
+      if (existing && existing.classList.contains('sn-pop')) {
+        existing.remove(); return;
+      }
+      var pop = document.createElement('span');
+      pop.className = 'sn-pop';
+      pop.textContent = src.textContent.trim();
+      sup.insertAdjacentElement('afterend', pop);
+    });
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+
+</body>
+</html>

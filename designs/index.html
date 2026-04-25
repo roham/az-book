@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Design tournament — Two directions to compare</title>
+<style>
+  @font-face { font-family:'Söhne'; src:url('../fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Breit'; src:url('../fonts/SöhneBreit-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+
+  :root{
+    --canvas:#0B0E12;
+    --panel:#13181E;
+    --ink:#F0E6D2;
+    --ink-mute:#A39A86;
+    --gold:#D4B66A;
+    --tangerine:#E8A05C;
+    --hairline:rgba(212,182,106,0.28);
+    --hairline-strong:rgba(212,182,106,0.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--canvas);color:var(--ink);font-family:'Tiempos Text',Georgia,serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+
+  body{padding:80px 40px 120px;max-width:1400px;margin:0 auto}
+  @media (max-width:780px){ body{padding:48px 20px 80px} }
+
+  .intro{max-width:720px;margin-bottom:80px}
+  .eyebrow{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+  .title{font-family:'Tiempos Headline',serif;font-style:italic;font-size:56px;line-height:1.05;letter-spacing:-.015em;margin-bottom:24px}
+  @media (max-width:700px){ .title{font-size:38px} }
+  .body{font-family:'Tiempos Text',serif;font-size:19px;line-height:1.65;color:var(--ink-mute)}
+  .body strong{color:var(--ink);font-weight:400}
+  .body em{font-style:italic;color:var(--ink)}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+  @media (max-width:1000px){ .grid{grid-template-columns:1fr} }
+
+  .card{display:block;border:1px solid var(--hairline);background:var(--panel);overflow:hidden;transition:transform .25s ease,border-color .25s ease;text-decoration:none;color:inherit}
+  .card:hover{transform:translateY(-3px);border-color:var(--hairline-strong)}
+  .card__hero{aspect-ratio:16/10;background-size:cover;background-position:center;background-color:#000;position:relative}
+  .card__hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.7) 100%)}
+  .card__label{position:absolute;top:24px;left:24px;z-index:2;font-family:'Söhne Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.95);padding:6px 12px;background:rgba(11,14,18,.6);border:1px solid rgba(212,182,106,.4);backdrop-filter:blur(6px)}
+  .card__title{position:absolute;left:24px;right:24px;bottom:24px;z-index:2;font-family:'Tiempos Headline',serif;font-style:italic;font-size:36px;line-height:1.05;color:var(--ink);text-shadow:0 2px 14px rgba(0,0,0,.6)}
+  .card__body{padding:32px}
+  .card__sub{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  .card__desc{font-family:'Tiempos Text',serif;font-size:16px;line-height:1.55;color:var(--ink-mute);margin-bottom:24px}
+  .card__cta{font-family:'Söhne Breit','Söhne',sans-serif;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--tangerine);border-bottom:2px solid transparent;padding-bottom:4px;display:inline-block;transition:border-color .15s ease}
+  .card:hover .card__cta{border-color:var(--tangerine)}
+
+  .card--c .card__hero{background-image:url('../img/hero.png')}
+  .card--d .card__hero{background-image:url('../img/v2/part-i-frame.png')}
+
+  .footer{margin-top:80px;padding-top:32px;border-top:1px solid var(--hairline);font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .footer a{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<section class="intro">
+  <div class="eyebrow">Design tournament · Two directions</div>
+  <h1 class="title">Pick a lane.</h1>
+  <p class="body">Two distinctly different commits to the retro-future theme, both <em>dark-default</em>, both immersive long-form. Click through to experience each as a full landing-plus-sample-chapter prototype. Say which you want to ship and I'll port both volumes (and the imagery tournament — running in the background — will give you per-plate model A/B/C swaps when ready).</p>
+</section>
+
+<div class="grid">
+
+  <a class="card card--c" href="c/">
+    <div class="card__hero">
+      <div class="card__label">DESIGN C · 68 / 80</div>
+      <div class="card__title">The Observatory</div>
+    </div>
+    <div class="card__body">
+      <div class="card__sub">★ Atmospheric maximalism · dark-only</div>
+      <p class="card__desc">A private observatory at midnight. The book is a star atlas, chapters are constellations, the website is the night around them. Constellation TOC where Vol I and Vol II are two distinct constellations. Sugimoto-horizon reading-progress. Tufte sidenotes in margin column. Bespoke atomic-orbit chapter glyphs. References: <em>Foundation</em>, <em>Devs</em>, <em>Arrival</em>, 2001, Refik Anadol, Hilma af Klint, Stripe Press.</p>
+      <span class="card__cta">View Design C →</span>
+    </div>
+  </a>
+
+  <a class="card card--d" href="d/">
+    <div class="card__hero">
+      <div class="card__label">DESIGN D · 73 / 80</div>
+      <div class="card__title">The Manuscript</div>
+    </div>
+    <div class="card__body">
+      <div class="card__sub">★ Typographic-craft maximalism · dark+light toggle</div>
+      <p class="card__desc">A contemporary illuminated monograph from an alternate-1962 atomic-age scriptorium. Page-as-leaf rendered on a darker canvas with binding shadow. Drop-caps with lamplight bloom in dark mode. Tufte sidenotes. Ornamental dingbats (☉ ⁂ ✦). Frontispiece TOC with mono page-numbers. Oldstyle figures. References: Très Riches Heures, Stripe Press cloth-bound, Tufte's <em>Visual Display</em>, McSweeney's, Newton's <em>Principia</em>.</p>
+      <span class="card__cta">View Design D →</span>
+    </div>
+  </a>
+
+</div>
+
+<div class="footer">
+  <span>Tournament · 4 directors · Opus judge · Top 2 prototyped</span>
+  <span><a href="../">← Current landing</a></span>
+</div>
+
+</body>
+</html>
