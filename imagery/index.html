@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Imagery tournament — head-to-head model comparison</title>
+<style>
+  @font-face { font-family:'Söhne'; src:url('../fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne'; src:url('../fonts/Söhne-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Söhne Mono'; src:url('../fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Headline'; src:url('../fonts/TiemposHeadline-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Tiempos Text'; src:url('../fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+
+  :root{
+    --cream:#F1E8D4;
+    --bone:#FBF7EE;
+    --teal:#0E2F3D;
+    --teal-deep:#091F29;
+    --tangerine:#E88A3C;
+    --vermillion:#D94E2E;
+    --gold:#C8A961;
+    --ink:#2B2822;
+    --hair-gold:rgba(200,169,97,.32);
+    --hair-cream:rgba(241,232,212,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--teal-deep);color:var(--cream);font-family:'Söhne',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  .page{max-width:1600px;margin:0 auto;padding:64px 32px 96px}
+  @media(max-width:700px){.page{padding:40px 16px 64px}}
+
+  .intro{max-width:780px;margin-bottom:72px;border-bottom:1px solid var(--hair-cream);padding-bottom:48px}
+  .eyebrow{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--tangerine);margin-bottom:24px}
+  .title{font-family:'Tiempos Headline',serif;font-style:italic;font-size:56px;line-height:1.05;letter-spacing:-.015em;color:var(--bone);margin-bottom:24px}
+  @media(max-width:700px){.title{font-size:36px}}
+  .lede{font-family:'Tiempos Text',serif;font-size:19px;line-height:1.55;color:var(--cream);margin-bottom:20px}
+  @media(max-width:700px){.lede{font-size:17px}}
+  .lede em{font-style:italic;color:var(--bone)}
+  .lede strong{color:var(--bone);font-weight:400}
+  .lede:last-child{margin-bottom:0}
+
+  .models{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;padding-top:32px;border-top:1px solid var(--hair-cream)}
+  @media(max-width:700px){.models{grid-template-columns:1fr;gap:12px}}
+  .model-card{padding:16px 18px;border:1px solid var(--hair-gold);background:rgba(14,47,61,.4)}
+  .model-card__name{font-family:'Söhne Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .model-card__desc{font-family:'Tiempos Text',serif;font-size:14px;line-height:1.5;color:var(--cream);margin-bottom:8px}
+  .model-card__cost{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--tangerine)}
+
+  .plates{display:flex;flex-direction:column;gap:80px;margin-top:24px}
+  @media(max-width:700px){.plates{gap:48px}}
+
+  .plate{display:block}
+  .plate__head{margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--hair-gold);display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}
+  .plate__num{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--tangerine)}
+  .plate__name{font-family:'Tiempos Headline',serif;font-style:italic;font-size:30px;line-height:1.1;color:var(--bone)}
+  @media(max-width:700px){.plate__name{font-size:22px}}
+  .plate__slug{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--gold);opacity:.65}
+
+  .row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:900px){.row{grid-template-columns:1fr;gap:24px}}
+
+  .variant{display:block;background:#000;border:1px solid var(--hair-gold);transition:border-color .25s ease, transform .25s ease;position:relative}
+  .variant:hover{border-color:var(--tangerine);transform:translateY(-2px)}
+  .variant__img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:#000}
+  .variant__missing{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:3/2;background:repeating-linear-gradient(45deg,rgba(216,78,46,.10),rgba(216,78,46,.10) 12px,rgba(14,47,61,.6) 12px,rgba(14,47,61,.6) 24px);font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--vermillion)}
+  .variant__meta{padding:14px 16px;border-top:1px solid var(--hair-gold);background:rgba(9,31,41,.85);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .variant__model{font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+  .variant__cost{font-family:'Söhne Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--tangerine);opacity:.85}
+
+  .footer{margin-top:96px;padding-top:32px;border-top:1px solid var(--hair-cream);font-family:'Söhne Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.7}
+
+  /* Lightbox */
+  .lightbox{position:fixed;inset:0;background:rgba(5,12,18,.96);display:none;align-items:center;justify-content:center;z-index:1000;padding:32px;cursor:zoom-out}
+  .lightbox.is-open{display:flex}
+  .lightbox img{max-width:100%;max-height:100%;object-fit:contain;border:1px solid var(--hair-gold)}
+  .lightbox__caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:'Söhne Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream);background:rgba(14,47,61,.8);padding:10px 18px;border:1px solid var(--hair-gold)}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <section class="intro">
+    <div class="eyebrow">/ Imagery tournament · 12 plates · 3 models · 36 variants</div>
+    <h1 class="title">Three models, one palette discipline.<br>Pick a winner per plate.</h1>
+    <p class="lede">Twelve representative chapter plates from <em>Volume 1</em> and <em>Volume 2</em> — each generated three ways with the identical retro-future style tail. <strong>OpenAI</strong> just unblocked the next-generation <em>gpt-image-2</em> model; this run pits it against the two best Black Forest Labs FLUX variants on Replicate to decide which model carries the rest of the book.</p>
+    <p class="lede">Same prompt, same palette tokens, same composition spec across all three. What differs is each model's interpretation of mid-century-modernist illustrated graphic-novel discipline. Click any variant to see it full-size.</p>
+    <div class="models">
+      <div class="model-card">
+        <div class="model-card__name">gpt-image-2</div>
+        <div class="model-card__desc">OpenAI's newest text-to-image model. Best in class for compositional intent and adherence to detailed prompts.</div>
+        <div class="model-card__cost">$0.19 / image · 1536×1024 high</div>
+      </div>
+      <div class="model-card">
+        <div class="model-card__name">flux-1.1-pro-ultra</div>
+        <div class="model-card__desc">Black Forest Labs' 4MP cinematic flagship via Replicate. Strongest at painterly atmosphere and depth.</div>
+        <div class="model-card__cost">$0.066 / image · 4MP 16:9</div>
+      </div>
+      <div class="model-card">
+        <div class="model-card__name">flux-1.1-pro</div>
+        <div class="model-card__desc">Standard FLUX 1.1 pro — the conservative, palette-disciplined third option.</div>
+        <div class="model-card__cost">$0.055 / image · 16:9</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="plates" id="plates"></section>
+
+  <div class="footer">/ End · 12 plates × 3 models · Total spend ≈ $3.60</div>
+</main>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox__caption" id="lightbox-cap"></div>
+</div>
+
+<script>
+const PLATES = [
+  ["hero-bridge",     "Hero · The bridge",                    "Vol 1 opener · cathedral of the prepared mind"],
+  ["vol1-thesis",     "Volume 1 · The thesis",                "Concentric rings, hexagonal frames, three strata"],
+  ["vol1-archetypes", "Volume 1 · Six archetypes",            "Petri · Probe · Frame · Beach · Lighthouse · Killer app"],
+  ["vol1-greenlight", "Volume 1 · The green-light",           "Three gauges, one beam, one decision"],
+  ["vol1-moat",       "Volume 1 · The moat",                  "Seven defensive powers stacked into one form"],
+  ["vol2-frame",      "Volume 2 · Cradling the seed",         "Hand, spark, lightning frozen above"],
+  ["vol2-waitlist",   "Volume 2 · The waitlist funnel",       "From queue to single particle"],
+  ["vol2-beta",       "Volume 2 · The doubling staircase",    "Five steps, one open doorway"],
+  ["vol2-metrics",    "Volume 2 · The mission-control panel", "Five gauges, one paper-tape ribbon"],
+  ["vol2-houndog",    "Volume 2 · The hound",                 "Charley-Harper geometry on the scent-line"],
+  ["vol2-wom",        "Volume 2 · The cascade",               "One node, four rings, geometric word-of-mouth"],
+  ["coda-bridge",     "Coda · The traveler",                  "One figure mid-span, dawn ahead"],
+];
+
+const MODELS = [
+  ["gpt2",       "gpt-image-2",        "OpenAI · $0.19"],
+  ["flux-ultra", "flux-1.1-pro-ultra", "Replicate · $0.066"],
+  ["flux-pro",   "flux-1.1-pro",       "Replicate · $0.055"],
+];
+
+const root = document.getElementById('plates');
+PLATES.forEach(([slug, title, desc], i) => {
+  const num = String(i+1).padStart(2,'0');
+  const variants = MODELS.map(([m, label, cost]) => `
+    <a class="variant" href="../img/tournament/${slug}-${m}.png" target="_blank"
+       onclick="event.preventDefault(); openLightbox('../img/tournament/${slug}-${m}.png','${slug} · ${label}')">
+      <img class="variant__img" src="../img/tournament/${slug}-${m}.png" alt="${slug} ${label}"
+           onerror="this.outerHTML='<div class=&quot;variant__missing&quot;>missing — generation pending</div>'">
+      <div class="variant__meta">
+        <span class="variant__model">${label}</span>
+        <span class="variant__cost">${cost}</span>
+      </div>
+    </a>
+  `).join('');
+  root.insertAdjacentHTML('beforeend', `
+    <article class="plate">
+      <header class="plate__head">
+        <span class="plate__num">${num} / 12</span>
+        <h2 class="plate__name">${title}</h2>
+        <span class="plate__slug">${desc}</span>
+      </header>
+      <div class="row">${variants}</div>
+    </article>
+  `);
+});
+
+function openLightbox(src, cap){
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-cap').textContent = cap;
+  document.getElementById('lightbox').classList.add('is-open');
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('is-open'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
