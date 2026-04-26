@@ -1,593 +1,1066 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-mode="dark">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The science of generating serendipity. — An operator's manual, in two volumes</title>
-<meta name="description" content="Volume I is the thesis. Volume II is the instrument. Together, a bridge — open, for anyone who wants to sit down.">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The Innovation Atlas — The science of generating serendipity.</title>
+<meta name="description" content="An operator's manual in two volumes. Volume I is the thesis. Volume II is the apparatus. Together a bridge — open, for anyone who wants to sit down." />
+<script>
+  // No-FOUC mode read.
+  try {
+    var m = localStorage.getItem('cd-mode');
+    if (m === 'light' || m === 'dark') document.documentElement.setAttribute('data-mode', m);
+  } catch (e) {}
+</script>
+
 <style>
-  /* -------- Fonts -------- */
-  @font-face { font-family:'Söhne'; src:url('fonts/Söhne-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Söhne'; src:url('fonts/Söhne-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Söhne Breit'; src:url('fonts/SöhneBreit-Fett.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Söhne Mono'; src:url('fonts/SöhneMono-Buch.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Tiempos Headline'; src:url('fonts/TiemposHeadline-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Tiempos Text'; src:url('fonts/TiemposText-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
-  @font-face { font-family:'Tiempos Text'; src:url('fonts/TiemposText-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+/* ================================================================ */
+/*                           FONTS                                  */
+/* ================================================================ */
+@font-face { font-family: "Tiempos Headline"; src: url("fonts/TiemposHeadline-Regular.otf") format("opentype"); font-weight: 300 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Headline"; src: url("fonts/TiemposHeadline-Bold.otf") format("opentype"); font-weight: 600 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Text"; src: url("fonts/TiemposText-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Tiempos Text"; src: url("fonts/TiemposText-RegularItalic.otf") format("opentype"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Söhne"; src: url("fonts/Söhne-Buch.otf") format("opentype"); font-weight: 400 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Söhne"; src: url("fonts/Söhne-Fett.otf") format("opentype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Söhne Breit"; src: url("fonts/SöhneBreit-Fett.otf") format("opentype"); font-weight: 500 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Söhne Mono"; src: url("fonts/SöhneMono-Buch.otf") format("opentype"); font-weight: 400 500; font-style: normal; font-display: swap; }
 
-  /* -------- Retro-Future Palette -------- */
-  :root{
-    --cream:#F1E8D4;      /* atomic cream — dominant background */
-    --teal:#0E2F3D;       /* deep teal — accent panels, gauge rings */
-    --tangerine:#E88A3C;  /* primary accent — CTAs, dial needles */
-    --vermillion:#D94E2E; /* signal / alert */
-    --gold:#C8A961;       /* champagne gold — hairlines, chrome highlights */
-    --ink:#2B2822;        /* warm ink — body text */
-    --bone:#FBF7EE;       /* bone white — cards, secondary panels */
-    --steel:#8A8780;      /* warm steel — hairline rules, shadows */
+/* ================================================================ */
+/*                  TOKENS — DARK (default) + LIGHT                 */
+/* ================================================================ */
+:root[data-mode="dark"] {
+  --bg-canvas: #07090C;
+  --bg-panel: #0E1218;
+  --bg-elevated: #141923;
+  --ink-primary: rgba(241,233,216,0.92);
+  --ink-secondary: #A39A86;
+  --ink-tertiary: #6B6555;
+  --accent-1: #E8722C;     /* tangerine */
+  --accent-2: #C2412A;     /* vermillion */
+  --accent-3: #C9A961;     /* champagne gold — DOMINANT */
+  --hairline-gold: rgba(201,169,97,0.35);
+  --hairline-gold-strong: rgba(201,169,97,0.7);
+  --hairline-cyan: rgba(120,180,200,0.18);
+  --glow-warm: rgba(232,114,44,0.10);
+  --pullquote-bg: rgba(232,114,44,0.05);
+  --grain-opacity: 0.05;
+  --dropcap-shadow: 0 0 28px rgba(232,114,44,0.32);
+  --dropcap-shadow-hover: 0 0 36px rgba(232,114,44,0.50);
+  --plate-vignette: linear-gradient(180deg, rgba(7,9,12,0.4) 0%, rgba(7,9,12,0.05) 35%, rgba(7,9,12,0.55) 78%, rgba(201,169,97,0.10) 100%);
+  --selection-bg: rgba(201,169,97,0.28);
+  --card-bg: rgba(14,18,24,0.55);
+  --card-bg-hover: rgba(20,25,35,0.75);
+}
+:root[data-mode="light"] {
+  --bg-canvas: #F4ECD8;          /* atomic cream paper */
+  --bg-panel: #EDE2C8;
+  --bg-elevated: #E5D8B9;
+  --ink-primary: #1F1A14;        /* warm walnut */
+  --ink-secondary: #5C5246;
+  --ink-tertiary: #8B7E6A;
+  --accent-1: #D2691E;           /* tangerine */
+  --accent-2: #B22222;
+  --accent-3: #A6822F;           /* deeper gold for cream */
+  --hairline-gold: rgba(166,130,47,0.40);
+  --hairline-gold-strong: rgba(166,130,47,0.75);
+  --hairline-cyan: rgba(120,150,160,0.20);
+  --glow-warm: rgba(210,105,30,0.10);
+  --pullquote-bg: rgba(166,130,47,0.05);
+  --grain-opacity: 0.03;
+  --dropcap-shadow: none;
+  --dropcap-shadow-hover: 0 0 18px rgba(210,105,30,0.20);
+  --plate-vignette: linear-gradient(180deg, rgba(244,236,216,0.20) 0%, rgba(244,236,216,0.05) 35%, rgba(244,236,216,0.55) 78%, rgba(166,130,47,0.10) 100%);
+  --selection-bg: rgba(166,130,47,0.28);
+  --card-bg: rgba(237,226,200,0.65);
+  --card-bg-hover: rgba(229,216,185,0.85);
+}
 
-    --hair-gold:rgba(200,169,97,.45);
-    --hair-gold-soft:rgba(200,169,97,.22);
-    --hair-steel:rgba(138,135,128,.25);
-    --teal-soft:rgba(14,47,61,.08);
-  }
+:root {
+  --display: "Tiempos Headline", "Iowan Old Style", Georgia, serif;
+  --body:    "Tiempos Text", "Iowan Old Style", Georgia, serif;
+  --ui:      "Söhne", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --ui-breit: "Söhne Breit", "Söhne", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono:    "Söhne Mono", "JetBrains Mono", ui-monospace, monospace;
 
-  /* -------- Reset -------- */
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:var(--cream);color:var(--ink);font-family:'Tiempos Text',Georgia,serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  a{color:inherit;text-decoration:none}
-  img{display:block;max-width:100%}
+  --reading-w: 66ch;
+  --container-max: 1280px;
+  --pad-x: 80px;
 
-  .mono{font-family:'Söhne Mono','SF Mono',ui-monospace,monospace;font-weight:400}
-  .sohne{font-family:'Söhne','Inter',system-ui,sans-serif}
-  .breit{font-family:'Söhne Breit','Söhne',system-ui,sans-serif;font-weight:700;letter-spacing:.02em}
-  .tiempos{font-family:'Tiempos Text',Georgia,serif}
-  .headline{font-family:'Tiempos Headline','Tiempos Text',Georgia,serif}
+  --scroll-progress: 0;
+  --parallax-y: 0px;
+}
 
-  /* -------- Eyebrow band -------- */
-  .eyebrow-band{
-    background:var(--cream);
-    padding:26px 24px 22px;
-    text-align:center;
-    position:relative;
-    border-bottom:1px solid var(--hair-gold-soft);
-  }
-  .eyebrow-band::before,
-  .eyebrow-band::after{
-    content:"";
-    position:absolute;
-    top:50%;
-    width:60px;
-    height:1px;
-    background:linear-gradient(90deg,transparent,var(--gold),transparent);
-    transform:translateY(-50%);
-  }
-  .eyebrow-band::before{ left:calc(50% - 260px); }
-  .eyebrow-band::after{ right:calc(50% - 260px); }
-  @media (max-width:720px){
-    .eyebrow-band::before,.eyebrow-band::after{display:none}
-  }
-  .eyebrow{
-    font-family:'Söhne Breit','Söhne',sans-serif;
-    font-weight:700;
-    font-size:11px;
-    letter-spacing:.28em;
-    color:var(--teal);
-    text-transform:uppercase;
-  }
+/* ================================================================ */
+/*                          RESET                                   */
+/* ================================================================ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background: var(--bg-canvas); }
+body {
+  background: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-family: var(--body);
+  font-size: 19px;
+  line-height: 1.7;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  animation: pageFade 600ms ease both;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+@keyframes pageFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
 
-  /* -------- Hero -------- */
-  .hero{
-    position:relative;
-    width:100%;
-    height:calc(100vh - 68px);
-    min-height:640px;
-    background:var(--cream) url('img/hero.png') center center / cover no-repeat;
-    overflow:hidden;
-  }
-  @media (max-width:720px){
-    .hero{
-      height:88vh;
-      min-height:560px;
-      background-size:cover;
-      background-position:center 45%;
-    }
-  }
+img { max-width: 100%; display: block; }
+a { color: var(--accent-3); text-decoration: none; }
 
-  /* Warm cream-to-transparent veil for legibility at bottom — fully opaque cream where H1 lives */
-  .hero::after{
-    content:"";
-    position:absolute;
-    left:0; right:0; bottom:0;
-    height:72%;
-    background:linear-gradient(180deg,
-      rgba(241,232,212,0) 0%,
-      rgba(241,232,212,0) 18%,
-      rgba(241,232,212,.42) 38%,
-      rgba(241,232,212,.86) 54%,
-      rgba(241,232,212,1) 66%,
-      rgba(241,232,212,1) 100%);
-    pointer-events:none;
-  }
+/* Hover underline trace */
+.prose a, .colophon a, .epigraph a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 300ms cubic-bezier(0.2, 0, 0.2, 1);
+  padding-bottom: 1px;
+}
+.prose a:hover, .colophon a:hover, .epigraph a:hover {
+  background-size: 100% 1px;
+}
 
-  .hero-content{
-    position:absolute;
-    left:0; right:0; bottom:0;
-    padding:0 24px 60px;
-    text-align:center;
-    z-index:2;
-  }
-  @media (max-width:720px){
-    .hero-content{padding-bottom:48px}
-  }
+::selection { background: var(--selection-bg); color: var(--ink-primary); }
 
-  /* H1 sits on solid cream with a soft halo + extra weight for legibility */
-  .hero h1{
-    font-family:'Tiempos Headline',Georgia,serif;
-    font-style:italic;
-    font-weight:400;
-    font-size:78px;
-    line-height:1.04;
-    letter-spacing:-.018em;
-    color:var(--ink);
-    max-width:980px;
-    margin:0 auto 22px;
-    text-shadow:
-      0 1px 0 rgba(241,232,212,.6),
-      0 0 24px rgba(241,232,212,.5);
-  }
-  @media (max-width:960px){ .hero h1{font-size:62px} }
-  @media (max-width:720px){ .hero h1{font-size:46px;letter-spacing:-.01em} }
-  @media (max-width:400px){ .hero h1{font-size:38px} }
+/* ================================================================ */
+/*              PAPER-GRAIN OVERLAY (D's tactile warmth)            */
+/* ================================================================ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.85 0 0 0 0 0.7 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
 
-  /* Eyebrow tagline sits ABOVE H1 to anchor the reading zone */
-  .hero-eyebrow{
-    font-family:'Söhne Breit','Söhne',sans-serif;
-    font-weight:700;
-    font-size:11px;
-    letter-spacing:.28em;
-    text-transform:uppercase;
-    color:var(--teal);
-    margin:0 0 22px;
-    opacity:.75;
-  }
+/* ================================================================ */
+/*                    TOP STICKY THIN LABEL                         */
+/* ================================================================ */
+.sticky-label {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 38px;
+  z-index: 40;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-canvas) 92%, transparent) 0%, color-mix(in srgb, var(--bg-canvas) 60%, transparent) 70%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--hairline-gold);
+}
+.sticky-label .ctx { color: var(--ink-secondary); }
+.sticky-label .ctx em { color: var(--ink-primary); font-style: normal; }
+.sticky-label .ctx em.acc { color: var(--accent-3); }
+.sticky-label .right-cluster {
+  display: inline-flex; align-items: center; gap: 14px;
+}
+.sticky-label .vol-toggle,
+.sticky-label .mode-toggle {
+  display: inline-flex; align-items: center; gap: 10px;
+  cursor: pointer;
+  border: none; background: transparent;
+  color: var(--ink-secondary);
+  font: inherit; letter-spacing: inherit; text-transform: inherit;
+  padding: 4px 8px;
+}
+.sticky-label .vol-toggle:hover,
+.sticky-label .mode-toggle:hover { color: var(--accent-3); }
+.sticky-label .vol-toggle .orbit { width: 14px; height: 14px; }
+.sticky-label .vol-toggle .orbit g { stroke: var(--accent-3); fill: none; stroke-width: 0.9; }
+.sticky-label .vol-toggle .orbit circle.core { fill: var(--accent-3); }
+.sticky-label .mode-toggle {
+  width: 26px; height: 26px;
+  border: 1px solid var(--hairline-gold);
+  border-radius: 50%;
+  padding: 0;
+  justify-content: center;
+  font-size: 13px; line-height: 1;
+  color: var(--accent-3);
+}
+.sticky-label .mode-toggle:hover { border-color: var(--accent-3); }
+:root[data-mode="dark"] .mode-toggle__sun { display: none; }
+:root[data-mode="dark"] .mode-toggle__moon { display: inline; }
+:root[data-mode="light"] .mode-toggle__sun { display: inline; }
+:root[data-mode="light"] .mode-toggle__moon { display: none; }
+.sticky-label .coords {
+  display: inline-block;
+  color: var(--ink-tertiary);
+  font-feature-settings: "tnum";
+}
+@media (max-width: 720px) {
+  .sticky-label .coords { display: none; }
+  .sticky-label { padding: 0 14px; }
+}
 
-  .hero-sub{
-    font-family:'Tiempos Text',Georgia,serif;
-    color:var(--teal);
-    font-size:19px;
-    line-height:1.55;
-    max-width:640px;
-    margin:0 auto 36px;
-  }
-  @media (max-width:720px){ .hero-sub{font-size:16px;margin-bottom:28px} }
+/* ================================================================ */
+/*                    SUGIMOTO HORIZON                              */
+/* ================================================================ */
+.horizon {
+  position: fixed;
+  bottom: 0; left: 0;
+  height: 1px;
+  width: calc(var(--scroll-progress) * 100%);
+  background: var(--accent-3);
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(201,169,97,0.4);
+}
 
-  /* -------- CTA plates (brushed aluminum) -------- */
-  .cta-row{
-    display:flex;
-    gap:18px;
-    justify-content:center;
-    flex-wrap:wrap;
-  }
-  .cta{
-    display:inline-flex;
-    flex-direction:column;
-    align-items:flex-start;
-    padding:16px 28px;
-    border-radius:18px;
-    background:linear-gradient(180deg,#F7F1DE 0%,#E8DEC5 55%,#D4C9A9 100%);
-    border:1px solid var(--gold);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.7),
-      inset 0 -1px 0 rgba(0,0,0,.08),
-      0 2px 0 rgba(200,169,97,.25),
-      0 6px 18px rgba(14,47,61,.12);
-    min-width:220px;
-    position:relative;
-    transition:transform .15s ease, box-shadow .15s ease;
-  }
-  .cta:hover{
-    transform:translateY(-1px);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.8),
-      inset 0 -1px 0 rgba(0,0,0,.08),
-      0 3px 0 rgba(200,169,97,.3),
-      0 10px 22px rgba(14,47,61,.18);
-  }
-  .cta .cta-main{
-    font-family:'Söhne Breit','Söhne',sans-serif;
-    font-weight:700;
-    font-size:14px;
-    letter-spacing:.18em;
-    color:var(--teal);
-    text-transform:uppercase;
-    position:relative;
-  }
-  .cta .cta-main::after{
-    content:"";
-    display:block;
-    width:0;
-    height:2px;
-    background:var(--tangerine);
-    margin-top:5px;
-    transition:width .22s ease;
-  }
-  .cta:hover .cta-main::after{ width:100% }
-  .cta .cta-sub{
-    font-family:'Söhne Mono',ui-monospace,monospace;
-    font-size:10px;
-    letter-spacing:.15em;
-    color:var(--steel);
-    text-transform:uppercase;
-    margin-top:4px;
-  }
-  .cta.primary .cta-main{color:var(--vermillion)}
-  .cta.primary{
-    background:linear-gradient(180deg,#F7F1DE 0%,#F1E3C6 55%,#E5D3A8 100%);
-  }
+/* ================================================================ */
+/*                          HERO                                    */
+/* ================================================================ */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero .bg {
+  position: absolute; inset: -8% -2%;
+  background: url("img/hero.png") center/cover no-repeat;
+  transform: translate3d(0, var(--parallax-y), 0);
+  will-change: transform;
+  z-index: 0;
+}
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 70%, rgba(7,9,12,0) 0%, rgba(7,9,12,0.45) 65%, rgba(7,9,12,0.85) 100%),
+    linear-gradient(180deg, rgba(7,9,12,0) 50%, rgba(7,9,12,0.85) 92%, var(--bg-canvas) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+:root[data-mode="light"] .hero::after {
+  background:
+    radial-gradient(ellipse at 30% 70%, rgba(244,236,216,0.05) 0%, rgba(244,236,216,0.30) 65%, rgba(244,236,216,0.78) 100%),
+    linear-gradient(180deg, rgba(244,236,216,0) 50%, rgba(244,236,216,0.85) 92%, var(--bg-canvas) 100%);
+}
+.hero .frame {
+  position: relative; z-index: 2;
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 56px var(--pad-x) 56px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr auto;
+  column-gap: 24px;
+}
+.hero .top-row {
+  grid-column: 1 / 2;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+.hero .top-row .obs { color: var(--accent-3); }
 
-  /* -------- Section dividers (atomic motif) -------- */
-  .atomic-divider{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:20px;
-    padding:44px 0 30px;
-    background:var(--cream);
-  }
-  .atomic-divider .line{
-    flex:0 0 120px;
-    height:1px;
-    background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  }
-  .atomic-divider svg{
-    width:28px; height:28px;
-    color:var(--gold);
-  }
+.hero .coords-block {
+  grid-column: 2 / 3;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: var(--ink-tertiary);
+  font-feature-settings: "tnum";
+}
+.hero .coords-block span { display: block; }
+.hero .coords-block span.live { color: var(--accent-3); }
 
-  /* -------- Summary -------- */
-  .summary-section{
-    background:var(--cream);
-    padding:28px 24px 96px;
-  }
-  .summary{
-    max-width:640px;
-    margin:0 auto;
-    font-family:'Tiempos Text',Georgia,serif;
-    font-size:19px;
-    line-height:1.72;
-    color:var(--ink);
-  }
-  .summary p{ margin-bottom:1.35em }
-  .summary p:last-child{ margin-bottom:0 }
-  .summary p strong{
-    font-family:'Söhne Breit','Söhne',sans-serif;
-    font-weight:700;
-    font-size:13px;
-    letter-spacing:.16em;
-    color:var(--teal);
-    text-transform:uppercase;
-    display:inline-block;
-    margin-right:4px;
-  }
-  .dropcap::first-letter{
-    font-family:'Tiempos Headline',Georgia,serif;
-    font-style:italic;
-    font-size:82px;
-    line-height:.78;
-    float:left;
-    margin:8px 10px -4px 0;
-    color:var(--tangerine);
-    font-weight:400;
-  }
+.hero .title-block {
+  grid-column: 1 / 3;
+  align-self: end;
+  max-width: 880px;
+  padding-bottom: 6vh;
+}
+.hero .kicker {
+  font-family: var(--ui-breit);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin: 0 0 28px;
+}
+.hero .kicker::before {
+  content: ""; display: inline-block;
+  width: 36px; height: 1px; background: var(--accent-3);
+  vertical-align: middle; margin-right: 14px; transform: translateY(-3px);
+}
+.hero h1 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(40px, 7.4vw, 96px);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  margin: 0 0 22px;
+  color: var(--ink-primary);
+  text-shadow: 0 0 80px rgba(232,114,44,0.18);
+  max-width: 14ch;
+}
+:root[data-mode="light"] .hero h1 { text-shadow: none; }
+.hero .standfirst {
+  font-family: var(--body);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  max-width: 56ch;
+  margin: 0;
+}
+.hero .author {
+  grid-column: 1 / 3;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  align-self: end;
+  justify-self: end;
+  text-align: right;
+}
 
-  /* -------- Pull quote -------- */
-  .pull-quote{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    margin:56px -60px;
-    padding:32px 24px;
-    border-top:1px solid var(--hair-gold);
-    border-bottom:1px solid var(--hair-gold);
-  }
-  @media (max-width:760px){
-    .pull-quote{ margin:48px 0; gap:14px; padding:28px 8px }
-  }
-  .pull-quote .atom{
-    flex:0 0 32px;
-    color:var(--tangerine);
-  }
-  .pull-quote .atom svg{ width:32px; height:32px; display:block }
-  .pull-quote blockquote{
-    flex:1;
-    font-family:'Tiempos Headline',Georgia,serif;
-    font-style:italic;
-    font-size:28px;
-    line-height:1.3;
-    color:var(--teal);
-    letter-spacing:-.01em;
-  }
-  @media (max-width:760px){
-    .pull-quote blockquote{ font-size:22px }
-  }
+/* ================================================================ */
+/*                   COSMIC DUST (page-load)                        */
+/* ================================================================ */
+.dust {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.dust span {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: rgba(241,233,216,0.6);
+  filter: blur(0.5px);
+  opacity: 0;
+  animation: drift 12s ease-out forwards;
+}
+:root[data-mode="light"] .dust span { background: rgba(166,130,47,0.55); }
+@keyframes drift {
+  0%   { opacity: 0; transform: translate3d(0,0,0); }
+  20%  { opacity: 0.4; }
+  100% { opacity: 0; transform: translate3d(40px, -120px, 0); }
+}
+.dust span:nth-child(1) { left: 8%;  top: 80%; animation-delay: 0.2s; }
+.dust span:nth-child(2) { left: 22%; top: 65%; animation-delay: 1.4s; }
+.dust span:nth-child(3) { left: 38%; top: 88%; animation-delay: 2.6s; }
+.dust span:nth-child(4) { left: 51%; top: 70%; animation-delay: 0.8s; }
+.dust span:nth-child(5) { left: 64%; top: 92%; animation-delay: 3.6s; }
+.dust span:nth-child(6) { left: 76%; top: 78%; animation-delay: 1.0s; }
+.dust span:nth-child(7) { left: 84%; top: 60%; animation-delay: 4.2s; }
+.dust span:nth-child(8) { left: 92%; top: 86%; animation-delay: 2.0s; }
 
-  /* -------- Diptych -------- */
-  .diptych-section{
-    background:var(--cream);
-    padding:40px 24px 120px;
-  }
-  .diptych{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:32px;
-    max-width:1200px;
-    margin:0 auto;
-  }
-  @media (max-width:900px){
-    .diptych{ grid-template-columns:1fr; gap:28px }
-  }
+/* ================================================================ */
+/*                 ATOMIC DIVIDER (between hero + intro)            */
+/* ================================================================ */
+.atomic-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  padding: 56px 0 32px;
+  background: var(--bg-canvas);
+  position: relative;
+  z-index: 2;
+}
+.atomic-divider .line {
+  flex: 0 0 140px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hairline-gold-strong), transparent);
+}
+.atomic-divider svg {
+  width: 36px; height: 36px;
+  opacity: 0.9;
+}
+.atomic-divider svg g { stroke: var(--accent-3); fill: none; }
+.atomic-divider svg circle.core { fill: var(--accent-3); }
+.atomic-divider svg circle.electron { fill: var(--accent-1); }
 
-  .card{
-    background:var(--bone);
-    border:1px solid var(--gold);
-    border-radius:22px;
-    overflow:hidden;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.9),
-      0 3px 0 rgba(200,169,97,.18),
-      0 12px 30px rgba(14,47,61,.08);
-    display:flex;
-    flex-direction:column;
-    text-decoration:none;
-    color:inherit;
-    cursor:pointer;
-    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-  }
-  .card:hover{
-    transform:translateY(-4px);
-    border-color:var(--tangerine);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.95),
-      0 4px 0 rgba(232,138,60,.25),
-      0 18px 42px rgba(14,47,61,.14);
-  }
-  .card:hover .card-cta{ border-color:var(--tangerine) }
-  .card:hover .card-cta .arrow{ transform:translateX(4px) }
-  .card:focus-visible{
-    outline:3px solid var(--tangerine);
-    outline-offset:4px;
-  }
-  .card-img{
-    width:100%;
-    aspect-ratio:1/1;
-    object-fit:cover;
-    display:block;
-    border-bottom:1px solid var(--hair-gold);
-  }
-  .card-body{
-    padding:32px 32px 36px;
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-    flex:1;
-  }
-  .card-label{
-    font-family:'Söhne Breit','Söhne',sans-serif;
-    font-weight:700;
-    font-size:12px;
-    letter-spacing:.24em;
-    color:var(--teal);
-    text-transform:uppercase;
-  }
-  .card-standfirst{
-    font-family:'Tiempos Text',Georgia,serif;
-    font-style:italic;
-    font-size:22px;
-    line-height:1.4;
-    color:var(--ink);
-  }
-  .card-cta{
-    margin-top:auto;
-    font-family:'Söhne Breit','Söhne',sans-serif;
-    font-weight:700;
-    font-size:13px;
-    letter-spacing:.18em;
-    color:var(--tangerine);
-    text-transform:uppercase;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    align-self:flex-start;
-    padding-bottom:4px;
-    border-bottom:2px solid transparent;
-    transition:border-color .18s ease;
-  }
-  .card-cta:hover{ border-color:var(--tangerine) }
-  .card-cta .arrow{
-    transition:transform .2s ease;
-    display:inline-block;
-  }
-  .card-cta:hover .arrow{ transform:translateX(3px) }
+/* ================================================================ */
+/*                    INTRO / EXEC ABSTRACT                         */
+/* ================================================================ */
+.intro {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-canvas);
+  padding: 16px 0 80px;
+}
+.intro .reading-col {
+  max-width: var(--reading-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  color: var(--ink-primary);
+}
+@media (max-width: 1024px) {
+  .intro .reading-col { padding: 0 28px; }
+}
 
-  /* -------- Closing refrain -------- */
-  .refrain{
-    background:var(--cream);
-    padding:80px 24px 60px;
-    text-align:center;
-    position:relative;
-    overflow:hidden;
-  }
-  .refrain::before{
-    content:"";
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:520px;
-    height:520px;
-    background:
-      radial-gradient(circle at center,
-        rgba(200,169,97,.08) 0%,
-        rgba(200,169,97,.03) 40%,
-        transparent 70%);
-    pointer-events:none;
-  }
-  .refrain-text{
-    position:relative;
-    font-family:'Tiempos Headline',Georgia,serif;
-    font-style:italic;
-    font-size:34px;
-    line-height:1.4;
-    color:var(--teal);
-    max-width:720px;
-    margin:0 auto;
-  }
-  @media (max-width:720px){ .refrain-text{font-size:24px} }
+.intro p { margin: 0 0 16px; }
+.intro p + p { text-indent: 1.5em; }
+.intro p.no-indent { text-indent: 0; }
+.intro p.no-indent + p { text-indent: 1.5em; }
 
-  /* -------- Colophon -------- */
-  .colophon{
-    background:var(--cream);
-    padding:48px 24px 68px;
-    text-align:center;
-    border-top:1px solid var(--hair-gold-soft);
-  }
-  .colophon-atom{
-    display:flex;
-    justify-content:center;
-    margin-bottom:18px;
-    color:var(--gold);
-  }
-  .colophon-atom svg{ width:24px; height:24px }
-  .colophon-text{
-    font-family:'Söhne Mono',ui-monospace,monospace;
-    font-size:11px;
-    letter-spacing:.22em;
-    color:var(--teal);
-    text-transform:uppercase;
-    line-height:1.9;
-  }
-  .colophon-text span{ opacity:.6; margin:0 6px }
+/* Drop-cap with lamplight bloom (D-flair) */
+.dropcap {
+  font-family: var(--display);
+  font-weight: 300;
+  font-style: italic;
+  float: left;
+  font-size: 5.6em;
+  line-height: 0.85;
+  margin: 0.06em 0.14em -0.05em 0;
+  padding: 0;
+  color: var(--accent-1);
+  font-feature-settings: "lnum";
+  text-shadow: var(--dropcap-shadow);
+  transition: text-shadow 200ms ease, opacity 200ms ease;
+  opacity: 0;
+  animation: dropcapFade 600ms ease 200ms forwards, dropcapBloom 1200ms ease 200ms forwards;
+}
+.dropcap:hover { text-shadow: var(--dropcap-shadow-hover); }
+@keyframes dropcapFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes dropcapBloom {
+  0%, 50% { filter: brightness(1); }
+  65% { filter: brightness(1.18); }
+  100% { filter: brightness(1); }
+}
 
+/* Run-in small caps (D-flair) */
+.runin {
+  font-family: var(--ui-breit);
+  font-weight: 500;
+  font-size: 0.85em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  margin-right: 0.35em;
+}
+
+/* Pull quote — atomic-orbit + warm gold halo */
+.pullquote {
+  position: relative;
+  margin: 64px auto;
+  padding: 40px 16px;
+  text-align: center;
+  max-width: 56ch;
+  isolation: isolate;
+}
+.pullquote::before {
+  content: "";
+  position: absolute; inset: -12% -22%;
+  background: radial-gradient(ellipse at center, var(--glow-warm) 0%, transparent 65%);
+  z-index: -1;
+  pointer-events: none;
+}
+.pullquote q {
+  display: inline-block;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(24px, 3.0vw, 32px);
+  line-height: 1.32;
+  color: var(--ink-primary);
+  quotes: "\201C" "\201D";
+  max-width: 26ch;
+}
+.pullquote q::before { content: open-quote; color: var(--accent-3); margin-right: 0.05em; }
+.pullquote q::after  { content: close-quote; color: var(--accent-3); margin-left: 0.05em; }
+.pullquote .orbit {
+  width: 32px; height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 18px;
+  opacity: 0.85;
+}
+.pullquote .orbit g { stroke: var(--accent-3); fill: none; }
+.pullquote .orbit circle.core { fill: var(--accent-3); }
+.pullquote .row {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Section break — D-flair: dingbat replaces simple rule */
+.section-break {
+  margin: 56px 0 48px;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+  padding: 24px 0;
+  text-align: center;
+}
+.section-break .dingbat {
+  font-family: var(--display);
+  color: var(--accent-3);
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 0.4em;
+  padding-left: 0.4em;
+  opacity: 0.88;
+}
+
+/* ================================================================ */
+/*                    DIPTYCH — TWO VOLUMES                         */
+/* ================================================================ */
+.diptych-section {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-canvas);
+  padding: 32px 0 96px;
+}
+.diptych {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+}
+@media (max-width: 900px) {
+  .diptych { grid-template-columns: 1fr; gap: 28px; padding: 0 28px; }
+}
+.vol-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--hairline-gold);
+  text-decoration: none;
+  color: var(--ink-primary);
+  isolation: isolate;
+  position: relative;
+  transition: transform 220ms cubic-bezier(0.2,0,0.2,1),
+              border-color 220ms ease,
+              background-color 220ms ease,
+              box-shadow 220ms ease;
+}
+.vol-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-1);
+  background: var(--card-bg-hover);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.35), 0 0 0 1px var(--hairline-gold-strong);
+}
+:root[data-mode="light"] .vol-card:hover {
+  box-shadow: 0 14px 40px rgba(31,26,20,0.18), 0 0 0 1px var(--hairline-gold-strong);
+}
+.vol-card:focus-visible {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 4px;
+}
+.vol-card .img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-bottom: 1px solid var(--hairline-gold);
+}
+.vol-card .img-wrap::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--plate-vignette);
+  pointer-events: none;
+}
+.vol-card .img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 600ms cubic-bezier(0.2,0,0.2,1);
+}
+.vol-card:hover .img-wrap img { transform: scale(1.025); }
+
+.vol-card .body {
+  padding: 32px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+}
+.vol-card .label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+}
+.vol-card .vol-title {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink-primary);
+  margin: 0;
+}
+.vol-card .standfirst {
+  font-family: var(--body);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+  margin: 0;
+}
+.vol-card .cta {
+  margin-top: auto;
+  font-family: var(--ui-breit);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-1);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease;
+}
+.vol-card:hover .cta { border-bottom-color: var(--accent-1); }
+.vol-card .cta .arrow {
+  display: inline-block;
+  transition: transform 220ms ease;
+}
+.vol-card:hover .cta .arrow { transform: translateX(4px); }
+
+/* ================================================================ */
+/*                       CLOSING REFRAIN                            */
+/* ================================================================ */
+.refrain {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-canvas);
+  padding: 96px var(--pad-x) 80px;
+  text-align: center;
+  overflow: hidden;
+}
+.refrain::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 640px;
+  height: 640px;
+  background: radial-gradient(circle at center,
+    var(--glow-warm) 0%,
+    rgba(201,169,97,0.04) 35%,
+    transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+.refrain p {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(24px, 3.6vw, 38px);
+  line-height: 1.4;
+  color: var(--ink-primary);
+  max-width: 32ch;
+  margin: 0 auto;
+  letter-spacing: -0.005em;
+}
+
+/* ================================================================ */
+/*                       FOOTER / COLOPHON                          */
+/* ================================================================ */
+.colophon {
+  border-top: 1px solid var(--hairline-gold);
+  background: var(--bg-canvas);
+  padding: 64px var(--pad-x) 96px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.colophon .c1 { text-align: left; }
+.colophon .c2 { text-align: center; }
+.colophon .c3 { text-align: right; color: var(--ink-secondary); }
+.colophon .dingbat { width: 24px; height: 24px; vertical-align: middle; opacity: 0.85; margin: 0 8px; }
+.colophon .dingbat g { stroke: var(--accent-3); fill: none; }
+.colophon .dingbat circle.core { fill: var(--accent-3); }
+.colophon .types {
+  margin-top: 28px;
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--ink-tertiary);
+  border-top: 1px solid var(--hairline-gold);
+  padding-top: 24px;
+}
+.colophon .types em { color: var(--ink-secondary); font-style: normal; }
+
+/* ================================================================ */
+/*                FOLIO / MONO PAGE COUNTER (D-flair)               */
+/* ================================================================ */
+.folio {
+  position: fixed;
+  bottom: 18px;
+  right: 22px;
+  z-index: 60;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent-3);
+  background: color-mix(in srgb, var(--bg-canvas) 80%, transparent);
+  padding: 6px 10px;
+  border: 1px solid var(--hairline-gold);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-feature-settings: "tnum";
+}
+
+/* ================================================================ */
+/*                         RESPONSIVE                               */
+/* ================================================================ */
+@media (max-width: 1024px) {
+  :root { --pad-x: 28px; }
+  .hero .frame { padding: 72px 28px 56px; }
+}
+@media (max-width: 640px) {
+  :root { --pad-x: 20px; }
+  body { font-size: 17px; line-height: 1.65; }
+  .hero { min-height: 560px; }
+  .hero .frame {
+    padding: 64px 20px 40px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto auto;
+  }
+  .hero .top-row { grid-column: 1; }
+  .hero .coords-block { grid-column: 1; text-align: left; }
+  .hero h1 { font-size: 38px; max-width: none; }
+  .hero .standfirst { font-size: 17px; }
+  .hero .author { grid-column: 1; justify-self: start; text-align: left; }
+  .hero .bg { transform: none !important; }
+  .pullquote q { font-size: 22px; }
+  .colophon { grid-template-columns: 1fr; text-align: center; }
+  .colophon .c1, .colophon .c2, .colophon .c3 { text-align: center; }
+  .dropcap { font-size: 4.2em; }
+  .folio { bottom: 12px; right: 12px; font-size: 11px; padding: 5px 8px; }
+  .vol-card .body { padding: 24px 24px 28px; }
+  .refrain { padding: 72px 24px 64px; }
+}
+
+/* ================================================================ */
+/*                     REDUCED MOTION                               */
+/* ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+  .dust { display: none; }
+  .hero .bg { transform: none !important; }
+  .dropcap { animation: none; opacity: 1; }
+  .prose a, .colophon a, .epigraph a { transition: none; }
+  .vol-card { transition: none; }
+}
 </style>
 </head>
+
 <body>
 
-<!-- =============== TOP EYEBROW BAND =============== -->
-<div class="eyebrow-band">
-  <div class="eyebrow">AN OPERATOR'S MANUAL &nbsp;·&nbsp; IN TWO VOLUMES &nbsp;·&nbsp; VOL. MMXXVI</div>
+<!-- ================================================================ -->
+<!--                            DUST                                  -->
+<!-- ================================================================ -->
+<div class="dust" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
 </div>
 
-<!-- =============== HERO =============== -->
-<section class="hero">
-  <div class="hero-content">
-    <h1>The science of generating serendipity.</h1>
-    <p class="hero-sub">Volume I is the thesis — what to build, with whom, funded how. Volume II is the instrument — how to run the experiment, read the result, and promote on evidence.</p>
-    <div class="cta-row">
-      <a class="cta primary" href="#vol1">
-        <span class="cta-main">Enter Volume I</span>
-        <span class="cta-sub">THE THESIS · CH. 01–09</span>
-      </a>
-      <a class="cta" href="#vol2">
-        <span class="cta-main">Enter Volume II</span>
-        <span class="cta-sub">THE INSTRUMENT · GATES 01–04</span>
-      </a>
+<!-- ================================================================ -->
+<!--                     STICKY THIN LABEL                            -->
+<!-- ================================================================ -->
+<header class="sticky-label" role="banner">
+  <span class="ctx"><em class="acc">The Innovation Atlas</em> · <em>RG</em></span>
+  <span class="coords" aria-hidden="true">OBS. DECK · MMXXVI</span>
+  <span class="right-cluster">
+    <button class="vol-toggle" id="volToggle" type="button" aria-label="Switch volume">
+      <svg class="orbit" viewBox="0 0 16 16" aria-hidden="true">
+        <g>
+          <circle cx="8" cy="8" r="6.5"/>
+          <ellipse cx="8" cy="8" rx="6.5" ry="2.4"/>
+          <ellipse cx="8" cy="8" rx="6.5" ry="2.4" transform="rotate(60 8 8)"/>
+        </g>
+        <circle class="core" cx="8" cy="8" r="1.1"/>
+      </svg>
+      <span id="volLabel">Vol I / II</span>
+    </button>
+    <button class="mode-toggle" id="modeToggle" type="button" aria-label="Toggle light or dark mode">
+      <span class="mode-toggle__moon" aria-hidden="true">☾</span>
+      <span class="mode-toggle__sun"  aria-hidden="true">☀</span>
+    </button>
+  </span>
+</header>
+
+<!-- ================================================================ -->
+<!--                            HERO                                  -->
+<!-- ================================================================ -->
+<section class="hero" aria-label="Title plate">
+  <div class="bg" aria-hidden="true"></div>
+  <div class="frame">
+
+    <div class="top-row">
+      <span class="obs">The Innovation Atlas · In Two Volumes</span>
     </div>
+
+    <div class="coords-block" aria-hidden="true">
+      <span class="live">RA 14h 32m</span>
+      <span>DEC −47° 12′</span>
+      <span>EPOCH J2026.04</span>
+    </div>
+
+    <div class="title-block">
+      <p class="kicker">The Innovation Atlas · In Two Volumes</p>
+      <h1>The science of generating serendipity.</h1>
+      <p class="standfirst">Volume I is the thesis — what to build, with whom, funded how. Volume II is the instrument — how to run the experiment, read the result, and promote on evidence.</p>
+    </div>
+
+    <div class="author">
+      R. Gharegozlou · Observations 2005–2026
+    </div>
+
   </div>
 </section>
 
-<!-- =============== DIVIDER =============== -->
+<!-- ================================================================ -->
+<!--             ATOMIC DIVIDER (between hero + intro)                -->
+<!-- ================================================================ -->
 <div class="atomic-divider" aria-hidden="true">
   <span class="line"></span>
-  <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.25">
-    <circle cx="20" cy="20" r="2.2" fill="currentColor" stroke="none"/>
-    <ellipse cx="20" cy="20" rx="16" ry="5.5"/>
-    <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(60 20 20)"/>
-    <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(-60 20 20)"/>
+  <svg viewBox="0 0 40 40">
+    <g stroke-width="1">
+      <circle cx="20" cy="20" r="16"/>
+      <ellipse cx="20" cy="20" rx="16" ry="5.5"/>
+      <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(60 20 20)"/>
+      <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(-60 20 20)"/>
+    </g>
+    <circle class="core" cx="20" cy="20" r="2.2"/>
+    <circle class="electron" cx="36" cy="20" r="1.6"/>
   </svg>
   <span class="line"></span>
 </div>
 
-<!-- =============== SUMMARY =============== -->
-<section class="summary-section">
-  <article class="summary">
-    <p class="dropcap">I have spent twenty years trying to answer one question: can you farm innovation, or do you just get lucky? I now think the answer is both, and that the "both" is the whole craft. Lightning is real. It also lands more often on a prepared field. This book, in two volumes, is the field.</p>
+<!-- ================================================================ -->
+<!--                INTRO / EXEC ABSTRACT                             -->
+<!-- ================================================================ -->
+<article class="intro prose" aria-label="Executive abstract">
+  <div class="reading-col">
 
-    <p><strong>Volume I is the thesis.</strong> There are nine steps that turn an idea into a product and a product into a business, and the order is not optional. There are six archetypes that define the <em>shape</em> of every bet — a Petri Dish (get weird), a Probe (test a falsifiable hypothesis), a Frame (draw the edges of a new space), a Beachhead (dominate a specific niche), a Lighthouse (a safe harbor for builders), and the rare Killer App (network effects at scale). Each archetype carries a different objective, a different metric, a different trap: treat a Petri Dish like a Killer App and you will run out of money. Three portfolio tiers — Sandbox Experiments &amp; Research, Big Bet Projects, and Established Business Units — govern how capital, patience, and governance flow. The Green Light Framework decides what to fund and when to shelve. Culture and finance hold the whole structure up. Volume I answers: <em>what am I building, with whom, and why.</em></p>
+    <p class="no-indent">
+      <span class="dropcap" aria-hidden="true">I</span>have spent twenty years trying to answer one question: can you farm innovation, or do you just get lucky? I now think the answer is both, and that the "both" is the whole craft. Lightning is real. It also lands more often on a prepared field. This book, in two volumes, is the field.
+    </p>
 
-    <div class="pull-quote" aria-hidden="true">
-      <span class="atom">
-        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4">
-          <circle cx="20" cy="20" r="2.4" fill="currentColor" stroke="none"/>
-          <ellipse cx="20" cy="20" rx="16" ry="5.5"/>
-          <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(60 20 20)"/>
-          <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(-60 20 20)"/>
+    <p>
+      <span class="runin">Volume I is the thesis.</span> There are nine steps that turn an idea into a product and a product into a business, and the order is not optional. There are six archetypes that define the <em>shape</em> of every bet — a Petri Dish (get weird), a Probe (test a falsifiable hypothesis), a Frame (draw the edges of a new space), a Beachhead (dominate a specific niche), a Lighthouse (a safe harbor for builders), and the rare Killer App (network effects at scale). Each archetype carries a different objective, a different metric, a different trap: treat a Petri Dish like a Killer App and you will run out of money. Three portfolio tiers — Sandbox Experiments &amp; Research, Big Bet Projects, and Established Business Units — govern how capital, patience, and governance flow. The Green Light Framework decides what to fund and when to shelve. Culture and finance hold the whole structure up. Volume I answers: <em>what am I building, with whom, and why.</em>
+    </p>
+
+    <!-- Pull quote — atomic-orbit + warm gold halo -->
+    <div class="pullquote" role="figure" aria-label="Pull quote">
+      <div class="row">
+        <svg class="orbit" viewBox="0 0 32 32" aria-hidden="true">
+          <g stroke-width="0.9">
+            <circle cx="16" cy="16" r="14"/>
+            <ellipse cx="16" cy="16" rx="14" ry="5"/>
+            <ellipse cx="16" cy="16" rx="14" ry="5" transform="rotate(60 16 16)"/>
+          </g>
+          <circle class="core" cx="16" cy="16" r="1.4"/>
         </svg>
-      </span>
-      <blockquote>"The thesis without the apparatus is a pitch deck. The apparatus without the thesis is a dashboard."</blockquote>
-      <span class="atom">
-        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4">
-          <circle cx="20" cy="20" r="2.4" fill="currentColor" stroke="none"/>
-          <ellipse cx="20" cy="20" rx="16" ry="5.5"/>
-          <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(60 20 20)"/>
-          <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(-60 20 20)"/>
+        <q>You don't make lightning. You build the apparatus that catches it when it strikes.</q>
+        <svg class="orbit" viewBox="0 0 32 32" aria-hidden="true">
+          <g stroke-width="0.9">
+            <circle cx="16" cy="16" r="14"/>
+            <ellipse cx="16" cy="16" rx="14" ry="5"/>
+            <ellipse cx="16" cy="16" rx="14" ry="5" transform="rotate(60 16 16)"/>
+          </g>
+          <circle class="core" cx="16" cy="16" r="1.4"/>
         </svg>
-      </span>
+      </div>
     </div>
 
-    <p><strong>Volume II is the apparatus.</strong> It is the instrument you strap to the thesis so reality can talk back to you on a clock. A waitlist is not a marketing tactic; it is an intake valve. An alpha is not a soft launch; it is a calibrated measurement where retention, activation, and signal density decide whether the next gate opens. A beta is not a bigger alpha; it is a different instrument entirely, tuned for cohort economics and hound-dog signal mining in the places users actually live. General availability is not a finish line; it is the moment the instrument hands the work to an operating unit that knows how to compound it. Volume II answers: <em>how do I run the experiment, read the result, and know — on evidence, not vibes — when to promote.</em></p>
+    <p class="no-indent">
+      Volume II is the apparatus. It is the instrument you strap to the thesis so reality can talk back to you on a clock. A waitlist is not a marketing tactic; it is an intake valve. An alpha is not a soft launch; it is a calibrated measurement where retention, activation, and signal density decide whether the next gate opens. A beta is not a bigger alpha; it is a different instrument entirely, tuned for cohort economics and hound-dog signal mining in the places users actually live. General availability is not a finish line; it is the moment the instrument hands the work to an operating unit that knows how to compound it. Volume II answers: <em>how do I run the experiment, read the result, and know — on evidence, not vibes — when to promote.</em>
+    </p>
 
-    <p>Neither volume works alone. The thesis without the apparatus is a pitch deck. The apparatus without the thesis is a dashboard. Together they are a bridge — the one I actually work at. This is that bridge, open, for anyone who wants to sit down.</p>
-  </article>
-</section>
+    <!-- Section break dingbat -->
+    <div class="section-break" aria-hidden="true">
+      <div class="dingbat">☉</div>
+    </div>
 
-<!-- =============== DIPTYCH =============== -->
-<section class="diptych-section" id="volumes">
+    <p class="no-indent">
+      Neither volume works alone. The thesis without the apparatus is a pitch deck. The apparatus without the thesis is a dashboard. Together they are a bridge — the one I actually work at. This is that bridge, open, for anyone who wants to sit down.
+    </p>
+
+  </div>
+</article>
+
+<!-- ================================================================ -->
+<!--                        DIPTYCH                                   -->
+<!-- ================================================================ -->
+<section class="diptych-section" aria-label="Two volumes">
   <div class="diptych">
 
-    <a class="card" id="vol1" href="volume-1.html">
-      <img class="card-img" src="img/vol1.svg" alt="Retro-future archetype wheel — six-slice chrome disc with tangerine pointer, set into an atomic-cream plotting table.">
-      <div class="card-body">
-        <div class="card-label">VOLUME I &nbsp;·&nbsp; THE THESIS</div>
-        <p class="card-standfirst">Nine steps, six archetypes, three portfolio tiers. What to build, with whom, and funded how.</p>
-        <span class="card-cta">
-          Enter Volume I <span class="arrow">&rarr;</span>
-        </span>
+    <a class="vol-card" href="volume-1.html" aria-label="Enter Volume I — The Thesis">
+      <div class="img-wrap">
+        <img src="img/v1/part-i-thesis.png" alt="Volume I — The Thesis. Cosmic plate: archetype constellation against deep field." loading="eager" />
+      </div>
+      <div class="body">
+        <div class="label">Volume I · The Thesis</div>
+        <p class="vol-title">The Architecture</p>
+        <p class="standfirst">Nine Steps · Six Archetypes · Three Tiers · Green Light Framework</p>
+        <span class="cta">Enter Volume I <span class="arrow" aria-hidden="true">&rarr;</span></span>
       </div>
     </a>
 
-    <a class="card" id="vol2" href="volume-2.html">
-      <img class="card-img" src="img/vol2.png" alt="Retro-future gauge stack — four analog dials labeled WAITLIST, ALPHA, BETA, GA with tangerine boomerang hands, on a deep-teal instrument panel.">
-      <div class="card-body">
-        <div class="card-label">VOLUME II &nbsp;·&nbsp; THE INSTRUMENT</div>
-        <p class="card-standfirst">Waitlist, alpha, beta, GA. How to run the experiment, read the result, and promote on evidence.</p>
-        <span class="card-cta">
-          Enter Volume II <span class="arrow">&rarr;</span>
-        </span>
+    <a class="vol-card" href="volume-2.html" aria-label="Enter Volume II — The Apparatus">
+      <div class="img-wrap">
+        <img src="img/v2/part-i-frame.png" alt="Volume II — The Apparatus. Cosmic plate: gauge constellation in deep field." loading="eager" />
+      </div>
+      <div class="body">
+        <div class="label">Volume II · The Apparatus</div>
+        <p class="vol-title">The Instrument</p>
+        <p class="standfirst">Waitlist · Alpha · Beta · GA · Gate Metrics</p>
+        <span class="cta">Enter Volume II <span class="arrow" aria-hidden="true">&rarr;</span></span>
       </div>
     </a>
 
   </div>
 </section>
 
-<!-- =============== REFRAIN =============== -->
-<section class="refrain">
-  <p class="refrain-text">Together they are a bridge — the one I actually work at. Open, for anyone who wants to sit down.</p>
+<!-- ================================================================ -->
+<!--                       CLOSING REFRAIN                            -->
+<!-- ================================================================ -->
+<section class="refrain" aria-label="Closing refrain">
+  <p>Together they are a bridge — the one I actually work at. Open, for anyone who wants to sit down.</p>
 </section>
 
-<!-- =============== COLOPHON =============== -->
-<footer class="colophon">
-  <div class="colophon-atom" aria-hidden="true">
-    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.25">
-      <circle cx="20" cy="20" r="2" fill="currentColor" stroke="none"/>
-      <ellipse cx="20" cy="20" rx="16" ry="5.5"/>
-      <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(60 20 20)"/>
-      <ellipse cx="20" cy="20" rx="16" ry="5.5" transform="rotate(-60 20 20)"/>
+<!-- ================================================================ -->
+<!--                          COLOPHON                                -->
+<!-- ================================================================ -->
+<footer class="colophon" role="contentinfo">
+  <div class="c1">The Innovation Atlas · Vol I + Vol II</div>
+  <div class="c2">
+    <svg class="dingbat" viewBox="0 0 100 100" aria-hidden="true">
+      <g stroke-width="1">
+        <circle cx="50" cy="50" r="40"/>
+        <ellipse cx="50" cy="50" rx="40" ry="13"/>
+        <ellipse cx="50" cy="50" rx="40" ry="13" transform="rotate(60 50 50)"/>
+        <ellipse cx="50" cy="50" rx="40" ry="13" transform="rotate(120 50 50)"/>
+      </g>
+      <circle class="core" cx="50" cy="50" r="3"/>
     </svg>
   </div>
-  <p class="colophon-text">
-    SET IN TIEMPOS &amp; SÖHNE <span>·</span> PLATES BY HOUSE STUDIO <span>·</span> STATION MMXXVI
-  </p>
+  <div class="c3">R. Gharegozlou · 2005–2026</div>
+  <div class="types">
+    Set in <em>Tiempos &amp; Söhne</em> · Plates by <em>House Studio</em> · Station <em>MMXXVI</em>
+  </div>
 </footer>
+
+<!-- ================================================================ -->
+<!--                       FOLIO COUNTER                              -->
+<!-- ================================================================ -->
+<div class="folio" id="folio" aria-live="polite">· LANDING ·</div>
+
+<!-- ================================================================ -->
+<!--                          HORIZON                                 -->
+<!-- ================================================================ -->
+<div class="horizon" aria-hidden="true"></div>
+
+<!-- ================================================================ -->
+<!--                            JS                                    -->
+<!-- ================================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var heroBg = document.querySelector('.hero .bg');
+  var root = document.documentElement;
+  var ticking = false;
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      var sTop = window.scrollY || window.pageYOffset;
+      var sH = document.documentElement.scrollHeight - window.innerHeight;
+      var prog = sH > 0 ? Math.max(0, Math.min(1, sTop / sH)) : 0;
+      root.style.setProperty('--scroll-progress', prog.toFixed(4));
+      // Parallax: 0.85x scroll means hero bg drifts up at 15% of scroll (per spec).
+      if (!reduced && heroBg && sTop < window.innerHeight * 1.4) {
+        root.style.setProperty('--parallax-y', (-sTop * 0.15).toFixed(1) + 'px');
+      }
+      ticking = false;
+    });
+  }
+
+  // Volume toggle — landing has no current volume, so it routes between vol1/vol2 pages.
+  var volBtn = document.getElementById('volToggle');
+  var lbl = document.getElementById('volLabel');
+  var volI = true;
+  if (volBtn && lbl) {
+    volBtn.addEventListener('click', function () {
+      volI = !volI;
+      lbl.textContent = volI ? 'Vol I / II' : 'Vol II / I';
+      var href = volI ? 'volume-1.html' : 'volume-2.html';
+      window.location.href = href;
+    });
+  }
+
+  // Mode toggle (dark <-> light) with localStorage
+  var modeBtn = document.getElementById('modeToggle');
+  if (modeBtn) {
+    modeBtn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-mode') || 'dark';
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-mode', next);
+      try { localStorage.setItem('cd-mode', next); } catch (e) {}
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
 
 </body>
 </html>
